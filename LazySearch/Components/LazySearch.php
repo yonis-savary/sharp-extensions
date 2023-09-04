@@ -271,6 +271,8 @@ class LazySearch
 
     public function extractQueryInfos(string $sampleQuery, array $options)
     {
+        $database = Database::getInstance();
+
         $allowPossibilities = $options['extras']['allow-possibilities'] ?? self::$configuration['default_fetch_possibilities'];
 
         if (!$allowPossibilities)
@@ -284,7 +286,7 @@ class LazySearch
             $aliasJump[$field['alias']] = &$field;
 
         $counts = join(', ', array_map(fn($e)=>"COUNT(DISTINCT `$e`) as `$e`", $aliasesToObserve));
-        $possibilitiesCount = array_values(Database::query("SELECT $counts FROM ($sampleQuery) as _")[0]);
+        $possibilitiesCount = array_values($database->query("SELECT $counts FROM ($sampleQuery) as _")[0]);
 
         foreach ($possibilitiesCount as $i => $count)
         {
@@ -294,7 +296,7 @@ class LazySearch
 
             if ($count < 100)
             {
-                $possibilities = Database::query("SELECT DISTINCT $alias FROM ($sampleQuery) as _", [], PDO::FETCH_BOTH);
+                $possibilities = $database->query("SELECT DISTINCT $alias FROM ($sampleQuery) as _", [], PDO::FETCH_BOTH);
                 $possibilities = array_map(fn($e)=>$e[$alias], $possibilities);
                 $thisField['possibilities'] = $possibilities;
             }
