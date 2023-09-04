@@ -84,7 +84,7 @@
 
 .lazySearchGrid > *
 {
-    width: fit-content;
+    width: min-content;
 }
 
 .lazySearch .sort-button
