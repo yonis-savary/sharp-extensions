@@ -55,9 +55,7 @@ class Svg
 
     public function __construct()
     {
-        $this->loadConfiguration();
-
-        $path = $this->configuration['path'];
+        $path = $this->getConfiguration()['path'];
 
         if (!str_ends_with($path, '/'))
             $path = "$path/";
@@ -107,7 +105,6 @@ class Svg
     {
         $path = $this->getIconPath($name);
 
-        Logger::getInstance()->debug($path);
         if (!file_exists($path))
             throw new Exception('File not found !');
 
@@ -149,9 +146,7 @@ class Svg
 
     public function serve(Request $req): Response
     {
-        self::loadConfiguration();
-
-        if ($this->configuration['enabled'] !== true)
+        if ($this->getConfiguration()['enabled'] !== true)
             return Response::json('Disabled component', 400);
 
         list($name, $size) = $req->list('name', 'size');
