@@ -271,7 +271,7 @@ declareNewBridge("menu", {
 
     registeredMenus: [],
     openedMenuMap: {},
-    lastOpenedMenu: null,
+    lastOpenedMenu: [],
 
     selectorToElement: function(selector)
     {
@@ -291,18 +291,22 @@ declareNewBridge("menu", {
         let menu = this.selectorToElement(selector);
         document.body.appendChild(menu);
 
-        let name = menu.getAttribute("name") ?? menu.getAttribute("id");
+        let name = menu.getAttribute("name") ?? menu.id ?? button.id;
+
+        if (!name)
+            console.warn(selector, "this element does not have any [name] attribute or [id], it is advised to add one")
 
         let opened = null;
         if (opened = this.openedMenuMap[name] ?? false)
         {
-            if (opened.opened)
-                await opened.close();
+            await opened.close();
             this.openedMenuMap[name] = undefined;
         }
 
         let instance = new AssetsKitMenu(menu, button, direction);
-        this.lastOpenedMenu = instance;
+
+        if (!this.lastOpenedMenu.includes(instance))
+            this.lastOpenedMenu.push(instance);
 
         if (name)
             this.openedMenuMap[name] = instance;
@@ -323,7 +327,15 @@ declareNewBridge("menu", {
 
     close: function()
     {
-        return this.lastOpenedMenu?.close();
+        console.log("CLOSING", this.lastOpenedMenu)
+        while (this.lastOpenedMenu.length)
+        {
+            let last = this.lastOpenedMenu.pop();
+            console.log(last);
+            if (!last.opened)
+                continue;
+            return last.close();
+        }
     },
 
 

@@ -16,11 +16,16 @@ declareNewBridge("autocomplete", {
         {
             this.autocompleteBox = document.createElement("section");
             this.autocompleteBox.classList = "menu menu-option scrollable";
+            this.autocompleteBox.id = `autocomplete-menu`;
             document.body.appendChild(this.autocompleteBox)
         }
         let autocompleteBox = this.autocompleteBox;
 
         let autocomplete = async _ => {
+
+            let targetBox = target.getBoundingClientRect();
+            let maxHeight = window.innerHeight - targetBox.bottom;
+            autocompleteBox.style.maxHeight = `${maxHeight}px`;
 
             let value = target.value;
             if (value.length < 3)
@@ -31,7 +36,10 @@ declareNewBridge("autocomplete", {
             target.removeAttribute("selection");
 
             autocompleteBox.innerHTML = res.map(x => html`
-                <section class="autocomplete-option" value="${x[0]}">${x[1]}</section>
+                <section
+                    class="autocomplete-option" value="${x[0]}"
+                    ${ Object.entries(x[2] ?? {}).map(([key, value]) => `${key}=${value}`).join(" ")}
+                >${x[1]}</section>
             `).join("");
 
             for (const option of autocompleteBox.querySelectorAll(".autocomplete-option"))
@@ -42,14 +50,21 @@ declareNewBridge("autocomplete", {
                     target.value = option.innerHTML;
                     closeMenu();
                     if (onselect)
-                        (onselect)(val, option.innerHTML);
+                        (onselect)(val, option.innerHTML, option);
+                    target.focus();
                 };
             }
             openMenu(autocompleteBox, target, "bottom")
         };
 
         target.addEventListener("click", autocomplete)
-        target.addEventListener("keyup", autocomplete)
+
+        let timeout = null;
+        target.addEventListener("keyup", ()=>{
+            if (timeout)
+                clearTimeout(timeout);
+            timeout = setTimeout(autocomplete, 300);
+        })
     }
 }, autocomplete => {return {
     addAutocompleteListener: autocomplete.addAutocompleteListener

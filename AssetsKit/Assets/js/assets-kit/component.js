@@ -43,7 +43,7 @@ class AssetsKitComponent extends HTMLElement
             throw new Error(`No component instance with id [${componentId}] found !`);
 
         let method = theInstance.data[methodName]
-        method.bind(theInstance)(event);
+        method.bind(theInstance)(event, theInstance);
     }
 
     static register(instance)
@@ -143,22 +143,23 @@ SharpAssetsKit.utils.declareGlobals({
 
 
 
-
 /*
+
 function componentExamples()
 {
     document.body.innerHTML = ""
 
-    let counter = Component( c =>`
+    let counter = Component( c => {
+        console.log(c) ; return `
         <div>
             <button onclick="${c.method.decrement}">-</button>
             <span>${c.html.count}</span>
             <button onclick="${c.method.increment}">+</button>
         </div>
-    `, {
+    `}, {
         count: 0,
-        decrement: (c)=> c.props.count--,
-        increment: (c)=> c.props.count++
+        decrement: (evt, c)=> c.props.count--,
+        increment: (evt, c)=> c.props.count++
     });
 
     document.body.appendChild(counter);
@@ -185,7 +186,7 @@ function componentExamples()
             this.props.list.push(newValue);
             this.refresh();
         },
-        deleteIndex: function(_, event){
+        deleteIndex: function(event){
             let index = event.target.getAttribute("index");
             this.data.list = this.data.list.filter((_,i)=> i!=index);
             this.refresh();
@@ -193,7 +194,7 @@ function componentExamples()
     })
     document.body.appendChild(todoList);
 }
+
+
+document.addEventListener("DOMContentLoaded", _ => componentExamples(document.body))
 */
-
-
-//document.addEventListener("DOMContentLoaded", _ => componentExamples(document.body))
