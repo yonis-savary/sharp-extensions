@@ -9,21 +9,23 @@
 <?= style("assets-kit/style.css", true) ?>
 <?= assetsKitJSBundle(true) ?>
 
-<body class="flex-row">
+<body class="flex-column" style="--primary: #5757ff">
 
-    <nav class="navbar vertical ">
+    <nav class="navbar bg-Crimson fg-White ">
         <h1>MyAPP</h1>
         <a href="">Link A</a>
         <a href="">Link B</a>
         <a href="">Link C</a>
         <a class="fill-left" href="">logout</a>
     </nav>
-    <nav class="navbar vertical bg-turquoise fg-white">
-        <h1>MyAPP</h1>
-        <a href="">Link A</a>
-        <a href="">Link B</a>
-        <a href="">Link C</a>
-        <a class="fill-left" href="">logout</a>
+    <nav class="navbar bg-Moccasin fg-Black">
+        <section class="content">
+            <h1>MyAPP</h1>
+            <a href="">Link A</a>
+            <a href="">Link B</a>
+            <a href="">Link C</a>
+            <a class="fill-left" href="">logout</a>
+        </section>
     </nav>
 
     <section class="flex-column flex-1">
@@ -50,85 +52,237 @@
             });
         </script>
 
-        <section class="window bg-blue fg-white">
-            <h1>I'm a window !</h1>
+        <section class="window bg-Black fg-White">
+            <section class="centered flex-column">
+                <h1>I'm a window !</h1>
+                <p class="text-justify weight-500">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem incidunt aliquam aperiam asperiores quod a voluptas facere amet vel recusandae odio fugiat optio, maiores consequatur nihil expedita ut. Similique corrupti rem laboriosam provident dolorum odio labore, distinctio ipsum, iste sapiente, omnis cupiditate ad perspiciatis impedit architecto repellat nobis asperiores fugit!</p>
+                <p class="text-justify weight-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat facilis, sit ullam repudiandae eos perspiciatis eligendi assumenda magni illo animi voluptates, quia dolore quidem modi, consequatur temporibus earum. Aperiam reprehenderit veritatis autem fuga ratione quae quos, beatae vero, natus ipsam doloribus nisi aut aspernatur officiis repudiandae corporis dolor, animi unde iure possimus? Cum, incidunt? Necessitatibus earum ipsum iure atque saepe. Quos ex ullam rerum? Molestias impedit rem obcaecati quisquam cumque!</p>
+                <p class="text-justify weight-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum adipisci ipsam quae veniam aut officiis sunt consequatur esse magni aspernatur.</p>
+            </section>
         </section>
+
+        <?php
+
+        $colors= [
+
+            "primary",
+            "white",
+            "lightgray",
+            "gray",
+            "darkgray",
+            "black",
+            "red",
+            "orange",
+            "yellow",
+            "green",
+            "turquoise",
+            "blue",
+            "indigo",
+            "violet",
+
+            "Ivory",
+            "Beige",
+            "AntiqueWhite",
+            "LemonChiffon",
+            "LightGoldenRodYellow",
+            "LightYellow",
+            "Linen",
+            "PaleGoldenRod",
+            "Bisque",
+            "BlanchedAlmond",
+            "BurlyWood",
+            "Khaki",
+            "DarkKhaki",
+            "Gold",
+            "GoldenRod",
+            "Yellow",
+            "White",
+            "Snow",
+            "Azure",
+            "WhiteSmoke",
+            "Gainsboro",
+            "LightGray",
+            "LightGrey",
+            "Silver",
+            "DarkGray",
+            "DarkGrey",
+            "Gray",
+            "Grey",
+            "DimGray",
+            "DimGrey",
+            "Black",
+            "HoneyDew",
+            "FloralWhite",
+            "MintCream",
+            "YellowGreen",
+            "LightGreen",
+            "PaleGreen",
+            "GreenYellow",
+            "Chartreuse",
+            "LawnGreen",
+            "Lime",
+            "LimeGreen",
+            "MediumSpringGreen",
+            "SpringGreen",
+            "MediumAquaMarine",
+            "MediumSeaGreen",
+            "OliveDrab",
+            "Olive",
+            "DarkOliveGreen",
+            "DarkSeaGreen",
+            "Green",
+            "DarkGreen",
+            "DarkSlateGray",
+            "DarkSlateGrey",
+            "ForestGreen",
+            "SeaGreen",
+            "SeaShell",
+            "LavenderBlush",
+            "Cornsilk",
+            "MistyRose",
+            "Moccasin",
+            "NavajoWhite",
+            "OldLace",
+            "PapayaWhip",
+            "PeachPuff",
+            "Wheat",
+            "Coral",
+            "DarkGoldenRod",
+            "Chocolate",
+            "DarkOrange",
+            "Orange",
+            "SandyBrown",
+            "Peru",
+            "DarkSalmon",
+            "LightSalmon",
+            "LightCoral",
+            "IndianRed",
+            "OrangeRed",
+            "PaleVioletRed",
+            "Tomato",
+            "Crimson",
+            "FireBrick",
+            "Brown",
+            "DarkRed",
+            "Maroon",
+            "Red",
+            "Tan",
+            "RosyBrown",
+            "SaddleBrown",
+            "Salmon",
+            "Sienna",
+            "Pink",
+            "LightPink",
+            "Plum",
+            "Thistle",
+            "HotPink",
+            "Orchid",
+            "Violet",
+            "Magenta",
+            "Fuchsia",
+            "DeepPink",
+            "MediumVioletRed",
+            "DarkMagenta",
+            "BlueViolet",
+            "DarkOrchid",
+            "DarkSlateBlue",
+            "DarkViolet",
+            "Indigo",
+            "MediumOrchid",
+            "MediumPurple",
+            "MediumSlateBlue",
+            "RebeccaPurple",
+            "Purple",
+            "GhostWhite",
+            "AliceBlue",
+            "Lavender",
+            "LightBlue",
+            "LightCyan",
+            "LightSkyBlue",
+            "LightSlateGray",
+            "LightSlateGrey",
+            "LightSteelBlue",
+            "PaleTurquoise",
+            "PowderBlue",
+            "SkyBlue",
+            "SlateGray",
+            "SlateGrey",
+            "Aquamarine",
+            "CadetBlue",
+            "CornflowerBlue",
+            "Blue",
+            "DarkBlue",
+            "DarkTurquoise",
+            "DeepSkyBlue",
+            "DodgerBlue",
+            "RoyalBlue",
+            "MediumBlue",
+            "MidnightBlue",
+            "Navy",
+            "SlateBlue",
+            "MediumTurquoise",
+            "Cyan",
+            "Aqua",
+            "SteelBlue",
+            "DarkCyan",
+            "Teal",
+            "Turquoise",
+            "LightSeaGreen",
+        ];
+
+        ?>
+
+
 
         <section class="centered flex-column">
 
+            <?php
+
+                function wrapSample($sample)
+                {
+                    echo "
+                    <section class='flex-row gap-0'>
+                        <section class='bg-Black night-theme flex-column padding-2 flex-1'>$sample</section>
+                        <section class='bg-White flex-column padding-2 flex-1'>$sample</section>
+                    </section>";
+                }
+
+                function buttonSection($color, $extrasClass="", $extrasAttributes="")
+                {
+                    $button = "<button $extrasAttributes class='button $extrasClass $color'>$color</button>";
+                    wrapSample($button);
+                }
+            ?>
+
             <section id="buttonSamples" class="card">
-                <section class="bg-blue fg-white">
+                <section class="bg-DodgerBlue fg-White">
                     <b>Buttons</b>
                 </section>
-                <section class="flex-row flex-wrap">
-                    <button class="button red">red</button>
-                    <button class="button orange">orange</button>
-                    <button class="button yellow">yellow</button>
-                    <button class="button green">green</button>
-                    <button class="button turquoise">turquoise</button>
-                    <button class="button blue">blue</button>
-                    <button class="button indigo">indigo</button>
-                    <button class="button violet">violet</button>
+                <section class="flex-column padding-0">
+                    <section class="flex-column scrollable gap-0 max-vh-50">
+                        <?php foreach ($colors as $color) { buttonSection($color); }?>
+                    </section>
+                    <section class="flex-column scrollable gap-0 max-vh-50">
+                        <?php foreach ($colors as $color) { buttonSection($color, "secondary"); }?>
+                    </section>
+                    <section class="flex-column scrollable gap-0 max-vh-50">
+                        <?php foreach ($colors as $color) { buttonSection($color, "tertiary"); }?>
+                    </section>
+                    <section class="flex-column scrollable gap-0 max-vh-50">
+                        <?php foreach ($colors as $color) { buttonSection($color, "", "disabled"); }?>
+                    </section>
                 </section>
                 <section class="flex-row flex-wrap">
-                    <button class="button red secondary">red</button>
-                    <button class="button orange secondary">orange</button>
-                    <button class="button yellow secondary">yellow</button>
-                    <button class="button green secondary">green</button>
-                    <button class="button turquoise secondary">turquoise</button>
-                    <button class="button blue secondary">blue</button>
-                    <button class="button indigo secondary">indigo</button>
-                    <button class="button violet secondary">violet</button>
+                    <?php foreach ($colors as $color) { ?>
+                        <button class="button icon <?= $color ?>"><?= svg("check") ?></button>
+                    <?php }?>
                 </section>
-                <section class="flex-row flex-wrap">
-                    <button class="button red tertiary">red</button>
-                    <button class="button orange tertiary">orange</button>
-                    <button class="button yellow tertiary">yellow</button>
-                    <button class="button green tertiary">green</button>
-                    <button class="button turquoise tertiary">turquoise</button>
-                    <button class="button blue tertiary">blue</button>
-                    <button class="button indigo tertiary">indigo</button>
-                    <button class="button violet tertiary">violet</button>
-                </section>
-                <section class="flex-row flex-wrap">
-                    <button disabled class="button red">red</button>
-                    <button disabled class="button orange">orange</button>
-                    <button disabled class="button yellow">yellow</button>
-                    <button disabled class="button green">green</button>
-                    <button disabled class="button turquoise">turquoise</button>
-                    <button disabled class="button blue">blue</button>
-                    <button disabled class="button indigo">indigo</button>
-                    <button disabled class="button violet">violet</button>
-                </section>
-                <section>
-                    <b>Some Icons</b>
-                </section>
-                <section class="flex-row flex-wrap align-center">
-                    <button class="button icon red">   <?= svg("x") ?></button>
-                    <button class="button icon orange"><?= svg("exclamation-triangle") ?></button>
-                    <button class="button icon yellow"><?= svg("exclamation-triangle") ?></button>
-                    <button class="button icon green"> <?= svg("check") ?></button>
-                    <button class="button icon blue">  <?= svg("info-circle") ?></button>
-                    <button class="button icon indigo"><?= svg("gear") ?></button>
-                    <button class="button icon violet"><?= svg("send") ?></button>
-                </section>
-                <section class="flex-row flex-wrap align-center">
-                    <button title="Delete" class="button icon red">   <?= svg("trash") ?></button>
-                    <button title="Report" class="button icon orange"><?= svg("exclamation-triangle") ?></button>
-                    <button title="Report" class="button icon yellow"><?= svg("exclamation-triangle") ?></button>
-                    <button title="Confirm" class="button icon green"> <?= svg("check") ?></button>
-                    <button title="More" class="button icon blue">  <?= svg("info-circle") ?></button>
-                    <button title="Setup" class="button icon indigo"><?= svg("gear") ?></button>
-                    <button title="Send" class="button icon violet"><?= svg("send") ?></button>
-                </section>
-
             </section>
 
 
 
-
             <section class="card">
-                <section class="bg-blue fg-white">
+                <section class="bg-DodgerBlue fg-White">
                     <b>Text</b>
                 </section>
                 <section class="flex-column">
@@ -162,47 +316,28 @@
                 <section>
                     <b>Some details</b>
                 </section>
-                <section class="flex-row flex-wrap">
-                    <details class="red"> <summary>I'm a details</summary> <p> And so it goes ! </p></details>
-                    <details class="orange"> <summary>I'm a details</summary> <p> And so it goes ! </p></details>
-                    <details class="yellow"> <summary>I'm a details</summary> <p> And so it goes ! </p></details>
-                    <details class="green"> <summary>I'm a details</summary> <p> And so it goes ! </p></details>
-                    <details class="blue"> <summary>I'm a details</summary> <p> And so it goes ! </p></details>
-                    <details class="indigo"> <summary>I'm a details</summary> <p> And so it goes ! </p></details>
-                    <details class="violet"> <summary>I'm a details</summary> <p> And so it goes ! </p></details>
+                <section class="flex-column gap-0 scrollable max-vh-50">
+                    <?php foreach ($colors as $color) {
+                        wrapSample("
+                        <details class='$color'>
+                            <summary>I'm a $color details</summary>
+                            <p> And so it goes ! </p>
+                        </details>
+                        ");
+                    }?>
                 </section>
                 <section>
                     <b>Some Infos</b>
                 </section>
-                <section class="flex-row flex-wrap">
-                    <section class="info-red">
-                        <b>red infos</b>
-                        <p> I'm an extra, and so it goes ! </p>
-                    </section>
-                    <section class="info-orange">
-                        <b>orange infos</b>
-                        <p> I'm an extra, and so it goes ! </p>
-                    </section>
-                    <section class="info-yellow">
-                        <b>yellow infos</b>
-                        <p> I'm an extra, and so it goes ! </p>
-                    </section>
-                    <section class="info-green">
-                        <b>green infos</b>
-                        <p> I'm an extra, and so it goes ! </p>
-                    </section>
-                    <section class="info-blue">
-                        <b>blue infos</b>
-                        <p> I'm an extra, and so it goes ! </p>
-                    </section>
-                    <section class="info-indigo">
-                        <b>indigo infos</b>
-                        <p> I'm an extra, and so it goes ! </p>
-                    </section>
-                    <section class="info-violet">
-                        <b>violet infos</b>
-                        <p> I'm an extra, and so it goes ! </p>
-                    </section>
+                <section class="flex-column gap-0 scrollable max-vh-50">
+                    <?php foreach ($colors as $color) {
+                        wrapSample("
+                        <section class='info $color'>
+                            <b>$color infos</b>
+                            <p>I'm an extra, and so it goes !</p>
+                        </section>
+                        ");
+                    }?>
                 </section>
                 <section class="info-blue">
                     <b>Info blue in card !</b>
@@ -227,41 +362,22 @@
                 <section>
                     <b>Some Chips</b>
                 </section>
-                <section class="flex-row flex-wrap">
-                    <button class="chip red">   <?= svg("check") ?></button>
-                    <button class="chip orange"><?= svg("check") ?></button>
-                    <button class="chip yellow"><?= svg("check") ?></button>
-                    <button class="chip green"> <?= svg("check") ?></button>
-                    <button class="chip blue">  <?= svg("check") ?></button>
-                    <button class="chip indigo"><?= svg("check") ?></button>
-                    <button class="chip violet"><?= svg("check") ?></button>
-                </section>
-                <section>
-                    <b>Some Tags</b>
-                </section>
-                <section class="flex-row flex-wrap">
-                    <button class="tag clickable red">   red</button>
-                    <button class="tag clickable orange">orange</button>
-                    <button class="tag clickable yellow">yellow</button>
-                    <button class="tag clickable green"> green</button>
-                    <button class="tag clickable blue">  blue</button>
-                    <button class="tag clickable indigo">indigo</button>
-                    <button class="tag clickable violet">violet</button>
-                </section>
-                <section class="flex-row flex-wrap">
-                    <button class="badge clickable red">   red</button>
-                    <button class="badge clickable orange">orange</button>
-                    <button class="badge clickable yellow">yellow</button>
-                    <button class="badge clickable green"> green</button>
-                    <button class="badge clickable blue">  blue</button>
-                    <button class="badge clickable indigo">indigo</button>
-                    <button class="badge clickable violet">violet</button>
+                <section class="flex-column gap-0 scrollable max-vh-50">
+                    <?php foreach ($colors as $color) {
+                        wrapSample("
+                        <section class='flex-row flex-wrap'>
+                            <button class='chip $color'> ". svg("check") . "</button>
+                            <button class='tag clickable $color'> $color</button>
+                            <button class='badge clickable $color'> $color</button>
+                        </section>
+                        ");
+                    }?>
                 </section>
             </section>
 
 
             <section class="card">
-                <section class="bg-blue fg-white">
+                <section class="bg-DodgerBlue fg-White">
                     <b>Some Data !</b>
                 </section>
                 <section class="flex-row">
@@ -282,7 +398,7 @@
 
 
             <section class="card">
-                <section class="bg-blue fg-white">
+                <section class="bg-DodgerBlue fg-White">
                     <b>Shadows</b>
                 </section>
                 <section class="flex-row justify-between">
@@ -309,7 +425,7 @@
 
 
             <section class="card" id="form">
-                <section class="bg-blue fg-white">
+                <section class="bg-DodgerBlue fg-White">
                     <b>Form</b>
                 </section>
                 <section class="flex-column">
@@ -336,7 +452,7 @@
 
 
                 <section>
-                    <input type="text" id="autocomplete">
+                    <input type="text" placeholder="Search a country..." id="autocomplete">
                     <button class="button green" onclick="notifySuccess('Saved', 'Everything\'s OK !')">Save !</button>
                 </section>
                 <script>
@@ -351,7 +467,7 @@
                         let regex = new RegExp(searchObject.split(" ").map(e => `(?=.*${e})`).join(""), "i")
                         return COUNTRY_OR_EUROPE.filter(x => x.match(regex)).map((x,i)=>[i,x]);
                     }, (index, country) => {
-                        notify("Country Selected", `You selected ${country} (${index})`)
+                        notify("Country Selected", `You selected ${country} `)
                     });
                 </script>
 
@@ -364,7 +480,7 @@
 
 
             <section class="card" id="menus">
-                <section class="bg-blue fg-white">
+                <section class="bg-DodgerBlue fg-White">
                     <b>Some Menus !</b>
                 </section>
                 <section class="flex-row gap-0">
@@ -381,16 +497,16 @@
                 </section>
                 <section class="flex-row">
 
-                    <button menu="menu-left" left class="button svg-text blue"><?= svg("caret-left") ?>Left menu</button>
+                    <button menu="menu-left" left class="button svg-text blue"><?= svg("caret-left-fill") ?>Left menu</button>
                     <section name="sampleMenu" class="menu" id="menu-left">Hello !</section>
 
-                    <button menu="menu-top" top class="button svg-text blue"><?= svg("caret-up") ?>Top Menu</button>
+                    <button menu="menu-top" top class="button svg-text blue"><?= svg("caret-up-fill") ?>Top Menu</button>
                     <section name="sampleMenu" class="menu" id="menu-top">Hello !</section>
 
-                    <button menu="menu-right" right class="button svg-text blue"><?= svg("caret-right") ?>Right Menu</button>
+                    <button menu="menu-right" right class="button svg-text blue"><?= svg("caret-right-fill") ?>Right Menu</button>
                     <section name="sampleMenu" class="menu" id="menu-right">Hello !</section>
 
-                    <button menu="menu-bottom" bottom class="button svg-text blue"><?= svg("caret-down") ?>Bottom Menu</button>
+                    <button menu="menu-bottom" bottom class="button svg-text blue"><?= svg("caret-down-fill") ?>Bottom Menu</button>
                     <section name="sampleMenu" class="menu" id="menu-bottom">Hello !</section>
 
                 </section>
@@ -418,7 +534,7 @@
 
 
             <section class="card">
-                <section class="bg-blue fg-white">
+                <section class="bg-DodgerBlue fg-white">
                     <b>Some Animations !</b>
                 </section>
 

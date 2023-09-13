@@ -17,6 +17,14 @@ Style usage :
     width: max-content;
 }
 
+each(@colors, .(@color, @name) {
+    .notification.@{name}
+    {
+        --notification-color: @color;
+        --notification-shadow: fade(@color, .2);
+        --notification-text: contrast(@color, @fg, @bg);
+    }
+})
 
 .notification .number
 {
@@ -26,9 +34,9 @@ Style usage :
     font-size: .8em;
     font-weight: bold;
 
-    color: contrast(@colors[red], @fg, @bg);
-    background-color: @colors[red];
-    box-shadow: 0px 3px 10px fade(@colors[red], .2) ;
+    color: var(--notification-text);
+    background-color: var(--notification-color);
+    box-shadow: 0px 3px 10px var(--notification-shadow) ;
 
     width: 1.5em;
     height: 1.5em;

@@ -72,8 +72,7 @@ each(range(0,100, 10), .(@size){
 
 .centered
 {
-    min-width: 800px;
-    max-width: 1000px;
+    width: clamp(0px, 1000px, 1000px);
     margin-left: auto;
     margin-right: auto;
 }
@@ -168,7 +167,7 @@ each(range(0,10), {
 
 
 
-
+.no-shadow { box-shadow: none !important; }
 .light-shadow { box-shadow: var(--light-shadow) !important };
 .medium-shadow { box-shadow: var(--medium-shadow) !important };
 .heavy-shadow { box-shadow: var(--heavy-shadow) !important };

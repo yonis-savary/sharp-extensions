@@ -19,13 +19,25 @@ Navbar usage
 {
     --spacing: .5em 1em;
 
-    background-color: var(--nav-bg);
-
     position: sticky;
     display: flex;
-    top: 0;
     gap: var(--spacing);
+    top: 0;
     padding: var(--spacing);
+}
+
+.navbar .content
+{
+    width: clamp(0px, 1000px, 1000px);
+    margin: 0 auto;
+
+    display: flex;
+    gap: var(--spacing);
+}
+
+.navbar:not(.vertical) .content
+{
+    flex-direction: row;
 }
 
 .navbar *
@@ -71,7 +83,6 @@ each(range(0,11), .(@value){
 .navbar .title
 {
     font-size: 1.2em;
-    color: var(--nav-fg);
 }
 
 .navbar a
@@ -86,7 +97,6 @@ each(range(0,11), .(@value){
 
     display: flex;
     align-items: center;
-    color: var(--nav-fg);
 }
 
 

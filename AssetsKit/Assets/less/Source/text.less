@@ -4,7 +4,6 @@ body
 }
 
 p {
-  max-width: 80ch;
   margin: 0;
 }
 
@@ -53,6 +52,7 @@ small, .small {
 .text-left { text-align: left !important;}
 .text-center { text-align: center !important;}
 .text-right { text-align: right !important;}
+.text-justify { text-align: justify !important; }
 
 each(range(100, 900, 100), .(@weight){
   .weight-@{weight} {
@@ -62,7 +62,7 @@ each(range(100, 900, 100), .(@weight){
 
 each(@colors, {
 
-    .info-@{key} {
+    .info.@{key} {
         border: none;
         border-radius: .33em;
         padding: 1em;
@@ -72,13 +72,14 @@ each(@colors, {
 
         span, b
         {
-        color: darken(@value, 5);
+          color: darken(@value, 5);
         }
     }
 
 
     .foreground-@{key}, .text-@{key}, .fg-@{key} {
         color: @value !important;
+        --fg: @value !important;
     }
 
     .background-@{key}, .bg-@{key} {
