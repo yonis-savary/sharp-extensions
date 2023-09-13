@@ -61,9 +61,10 @@ declareNewBridge("autocomplete", {
 
         let timeout = null;
         target.addEventListener("keyup", ()=>{
+            closeMenu();
             if (timeout)
                 clearTimeout(timeout);
-            timeout = setTimeout(autocomplete, 300);
+            timeout = setTimeout(autocomplete, 500);
         })
     }
 }, autocomplete => {return {
