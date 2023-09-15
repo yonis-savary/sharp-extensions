@@ -1,12 +1,16 @@
 
 each(@colors, .(@color, @name){
 
+    .badge
+    {
+        border: none;
+        filter: brightness(100%);
+    }
+
     .badge.@{name}
     {
         color: contrast(@color, black, white);
         background-color: @color;
-        border: none;
-        filter: brightness(100%);
     }
 
     .badge.@{name}.clickable:hover

@@ -2,7 +2,7 @@
 
 Navbar usage
 
-<nav [class="vertical"]>
+<nav class="navbar [vertical]">
     <h1>Title !</h1>
     <a href="/" class="icon"><img src="/samples/img/icon.png" alt=""></a>
     <a href="Elem1">Elem1</a>
@@ -186,9 +186,17 @@ each(range(0,11), .(@value){
         margin: 0 !important;
         transition: all 200ms ease;
         z-index: 100;
+    }
 
+    .navbar, .navbar .content
+    {
         flex-direction: column !important;
         align-items: center;
+    }
+
+    .navbar .content
+    {
+        width: auto;
     }
 
     .navbar.active

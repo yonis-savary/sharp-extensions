@@ -1,17 +1,10 @@
 
 each(@colors, .(@color, @name){
-
     .tag.@{name}
     {
         color: @color;
         background-color: fade(@color, 15);
         border: solid .1em @color;
-        filter: brightness(100%);
-    }
-
-    .tag.@{name}.clickable:hover
-    {
-        filter: brightness(130%);
     }
 })
 
@@ -28,9 +21,16 @@ each(@colors, .(@color, @name){
     width: max-content;
     gap: 1em;
     text-decoration: none;
+
+    filter: brightness(100%);
 }
 
 .tag.clickable
 {
     cursor: pointer;
+}
+
+.tag.clickable:hover
+{
+    filter: brightness(130%);
 }

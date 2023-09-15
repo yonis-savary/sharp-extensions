@@ -1,7 +1,6 @@
-.button
-{
+.button {
     border-radius: @default-container-border-radius * .5;
-    padding: .3em .8em;
+    padding: .4em .8em;
     border: none;
     transition: all 100ms ease;
     text-decoration: none;
@@ -10,23 +9,19 @@
     font-family: @font-family;
 }
 
-.button svg
-{
+.button svg {
     scale: .8
 }
 
-.button:focus
-{
+.button:focus {
     outline: 3px solid lighten(@focus-outline-color, 5)
 }
 
-.button
-{
+.button {
     box-shadow: 0 0 0 rgba(black, 0);
 }
 
-.button.icon
-{
+.button.icon {
     position: relative;
     padding: .25em;
     border: none !important;
@@ -38,66 +33,63 @@
     justify-content: center;
 }
 
-.button svg
-{
+.button svg {
     scale: .9;
 }
 
 each(@colors, .(@color, @name) {
-    .button.@{name}
-    {
-        background-color: @color;
-        color: contrast(@color, black, white);
-        border: solid 2px @color;
+    .button {
         box-shadow: 0px 0px 0px transparent;
         transition: all 100ms ease;
     }
 
-    .button.@{name}.icon
-    {
+    .button.@{name} {
+        background-color: @color;
+        color: contrast(@color, black, white);
+        border: solid 2px @color;
+    }
+
+    .button.@{name}.icon {
         color: contrast(fade(@color, 30), @color, lighten(@color, 5));
         background-color: fade(@color, 30);
     }
 
-    .button.@{name}:not(:disabled):hover
-    {
+    .button.@{name}:not(:disabled):hover {
         box-shadow: 0px 0px 16px fade(@color, 20);
     }
 
-    .button.secondary.@{name}
-    {
+    .button.secondary.@{name} {
         background-color: fade(@color, 35);
         border: solid 2px fade(@color, 0);
         color: darken(@color, 0);
     }
 
-    .button.tertiary.@{name}
-    {
-        color: @color;
+    .button.tertiary {
         background-color: transparent;
+    }
+
+    .button.tertiary.@{name} {
+        color: @color;
         border-color: @color;
     }
-    .button.tertiary.@{name}:hover
-    {
+
+    .button.tertiary.@{name}:hover {
         color: contrast(@color, black, white);
         background-color: @color;
         border-color: @color;
     }
 })
 
-.button:not(:disabled):hover
-{
+.button:not(:disabled):hover {
     //filter: brightness(115%);
     box-shadow: @light-shadow;
 }
 
-.button:not(:disabled):active
-{
+.button:not(:disabled):active {
     box-shadow: 0 0 30px transparent !important;
 }
 
-.button:disabled
-{
+.button:disabled {
     border-color: #d0d0d0 !important;
     background: #d0d0d0 !important;
     color: #727272 !important;
@@ -112,8 +104,7 @@ each(@colors, .(@color, @name) {
     it can help to understand button purposes when they are next to each others !
 */
 
-.button.icon[label]::after
-{
+.button.icon[label]::after {
     color: var(--fg);
     font-size: .75em;
     font-weight: 400;
@@ -125,8 +116,7 @@ each(@colors, .(@color, @name) {
     transform: translateX(-50%);
 }
 
-.button.icon[label]
-{
+.button.icon[label] {
     margin-bottom: 1em;
 }
 
@@ -134,8 +124,7 @@ each(@colors, .(@color, @name) {
 @media screen and (max-width: @mobile-screen-width)
 {
     // This block's purpose is to have a better touch-surface for mobile users
-    .button
-    {
+    .button {
         min-height: 3rem;
     }
 }

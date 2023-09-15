@@ -34,7 +34,7 @@ class Svg
             'enabled' => true,
             'path' => 'Sharp/Extensions/AssetsKit/vendor/twbs/bootstrap-icons/icons',
             'cached' => true,
-            'default_size' => 24,
+            'default-size' => 24,
             'max-age' => 3600*24*7, // 1 Weeks
             "middlewares" => []
         ];
@@ -132,6 +132,8 @@ class Svg
     public function get(string $name, int $size=null): string|null
     {
         $content = $this->cache[$name] ?? $this->loadSVGFromName($name);
+
+        $size ??= $this->configuration["default-size"];
 
         if ($size !== null)
             $content = preg_replace('/(height|width)=".*?"/', "$1='$size'", $content);

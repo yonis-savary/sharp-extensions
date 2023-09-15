@@ -66,7 +66,7 @@ declareNewBridge("svg", {
 
         if (content)
         {
-            return content.replace(/(height|width)=\"\d+\"/g, `$1=\"${size}"`).replace(/>/, `sig="${signature}">`);
+            return content.replace(/(height|width)=[\"']\d+[\"']/g, `$1=\"${size}"`).replace(/>/, `sig="${signature}">`);
         }
         else
         {
