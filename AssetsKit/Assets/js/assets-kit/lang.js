@@ -88,6 +88,16 @@ declareNewBridge("lang", {
     },
 
 
+    firstParentThatMatch: function(element, selector)
+    {
+        let pointer = element;
+
+        while (!pointer.matches(selector))
+            pointer = pointer.parentNode;
+
+        return pointer;
+    },
+
     /*
     * Page Signature
     * _____________________________________
@@ -299,6 +309,10 @@ declareNewBridge("lang", {
             this.appendChild(c)
     }
 
+
+    Element.prototype.firstParentThatMatch = function(selector){
+        return SharpAssetsKit.lang.firstParentThatMatch(this, selector);
+    }
 
 
     document.nodeFromHTML = (html, type="section") => {
