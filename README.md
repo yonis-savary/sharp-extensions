@@ -1,12 +1,12 @@
 # Sharp-Extensions
 
-Extensions for [YonisSavary/Sharp-PHP](https://github.com/YonisSavary/Sharp-PHP) project
+Extensions for [yonis-savary/Sharp-PHP](https://github.com/yonis-savary/sharp-php) project
 
 ## Installation
 
 ```bash
 # One-shot clone
-git clone https://github.com/YonisSavary/Sharp-Extensions.git Sharp/Extensions
+git clone https://github.com/yonis-savary/sharp-extensions.git Sharp/Extensions
 # submodule
-git submodule add https://github.com/YonisSavary/Sharp-Extensions.git Sharp/Extensions
+git submodule add https://github.com/yonis-savary/sharp-extensions.git Sharp/Extensions
 ```
