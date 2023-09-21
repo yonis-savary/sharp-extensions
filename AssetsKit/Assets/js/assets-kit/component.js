@@ -149,14 +149,13 @@ function componentExamples()
 {
     document.body.innerHTML = ""
 
-    let counter = Component( c => {
-        console.log(c) ; return `
+    let counter = Component( c => `
         <div>
             <button onclick="${c.method.decrement}">-</button>
             <span>${c.html.count}</span>
             <button onclick="${c.method.increment}">+</button>
         </div>
-    `}, {
+    `, {
         count: 0,
         decrement: (evt, c)=> c.props.count--,
         increment: (evt, c)=> c.props.count++

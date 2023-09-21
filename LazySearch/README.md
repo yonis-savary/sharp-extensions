@@ -1,3 +1,5 @@
+[< Back to extensions summary](../README.md)
+
 # LazySearch
 
 This plugin can help you build content tables with :
@@ -9,17 +11,14 @@ This plugin can help you build content tables with :
 ## Base Usage
 
 ```php
-// The ANY method is important here
-Router::any("/contact", function(){
-    return LazySearch::makeList(
-        "SELECT
-            id,
-            name,
-            phone_number,
-            city
-        FROM contact
-    ");
-});
+return lazyList(
+    "SELECT
+        id,
+        name,
+        phone_number,
+        city
+    FROM contact
+");
 ```
 
 Note: for LazySearch to work, explicits columns names must be selected, you cannot select `*`
@@ -32,23 +31,19 @@ then you have to give it some options
 
 ```php
 // The ANY method is important here
-Router::any("/contact", function(){
-    return LazySearch::makeList(
-        "SELECT
-            id,
-            name,
-            phone_number,
-            city
-        FROM contact
-    ");
-}, LazySearch::makeOptions(
-        [LazySearch::makeLink("name", "/contact/", "id")]
-));
+return lazyList(
+    "SELECT
+        id,
+        name,
+        phone_number,
+        city
+    FROM contact
+");
 ```
 
 This line
 ```php
-LazySearch::makeLink("name", "/contact/", "id")
+lazyLink("name", "/contact/", "id")
 ```
 
 Means that on every `name` cell, the content will be a link leading to `/contact/{id}` with `{id}` replaced
@@ -66,3 +61,5 @@ by its value
 | `export_chunk_size`  | `20_000` | Chunk size for exports, a bigger number means faster stream, be aware of PHP memory limit      |
 | `use_cache`          | `false`  | Is the cached used for queries informations ?                                                  |
 | `cache_time_to_live` | `60*5`   | By default, a query data is in cache for 5 minutes                                             |
+
+[< Back to extensions summary](../README.md)

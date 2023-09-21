@@ -1,6 +1,6 @@
-# Sharp-Extensions
+# sharp-extensions
 
-Extensions for [yonis-savary/Sharp-PHP](https://github.com/yonis-savary/sharp-php) project
+Extensions for [yonis-savary/sharp-php](https://github.com/yonis-savary/sharp-php) project
 
 ## Installation
 
@@ -9,4 +9,15 @@ Extensions for [yonis-savary/Sharp-PHP](https://github.com/yonis-savary/sharp-ph
 git clone https://github.com/yonis-savary/sharp-extensions.git Sharp/Extensions
 # submodule
 git submodule add https://github.com/yonis-savary/sharp-extensions.git Sharp/Extensions
+
+# After adding Sharp/Extensions/AssetsKit and/or Sharp/Extensions/LazySearch into sharp.json
+php do build
+php do test
 ```
+
+
+## Extensions
+
+
+- [🎨 AssetsKit](./AssetsKit/README.md) : SVG Component, basic stylesheet/scripts for your applications !
+- [📖 LazySearch](./LazySearch/README.md) : Pagination in your Application !

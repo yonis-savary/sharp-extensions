@@ -31,6 +31,7 @@ class Svg
     {
         return [
             'enabled' => true,
+            "url" => "/assets/svg",
             'path' => 'Sharp/Extensions/AssetsKit/vendor/twbs/bootstrap-icons/icons',
             'cached' => true,
             'default-size' => 24,
@@ -49,7 +50,6 @@ class Svg
         $instance = self::getInstance();
         if ($instance->isEnabled())
             $instance->handleRequest( Request::buildFromGlobals() );
-
     }
 
     public function __construct()
@@ -72,7 +72,8 @@ class Svg
 
     public function handleRequest(Request $req, bool $returnResponse=false)
     {
-        $route = Route::get("/assets/svg", [$this, "serve"], $this->configuration["middlewares"]);
+        $url = $this->configuration["url"];
+        $route = Route::get($url, [$this, "serve"], $this->configuration["middlewares"]);
 
         if (!$route->match($req))
             return;
@@ -143,7 +144,7 @@ class Svg
 
         list($name, $size) = $req->list('name', 'size');
         if ($name === null)
-            return Response::json('\'name\' parameter is needed !', 400);
+            return Response::json('"name" parameter is needed !', 400);
 
         $content = $this->get($name, $size);
 

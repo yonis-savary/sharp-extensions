@@ -10,7 +10,6 @@ use Sharp\Classes\Http\Request;
 use Sharp\Classes\Http\Response;
 use Sharp\Classes\Data\Database;
 use Sharp\Classes\Env\Cache;
-use Sharp\Classes\Env\Storage;
 use Sharp\Classes\Web\Renderer;
 use Sharp\Core\Utils;
 
@@ -79,8 +78,13 @@ class LazySearch
     public function interpretMode(?string $mode)
     {
         $this->mode = match($mode){
-            'json', 'data' => self::MODE_DATA,
-            'file', 'export', 'csv' => self::MODE_FILE,
+            'json',
+            'data' => self::MODE_DATA,
+
+            'file',
+            'export',
+            'csv' => self::MODE_FILE,
+
             default => self::MODE_FORM
         };
     }
@@ -107,7 +111,7 @@ class LazySearch
     {
         $infos = &$this->queryInfos;
 
-        if (self::$configuration['cached'])
+        if ($this->isCached())
         {
             if ($cachedInfo = Cache::getInstance()->try($this->cacheKey($query)))
                 return $infos = $cachedInfo;
