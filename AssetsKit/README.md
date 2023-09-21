@@ -28,7 +28,7 @@ svg("person-fill", 64);
     "path" : "Sharp/Extensions/AssetsKit/vendor/twbs/bootstrap-icons/icons",
     "cached" : true,
     "default-size" : 24,
-    "max-age" : 604800, // 1 Weeks
+    "max-age" : 604800,
     "middlewares" : []
 }
 ```
@@ -84,7 +84,7 @@ localhost:8080/assets-kit-demo
 
 Describing every scripts inside this documentation would make it too long
 
-You can read the [`documentatio here`](./Docs/scripts.md)
+You can read the [`documentation here`](./Docs/scripts.md)
 
 
 [< Back to extensions summary](../README.md)
