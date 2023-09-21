@@ -26,7 +26,6 @@ class Svg
 
     const CACHE_KEY = 'components.svg.cache';
     protected $cache = [];
-    protected string $cacheHash ="";
 
     public static function getDefaultConfiguration(): array
     {
@@ -55,7 +54,9 @@ class Svg
 
     public function __construct()
     {
-        $path = $this->getConfiguration()['path'];
+        $this->loadConfiguration();
+
+        $path = $this->configuration['path'];
 
         if (!str_ends_with($path, '/'))
             $path = "$path/";
@@ -66,8 +67,7 @@ class Svg
         $this->configuration['path'] = $path;
 
         // Code here will be executed the first time SVG component will be called
-        $this->cache = Cache::getInstance()->get(self::CACHE_KEY, []);
-        $this->cacheHash = md5(print_r($this->cache, true));
+        $this->cache = Cache::getInstance()->getReference(self::CACHE_KEY, []);
     }
 
     public function handleRequest(Request $req, bool $returnResponse=false)
@@ -116,16 +116,6 @@ class Svg
         return $content;
     }
 
-    public function __destruct()
-    {
-        $cacheHash = md5(print_r($this->cache, true));
-        if ($this->cacheHash === $cacheHash)
-            return;
-
-        if ($this->configuration['cached'] === true)
-            Cache::getInstance()->set(self::CACHE_KEY, $this->cache, 3600*24);
-    }
-
     // ---------- implementation ----------
 
 
@@ -155,7 +145,7 @@ class Svg
         if ($name === null)
             return Response::json('\'name\' parameter is needed !', 400);
 
-        $content = Svg::get($name, $size);
+        $content = $this->get($name, $size);
 
         $res = Response::html($content);
         $res->withHeaders([
