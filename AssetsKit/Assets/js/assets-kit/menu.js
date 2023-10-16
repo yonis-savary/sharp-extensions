@@ -333,13 +333,17 @@ declareNewBridge("menu", {
 
     close: async function(name=null)
     {
+        if (name && name instanceof HTMLElement)
+            name = name.id;
+
         if (name)
         {
             let toClose = this.openedMenuMap[name] ?? false;
 
             if (!toClose)
-                return console.error(`Cannot find menu with name = ${name}`);
+                return console.warn(`Cannot find menu with name = ${name}`);
 
+            delete this.openedMenuMap[name];
             return await toClose.close();
         }
 
@@ -352,7 +356,7 @@ declareNewBridge("menu", {
         {
             last = this.lastOpenedMenu.pop();
         }
-        while (last.opened && this.lastOpenedMenu.length);
+        while ((!last.opened) && this.lastOpenedMenu.length);
 
         return await last.close();
     },

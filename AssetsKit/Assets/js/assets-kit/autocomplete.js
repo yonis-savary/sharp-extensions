@@ -49,7 +49,7 @@ declareNewBridge("autocomplete", {
                     let val = option.getAttribute("value");
                     target.setAttribute("selection", val);
                     target.value = option.innerHTML;
-                    closeMenu();
+                    closeMenu("autocomplete-menu");
                     if (onselect)
                         (onselect)(val, option.innerHTML, option);
                     target.focus();
