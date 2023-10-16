@@ -1,7 +1,10 @@
 <?php
 
 use Sharp\Classes\Web\Renderer;
-use Sharp\Extensions\LazySearch\Components\LazySearch;
+use Sharp\Core\Utils;
+use Sharp\Extensions\LazySearch\Classes\LazySearchLink;
+use Sharp\Extensions\LazySearch\Classes\LazySearchOptions;
+use Sharp\Extensions\LazySearch\Classes\LazySearch;
 
 function lazySearch(string $url)
 {
@@ -9,38 +12,40 @@ function lazySearch(string $url)
 }
 
 
-function lazyList(
-    string $query,
-    array $options = [
-        'links'=>[],
-        'title' => 'Results',
-        'views' => [],
-        'scripts'=> [],
-        'ignores' => [],
-        'extras' => []
-]) {
+function lazyList(string $query, LazySearchOptions $options=null)
+{
     return LazySearch::getInstance()->makeList($query, $options);
 }
 
 function lazyOptions(
     array $links=[],
-    string $title='Results',
+    string $title=null,
     string|array $views=[],
     string|array $scripts=[],
     string|array $ignores=[],
     array $extras=[],
     array $defaultFilters=[],
     array $defaultSorts=[]
-) {
-    return LazySearch::getInstance()->makeOptions(
-        $links, $title, $views, $scripts, $ignores, $extras, $defaultFilters, $defaultSorts
+) : LazySearchOptions
+{
+    return new LazySearchOptions(
+        $title,
+        Utils::toArray($views),
+        Utils::toArray($scripts),
+        Utils::toArray($ignores),
+        $links,
+        $extras,
+        $defaultFilters,
+        $defaultSorts
     );
 }
 
 function lazyLink(
     string $field,
     string $prefix,
-    string $value
-) {
-    return LazySearch::getInstance()->makeLink($field, $prefix, $value);
+    string $value,
+    string $suffix=""
+) : LazySearchLink
+{
+    return new LazySearchLink($field, $value, $prefix, $suffix);
 }

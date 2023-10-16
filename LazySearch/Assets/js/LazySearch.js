@@ -12,7 +12,8 @@ const LOCALES = {
             filtersTitle       : "Filters",
             resetFilters       : "Reset filters",
             exportLabel        : "Export",
-            searchPlaceholder  : "Search..."
+            searchPlaceholder  : "Search...",
+            resultsName        : "results"
         },
         functions: {
             dateTransform: e => e
@@ -24,7 +25,8 @@ const LOCALES = {
             filtersTitle       : "Filtres",
             resetFilters       : "Réinitialiser",
             exportLabel        : "Exporter",
-            searchPlaceholder  : "Rechercher..."
+            searchPlaceholder  : "Rechercher...",
+            resultsName        : "resultats"
         },
         functions: {
             dateTransform: e => e.split("-").reverse().join("/")
@@ -32,7 +34,11 @@ const LOCALES = {
     }
 }
 
-const LOC = LOCALES[(typeof LAZYSEARCH_CONFIGURATION !== "undefined" ? LAZYSEARCH_CONFIGURATION.locale : null ) ?? 'en'];
+const LOC = LOCALES[
+    (typeof LAZYSEARCH_CONFIGURATION !== "undefined" ?
+        LAZYSEARCH_CONFIGURATION.locale :
+        null ) ?? 'en'
+];
 
 /**
  * Events
@@ -88,16 +94,23 @@ class LazySearch
         this.flags.allowTranslate = !this.root.hasAttribute("no-translate");
 
         this.root.innerHTML = `
-        <section class="lazySearchGrid" style="display: grid; gap: 1em; grid-template-area:
+        <section class="lazySearchGrid" style="display: grid; gap: .5em; grid-template-area:
             'none', 'pagination'
             'filters', 'content';
             grid-template-columns: minmax(auto, 0px) auto;
         ">
+            <section style="grid-area: 1/1/2/2" class="flex-column align-center justify-center">
+                <h1 class="h4 tableTitle"></h1>
+            </section>
             ${(!this.flags.allowFilters) ? "": `
             <section style="grid-area: 2/1/3/2" class="flex-column aside-menu">
                 <section class="card">
                     <section class="flex-column">
-                        <b class="svg-text">${svg("funnel")}${LOC.dict.filtersTitle}</b>
+                        <section class="flex-row align-center gap-1">
+                            <b class="svg-text">${svg("funnel")}${LOC.dict.filtersTitle}</b>
+                            <button class="button blue icon resetButton fill-left">${svg("arrow-repeat")}</button>
+                            <button class="button violet icon exportButton">${svg("file-earmark-arrow-down")}</button>
+                        </section>
                         <section class="flex-column hide-empty gap-2 filters"></section>
                     </section>
                     <section class="hide-empty extraAside"></section>
@@ -106,14 +119,13 @@ class LazySearch
             `}
             <section
                 style="grid-area: 1/2/2/3; width: 100%"
-                class="flex-row justify-between"
+                class="flex-column align-end gap-1"
             >
-                <section class="flex-row align-center">
+                <section class="flex-row width-100 align-center">
                     <input type="search" placeholder="${LOC.dict.searchPlaceholder}" name="${this.url}" class="search">
-                    <button class="button blue secondary svg-text resetButton">${svg("arrow-repeat")} ${LOC.dict.resetFilters}</button>
-                    <button class="button violet secondary svg-text exportButton">${svg("file-earmark-arrow-down")} ${LOC.dict.exportLabel}</button>
+                    <small class="resultCount"></small>
+                    <section class="fill-left flex-row gap-1 align-end pagination"></section>
                 </section>
-                <section class="flex-row gap-1 align-end pagination"></section>
             </section>
             <section style="grid-area: 2/2/3/3" class="content-wrapper">
                 <table class="content table"></table>
@@ -134,9 +146,6 @@ class LazySearch
         this.dom.resetButton?.addEventListener("click", ()=>this.reset())
         this.dom.exportButton?.addEventListener("click", ()=>this.export())
 
-        this.observer = new ResizeObserver(this.refreshTranslate.bind(this));
-        this.observer.observe(this.root);
-
         ;(async _ => {
             if (this.url)
                 await this.refresh()
@@ -149,22 +158,6 @@ class LazySearch
     {
         this.renderCallbacks.push(...callbacks)
         this.refresh()
-    }
-
-    refreshTranslate()
-    {
-        if (!this.flags.allowFilters)
-            return;
-
-        if (!this.flags.allowTranslate)
-            return;
-
-        if (isMobile())
-            return;
-
-        this.root.style.transform = "";
-        let box = this.root.getBoundingClientRect();
-        this.root.style.transform = `translateX(-${box.left/2}px)`;
     }
 
     async export()
@@ -224,8 +217,8 @@ class LazySearch
         if (this.flags.extractInfos)
         {
             this.flags.extractInfos = false;
-            this.buildFilters(meta);
-            this.refreshTranslate();
+            this.buildFilters(meta, options);
+            this.root.querySelector(".tableTitle").innerText = options.title
         }
 
         this.buildPagination(resultsCount)
@@ -259,17 +252,17 @@ class LazySearch
         Object.keys(this.params.filters).forEach(field => {
             if (!Array.isArray(filters[field]))
                 filters[field] = [filters[field]];
-        })
+        });
     }
 
     async buildTable(data, meta, options)
     {
-        let isIgnored = field => options.ignores.includes(field)
+        let isIgnored = field => options.fieldsToIgnore.includes(field)
         let displayable = meta.fields.map(x => x.alias).filter(x => !isIgnored(x));
 
         let links = {};
-        options.links.forEach(link => {
-            links[link.field] = row => `${link.prefix}${row[link.value]}`
+        options.lazySearchLinks.forEach(link => {
+            links[link.fieldLink] = row => `${link.prefix}${row[link.fieldValue]}${link.suffix}`
         });
         let isLink = field => Object.keys(links).includes(field);
 
@@ -280,7 +273,7 @@ class LazySearch
             ${displayable.map(field => `
             <th>
                 <section
-                    class="flex-row sort-button align-center ${this.params.sorts[0] == field ? "fg-blue": ""}"
+                    class="flex-row gap-2 sort-button align-center ${this.params.sorts[0] == field ? "fg-blue": ""}"
                 >
                     ${this.params.sorts[0] !== field ?
                         `<span class="svg-text sort-asc" field="${field}">${svg('filter', 18)}</span>`:
@@ -342,6 +335,8 @@ class LazySearch
         let minRange = Math.min(...range);
         let maxRange = Math.max(...range);
 
+        this.root.querySelector(".resultCount").innerText =`${resultsCount} ${LOC.dict.resultsName}`
+
         if (maxPage == 0)
             return this.dom.pagination.innerHTML = "";
 
@@ -361,13 +356,15 @@ class LazySearch
         })
     }
 
-    async buildFilters(meta)
+    async buildFilters(meta, options)
     {
         if (!this.flags.allowFilters)
             return;
 
+        let fieldIsNotIgnored = f => (!(options.fieldsToIgnore.includes(f)));
+
         this.dom.filters.innerHTML = `
-            ${meta.fields.filter(x => (x.possibilities ?? []).length).map(field => `
+            ${meta.fields.filter(f => fieldIsNotIgnored(f.alias)).filter(x => (x.possibilities ?? []).length).map(field => `
                 <details class="flex-column gap-0" ${(this.params.filters[field.alias] ?? []).length ? "open": ""}>
                     <summary>
                         <b>${field.alias}</b>
@@ -436,7 +433,7 @@ class LazySearch
     formatData(data)
     {
         if (data === null || typeof data == "undefined")
-            return "N/A";
+            return "";
 
         if (data.toString().match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/))
             return LOC.functions.dateTransform(data.toString());

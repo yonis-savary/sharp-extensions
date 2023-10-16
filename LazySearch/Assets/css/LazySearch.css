@@ -64,27 +64,25 @@
     position: sticky;
     top: 0;
     background-color: var(--bg);
-    box-shadow: var(--light-shadow);
 }
 
 .lazySearch .content-wrapper
 {
     overflow-y: auto;
     max-height: 80vh;
-    padding: 0 .5em .5em .5em;
 }
 
 .lazySearch td ,
 .lazySearch th
 {
     white-space: nowrap;
-    max-width: 25ch;
+    max-width: 35ch;
     text-overflow: ellipsis;
 }
 
 .lazySearchGrid > *
 {
-    width: min-content;
+    width: 100%;
 }
 
 .lazySearch .sort-button

@@ -1,19 +1,19 @@
 <?php
 
     use Sharp\Classes\Extras\AssetServer;
-use Sharp\Classes\Web\Renderer;
-use Sharp\Extensions\LazySearch\Components\LazySearch;
+    use Sharp\Classes\Web\Renderer;
+    use Sharp\Extensions\LazySearch\Classes\LazySearch;
 
     $asset = fn(string $target) => AssetServer::getInstance()->getURL($target);
-    $settings = LazySearch::getInstance()->getQuerySettings();
+    $settings = (array) LazySearch::getInstance()->getBackendOptions();
 
-    foreach (($settings["views"] ?? []) as $v)
+    foreach (($settings["viewsToRender"] ?? []) as $v)
     {
         if (Renderer::getInstance()->templateExists($v))
-            echo Renderer::getInstance()->render($v)->getContent();
+            echo Renderer::getInstance()->render($v);
     }
 
-    foreach (($settings["scripts"] ?? []) as $s)
+    foreach (($settings["scriptToInject"] ?? []) as $s)
         echo "<script src='".$asset($s)."'></script>"
 
 ?>
