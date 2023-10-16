@@ -325,15 +325,36 @@ declareNewBridge("menu", {
     },
 
 
-    close: function()
+    closeAllMenus: async function()
     {
         while (this.lastOpenedMenu.length)
+            await this.close();
+    },
+
+    close: async function(name=null)
+    {
+        if (name)
         {
-            let last = this.lastOpenedMenu.pop();
-            if (!last.opened)
-                continue;
-            return last.close();
+            let toClose = this.openedMenuMap[name] ?? false;
+
+            if (!toClose)
+                return console.error(`Cannot find menu with name = ${name}`);
+
+            return await toClose.close();
         }
+
+        if (!this.lastOpenedMenu.length)
+            return;
+
+        let last;
+
+        do
+        {
+            last = this.lastOpenedMenu.pop();
+        }
+        while (last.opened && this.lastOpenedMenu.length);
+
+        return await last.close();
     },
 
 
@@ -361,6 +382,7 @@ declareNewBridge("menu", {
     openMenu: menu.open,
     openMenuAtCoord: menu.openAtCoord,
     closeMenu: menu.close,
+    closeAllMenus: menu.closeAllMenus,
     addMenuListeners: menu.addMenuListeners,
     isMenuOpened: menu.isOpened
 }})

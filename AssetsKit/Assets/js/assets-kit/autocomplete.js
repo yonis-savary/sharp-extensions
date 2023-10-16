@@ -62,7 +62,7 @@ declareNewBridge("autocomplete", {
 
         let timeout = null;
         target.addEventListener("keyup", ()=>{
-            closeMenu();
+            closeMenu("autocomplete-menu");
             if (timeout)
                 clearTimeout(timeout);
             timeout = setTimeout(autocomplete, 500);
