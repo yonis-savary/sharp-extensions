@@ -1,3 +1,178 @@
+
+<?php
+
+$colors= [
+
+    "primary",
+    "white",
+    "lightgray",
+    "gray",
+    "darkgray",
+    "black",
+    "red",
+    "orange",
+    "yellow",
+    "green",
+    "turquoise",
+    "blue",
+    "indigo",
+    "violet",
+
+    "Ivory",
+    "Beige",
+    "AntiqueWhite",
+    "LemonChiffon",
+    "LightGoldenRodYellow",
+    "LightYellow",
+    "Linen",
+    "PaleGoldenRod",
+    "Bisque",
+    "BlanchedAlmond",
+    "BurlyWood",
+    "Khaki",
+    "DarkKhaki",
+    "Gold",
+    "GoldenRod",
+    "Yellow",
+    "White",
+    "Snow",
+    "Azure",
+    "WhiteSmoke",
+    "Gainsboro",
+    "LightGray",
+    "LightGrey",
+    "Silver",
+    "DarkGray",
+    "DarkGrey",
+    "Gray",
+    "Grey",
+    "DimGray",
+    "DimGrey",
+    "Black",
+    "HoneyDew",
+    "FloralWhite",
+    "MintCream",
+    "YellowGreen",
+    "LightGreen",
+    "PaleGreen",
+    "GreenYellow",
+    "Chartreuse",
+    "LawnGreen",
+    "Lime",
+    "LimeGreen",
+    "MediumSpringGreen",
+    "SpringGreen",
+    "MediumAquaMarine",
+    "MediumSeaGreen",
+    "OliveDrab",
+    "Olive",
+    "DarkOliveGreen",
+    "DarkSeaGreen",
+    "Green",
+    "DarkGreen",
+    "DarkSlateGray",
+    "DarkSlateGrey",
+    "ForestGreen",
+    "SeaGreen",
+    "SeaShell",
+    "LavenderBlush",
+    "Cornsilk",
+    "MistyRose",
+    "Moccasin",
+    "NavajoWhite",
+    "OldLace",
+    "PapayaWhip",
+    "PeachPuff",
+    "Wheat",
+    "Coral",
+    "DarkGoldenRod",
+    "Chocolate",
+    "DarkOrange",
+    "Orange",
+    "SandyBrown",
+    "Peru",
+    "DarkSalmon",
+    "LightSalmon",
+    "LightCoral",
+    "IndianRed",
+    "OrangeRed",
+    "PaleVioletRed",
+    "Tomato",
+    "Crimson",
+    "FireBrick",
+    "Brown",
+    "DarkRed",
+    "Maroon",
+    "Red",
+    "Tan",
+    "RosyBrown",
+    "SaddleBrown",
+    "Salmon",
+    "Sienna",
+    "Pink",
+    "LightPink",
+    "Plum",
+    "Thistle",
+    "HotPink",
+    "Orchid",
+    "Violet",
+    "Magenta",
+    "Fuchsia",
+    "DeepPink",
+    "MediumVioletRed",
+    "DarkMagenta",
+    "BlueViolet",
+    "DarkOrchid",
+    "DarkSlateBlue",
+    "DarkViolet",
+    "Indigo",
+    "MediumOrchid",
+    "MediumPurple",
+    "MediumSlateBlue",
+    "RebeccaPurple",
+    "Purple",
+    "GhostWhite",
+    "AliceBlue",
+    "Lavender",
+    "LightBlue",
+    "LightCyan",
+    "LightSkyBlue",
+    "LightSlateGray",
+    "LightSlateGrey",
+    "LightSteelBlue",
+    "PaleTurquoise",
+    "PowderBlue",
+    "SkyBlue",
+    "SlateGray",
+    "SlateGrey",
+    "Aquamarine",
+    "CadetBlue",
+    "CornflowerBlue",
+    "Blue",
+    "DarkBlue",
+    "DarkTurquoise",
+    "DeepSkyBlue",
+    "DodgerBlue",
+    "RoyalBlue",
+    "MediumBlue",
+    "MidnightBlue",
+    "Navy",
+    "SlateBlue",
+    "MediumTurquoise",
+    "Cyan",
+    "Aqua",
+    "SteelBlue",
+    "DarkCyan",
+    "Teal",
+    "Turquoise",
+    "LightSeaGreen",
+];
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +203,8 @@
         </section>
     </nav>
 
-    <section class="flex-column flex-1">
+
+    <section class="flex-column flex-1 margin-top-10">
 
         <section class="centered">
             <section class="flex-row align-center justify-between">
@@ -51,187 +227,6 @@
                 document.body.classList.add("day-theme")
             });
         </script>
-
-        <section class="window bg-Black fg-White">
-            <section class="centered flex-column">
-                <h1>I'm a window !</h1>
-                <p class="text-justify weight-500">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem incidunt aliquam aperiam asperiores quod a voluptas facere amet vel recusandae odio fugiat optio, maiores consequatur nihil expedita ut. Similique corrupti rem laboriosam provident dolorum odio labore, distinctio ipsum, iste sapiente, omnis cupiditate ad perspiciatis impedit architecto repellat nobis asperiores fugit!</p>
-                <p class="text-justify weight-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat facilis, sit ullam repudiandae eos perspiciatis eligendi assumenda magni illo animi voluptates, quia dolore quidem modi, consequatur temporibus earum. Aperiam reprehenderit veritatis autem fuga ratione quae quos, beatae vero, natus ipsam doloribus nisi aut aspernatur officiis repudiandae corporis dolor, animi unde iure possimus? Cum, incidunt? Necessitatibus earum ipsum iure atque saepe. Quos ex ullam rerum? Molestias impedit rem obcaecati quisquam cumque!</p>
-                <p class="text-justify weight-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum adipisci ipsam quae veniam aut officiis sunt consequatur esse magni aspernatur.</p>
-            </section>
-        </section>
-
-        <?php
-
-        $colors= [
-
-            "primary",
-            "white",
-            "lightgray",
-            "gray",
-            "darkgray",
-            "black",
-            "red",
-            "orange",
-            "yellow",
-            "green",
-            "turquoise",
-            "blue",
-            "indigo",
-            "violet",
-
-            "Ivory",
-            "Beige",
-            "AntiqueWhite",
-            "LemonChiffon",
-            "LightGoldenRodYellow",
-            "LightYellow",
-            "Linen",
-            "PaleGoldenRod",
-            "Bisque",
-            "BlanchedAlmond",
-            "BurlyWood",
-            "Khaki",
-            "DarkKhaki",
-            "Gold",
-            "GoldenRod",
-            "Yellow",
-            "White",
-            "Snow",
-            "Azure",
-            "WhiteSmoke",
-            "Gainsboro",
-            "LightGray",
-            "LightGrey",
-            "Silver",
-            "DarkGray",
-            "DarkGrey",
-            "Gray",
-            "Grey",
-            "DimGray",
-            "DimGrey",
-            "Black",
-            "HoneyDew",
-            "FloralWhite",
-            "MintCream",
-            "YellowGreen",
-            "LightGreen",
-            "PaleGreen",
-            "GreenYellow",
-            "Chartreuse",
-            "LawnGreen",
-            "Lime",
-            "LimeGreen",
-            "MediumSpringGreen",
-            "SpringGreen",
-            "MediumAquaMarine",
-            "MediumSeaGreen",
-            "OliveDrab",
-            "Olive",
-            "DarkOliveGreen",
-            "DarkSeaGreen",
-            "Green",
-            "DarkGreen",
-            "DarkSlateGray",
-            "DarkSlateGrey",
-            "ForestGreen",
-            "SeaGreen",
-            "SeaShell",
-            "LavenderBlush",
-            "Cornsilk",
-            "MistyRose",
-            "Moccasin",
-            "NavajoWhite",
-            "OldLace",
-            "PapayaWhip",
-            "PeachPuff",
-            "Wheat",
-            "Coral",
-            "DarkGoldenRod",
-            "Chocolate",
-            "DarkOrange",
-            "Orange",
-            "SandyBrown",
-            "Peru",
-            "DarkSalmon",
-            "LightSalmon",
-            "LightCoral",
-            "IndianRed",
-            "OrangeRed",
-            "PaleVioletRed",
-            "Tomato",
-            "Crimson",
-            "FireBrick",
-            "Brown",
-            "DarkRed",
-            "Maroon",
-            "Red",
-            "Tan",
-            "RosyBrown",
-            "SaddleBrown",
-            "Salmon",
-            "Sienna",
-            "Pink",
-            "LightPink",
-            "Plum",
-            "Thistle",
-            "HotPink",
-            "Orchid",
-            "Violet",
-            "Magenta",
-            "Fuchsia",
-            "DeepPink",
-            "MediumVioletRed",
-            "DarkMagenta",
-            "BlueViolet",
-            "DarkOrchid",
-            "DarkSlateBlue",
-            "DarkViolet",
-            "Indigo",
-            "MediumOrchid",
-            "MediumPurple",
-            "MediumSlateBlue",
-            "RebeccaPurple",
-            "Purple",
-            "GhostWhite",
-            "AliceBlue",
-            "Lavender",
-            "LightBlue",
-            "LightCyan",
-            "LightSkyBlue",
-            "LightSlateGray",
-            "LightSlateGrey",
-            "LightSteelBlue",
-            "PaleTurquoise",
-            "PowderBlue",
-            "SkyBlue",
-            "SlateGray",
-            "SlateGrey",
-            "Aquamarine",
-            "CadetBlue",
-            "CornflowerBlue",
-            "Blue",
-            "DarkBlue",
-            "DarkTurquoise",
-            "DeepSkyBlue",
-            "DodgerBlue",
-            "RoyalBlue",
-            "MediumBlue",
-            "MidnightBlue",
-            "Navy",
-            "SlateBlue",
-            "MediumTurquoise",
-            "Cyan",
-            "Aqua",
-            "SteelBlue",
-            "DarkCyan",
-            "Teal",
-            "Turquoise",
-            "LightSeaGreen",
-        ];
-
-        ?>
-
 
 
         <section class="centered flex-column">
@@ -258,17 +253,21 @@
                 <section class="bg-DodgerBlue fg-White">
                     <b>Buttons</b>
                 </section>
-                <section class="flex-column padding-0">
-                    <section class="flex-column scrollable gap-0 max-vh-50">
+                <section class="flex-column">
+                    <textarea disabled><button class="button COLOR">some test</button></textarea>
+                    <section class="flex-column scrollable gap-0 max-vh-30">
                         <?php foreach ($colors as $color) { buttonSection($color); }?>
                     </section>
-                    <section class="flex-column scrollable gap-0 max-vh-50">
+                    <textarea disabled><button class="button secondary COLOR">some test</button></textarea>
+                    <section class="flex-column scrollable gap-0 max-vh-30">
                         <?php foreach ($colors as $color) { buttonSection($color, "secondary"); }?>
                     </section>
-                    <section class="flex-column scrollable gap-0 max-vh-50">
+                    <textarea disabled><button class="button tertiary COLOR">some test</button></textarea>
+                    <section class="flex-column scrollable gap-0 max-vh-30">
                         <?php foreach ($colors as $color) { buttonSection($color, "tertiary"); }?>
                     </section>
-                    <section class="flex-column scrollable gap-0 max-vh-50">
+                    <textarea disabled><button class="button disabled COLOR">some test</button></textarea>
+                    <section class="flex-column scrollable gap-0 max-vh-30">
                         <?php foreach ($colors as $color) { buttonSection($color, "", "disabled"); }?>
                     </section>
                 </section>
@@ -353,8 +352,16 @@
                         <dd><input class="subtle" placeholder="Hover me !" type="text"></dd>
                     </dl>
                 </section>
-                <section>
-                    <section class="notification">
+                <section class="flex-row">
+                    <section class="notification red">
+                        Your notifications
+                        <div class="number">12</div>
+                    </section>
+                    <section class="notification orange">
+                        Your notifications
+                        <div class="number">12</div>
+                    </section>
+                    <section class="notification green">
                         Your notifications
                         <div class="number">12</div>
                     </section>
@@ -365,7 +372,7 @@
                 <section class="flex-column gap-0 scrollable max-vh-50">
                     <?php foreach ($colors as $color) {
                         wrapSample("
-                        <section class='flex-row flex-wrap'>
+                        <section class='flex-row align-center flex-wrap'>
                             <button class='chip $color'> ". svg("check") . "</button>
                             <button class='tag clickable $color'> $color</button>
                             <button class='badge clickable $color'> $color</button>
@@ -497,16 +504,16 @@
                 </section>
                 <section class="flex-row">
 
-                    <button menu="menu-left" left class="button svg-text blue"><?= svg("caret-left-fill") ?>Left menu</button>
+                    <button menu="menu-left" left class="button svg-text blue">Left menu <?= svg("caret-left-fill") ?></button>
                     <section name="sampleMenu" class="menu" id="menu-left">Hello !</section>
 
-                    <button menu="menu-top" top class="button svg-text blue"><?= svg("caret-up-fill") ?>Top Menu</button>
+                    <button menu="menu-top" top class="button svg-text blue">Top Menu <?= svg("caret-up-fill") ?></button>
                     <section name="sampleMenu" class="menu" id="menu-top">Hello !</section>
 
-                    <button menu="menu-right" right class="button svg-text blue"><?= svg("caret-right-fill") ?>Right Menu</button>
+                    <button menu="menu-right" right class="button svg-text blue">Right Menu <?= svg("caret-right-fill") ?></button>
                     <section name="sampleMenu" class="menu" id="menu-right">Hello !</section>
 
-                    <button menu="menu-bottom" bottom class="button svg-text blue"><?= svg("caret-down-fill") ?>Bottom Menu</button>
+                    <button menu="menu-bottom" bottom class="button svg-text blue">Bottom Menu <?= svg("caret-down-fill") ?></button>
                     <section name="sampleMenu" class="menu" id="menu-bottom">Hello !</section>
 
                 </section>
@@ -559,10 +566,17 @@
 
                 </script>
             </section>
+        </section>
 
+        <section class="window bg-Black fg-White">
+            <section class="centered flex-column">
+                <h1>I'm a window !</h1>
+                <p class="text-justify weight-500">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem incidunt aliquam aperiam asperiores quod a voluptas facere amet vel recusandae odio fugiat optio, maiores consequatur nihil expedita ut. Similique corrupti rem laboriosam provident dolorum odio labore, distinctio ipsum, iste sapiente, omnis cupiditate ad perspiciatis impedit architecto repellat nobis asperiores fugit!</p>
+                <p class="text-justify weight-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat facilis, sit ullam repudiandae eos perspiciatis eligendi assumenda magni illo animi voluptates, quia dolore quidem modi, consequatur temporibus earum. Aperiam reprehenderit veritatis autem fuga ratione quae quos, beatae vero, natus ipsam doloribus nisi aut aspernatur officiis repudiandae corporis dolor, animi unde iure possimus? Cum, incidunt? Necessitatibus earum ipsum iure atque saepe. Quos ex ullam rerum? Molestias impedit rem obcaecati quisquam cumque!</p>
+                <p class="text-justify weight-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum adipisci ipsam quae veniam aut officiis sunt consequatur esse magni aspernatur.</p>
+            </section>
         </section>
     </section>
-
 
 
 

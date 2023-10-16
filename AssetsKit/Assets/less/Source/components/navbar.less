@@ -28,15 +28,17 @@ Navbar usage
 
 .navbar .content
 {
-    width: clamp(0px, 1000px, 1000px);
+    width: 100%;
     margin: 0 auto;
 
     display: flex;
+    flex-direction: column;
     gap: var(--spacing);
 }
 
 .navbar:not(.vertical) .content
 {
+    width: clamp(0px, 1000px, 1000px);
     flex-direction: row;
 }
 
@@ -47,7 +49,6 @@ Navbar usage
 
 .navbar:not(.vertical)
 {
-    box-shadow: @light-shadow;
     flex-direction: row;
     align-items: center;
     width: 100vw;
@@ -80,9 +81,10 @@ each(range(0,11), .(@value){
 
 
 .navbar h1 ,
+.navbar .h1,
 .navbar .title
 {
-    font-size: 1.2em;
+    font-size: 1.2em !important;
 }
 
 .navbar a
@@ -101,8 +103,7 @@ each(range(0,11), .(@value){
 
 
 
-.navbar a:hover,
-.navbar a.active
+.navbar a:hover
 {
     background-color: rgba(white, .15);
 }
@@ -118,13 +119,11 @@ each(range(0,11), .(@value){
 
 .navbar:not(.vertical) a
 {
-    padding: .25em 1em;
     justify-content: center;
 }
 
 .navbar.vertical a
 {
-    padding: .7em 1.4em;
     width: 100%;
     justify-content: flex-start;
 }
@@ -132,6 +131,27 @@ each(range(0,11), .(@value){
 
 
 
+
+.navbar .menu
+{
+    gap: 0;
+}
+
+.navbar .menu a:not(.button)
+{
+    border-radius: .5em;
+    background: transparent;
+    flex: 1 0 0px;
+    padding: .5em;
+    transition: all 200ms ease;
+    text-decoration: none;
+}
+
+
+.navbar .menu a:not(.button):hover
+{
+    background: rgba(black, .1);
+}
 
 
 
@@ -197,6 +217,7 @@ each(range(0,11), .(@value){
     .navbar .content
     {
         width: auto;
+        flex-direction: column;
     }
 
     .navbar.active

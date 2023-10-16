@@ -19,8 +19,6 @@ document.addEventListener("DOMContentLoaded", async ()=>{
         let box = button.getBoundingClientRect();
         lastButtonBottom = (box.top + box.height*1.1);
 
-        console.log(button, nav);
-
         button.addEventListener("click", function(event){
 
             if (openedNavbar)

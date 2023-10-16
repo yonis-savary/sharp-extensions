@@ -327,11 +327,9 @@ declareNewBridge("menu", {
 
     close: function()
     {
-        console.log("CLOSING", this.lastOpenedMenu)
         while (this.lastOpenedMenu.length)
         {
             let last = this.lastOpenedMenu.pop();
-            console.log(last);
             if (!last.opened)
                 continue;
             return last.close();

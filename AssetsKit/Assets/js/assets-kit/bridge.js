@@ -49,8 +49,6 @@ function declareNewBridge(name, object, globalsToDeclare=null, prototypeMutator=
 {
     SharpAssetsKit[name] = new Bridge(object);
 
-    //console.debug(globalsToDeclare(SharpAssetsKit[name]))
-
     if (typeof globalsToDeclare == "function")
         SharpAssetsKit.utils.declareGlobals(globalsToDeclare(SharpAssetsKit[name]));
 

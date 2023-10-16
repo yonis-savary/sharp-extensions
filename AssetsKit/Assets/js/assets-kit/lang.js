@@ -159,6 +159,17 @@ declareNewBridge("lang", {
     html: function(arr, ...parameters)
     {
         return this.getSignatureComment() + arr[0] + parameters.map((x,i) => this.escapeHTML(x) + arr[i+1]).join("");;
+    },
+
+
+    hideElement: function(element)
+    {
+        element.style.display = "none";
+    },
+
+    showElement: function(element)
+    {
+        element.style.display = "";
     }
 }, lang => {return {
     isMobile: lang.isMobile,
@@ -174,6 +185,8 @@ declareNewBridge("lang", {
     getSignatureComment: lang.getSignatureComment,
     escapeHTML: lang.escapeHTML,
     html: lang.html,
+    hideElement: lang.hideElement,
+    showElement: lang.showElement,
 }}, lang => {
 
     /**
@@ -313,6 +326,15 @@ declareNewBridge("lang", {
     Element.prototype.firstParentThatMatch = function(selector){
         return SharpAssetsKit.lang.firstParentThatMatch(this, selector);
     }
+
+
+    Element.prototype.hide = function(){
+        SharpAssetsKit.lang.hideElement(this);
+    }
+    Element.prototype.show = function(){
+        SharpAssetsKit.lang.showElement(this);
+    }
+
 
 
     document.nodeFromHTML = (html, type="section") => {

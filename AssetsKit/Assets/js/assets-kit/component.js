@@ -89,7 +89,12 @@ class AssetsKitComponent extends HTMLElement
         this.html = new Proxy(this.props, {
             get: (target, key) => escapeHTML(target[key]),
             set: (target, key, value) => target[key] = escapeHTML(value)
-        })
+        });
+
+        this.tree = new Proxy({}, {
+            set: _ => false,
+            get: (target, key) => target.getElementById(key)
+        });
 
         this.method = new Proxy(this.data, {
             get: (target, key) => {

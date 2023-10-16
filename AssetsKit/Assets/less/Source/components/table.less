@@ -2,31 +2,40 @@
 {
     .container;
     padding: 0;
-    border-radius: @default-container-border-radius;
     overflow: hidden;
     font-size: .75em;
-    border-collapse: collapse;
+    border-spacing: 0;
+    border-radius: @default-container-border-radius;
 }
 
-.table td,
+.table td
+{
+    padding: .75em;
+    border: none;
+}
+
 .table th
 {
     padding: 1em;
     border: none;
+    text-align: inherit;
 }
 
 .table tr
 {
     font-weight: normal;
     transition: all 100ms ease-in-out;
-    background: var(--bg);
+}
+
+.table thead
+{
+    border: solid 1px var(--stealth);
 }
 
 .table tbody tr:hover
 {
     filter: sepia(25%);
 }
-
 
 .table.stripped tbody tr:nth-child(even),
 .table.striped tbody tr:nth-child(even)

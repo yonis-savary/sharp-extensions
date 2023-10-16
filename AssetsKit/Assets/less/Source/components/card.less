@@ -7,8 +7,7 @@
 {
     .flex-column();
     animation: card-fade 100ms ease;
-    background: var(--bg);
-    box-shadow: var(--medium-shadow);
+    border: solid 1px var(--stealth);
     border-radius: @default-container-border-radius;
     overflow: hidden;
     gap: 0;
@@ -17,7 +16,7 @@
 
 .card > *
 {
-    padding: @standart-spacing;
+    padding: @default-container-padding;
     border-top: 1px solid var(--stealth);
     border-radius: 0;
 }
@@ -25,7 +24,7 @@
 .card > img
 {
     padding: 0;
-    max-width: 15em;
+    max-width: 100%;
     object-fit: cover;
 }
 

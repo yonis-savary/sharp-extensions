@@ -15,11 +15,12 @@ h1, h2, h3, h4, h5 {
     line-height: 1.3;
 }
 
-h1 { font-size: 3.052em; font-weight: 900; }
-h2 { font-size: 2.441em; font-weight: 800; }
-h3 { font-size: 1.953em; font-weight: 700; }
-h4 { font-size: 1.563em; font-weight: 700; }
-h5 { font-size: 1.250em; font-weight: 600; }
+
+h1 { font-size: 1.802rem; font-weight: 700; }
+h2 { font-size: 1.602rem; font-weight: 700; }
+h3 { font-size: 1.424rem; font-weight: 600; }
+h4 { font-size: 1.266rem; font-weight: 600; }
+h5 { font-size: 1.125rem; font-weight: 400; }
 
 .h1 { font-size: 3.052em !important; font-weight: 900 !important; }
 .h2 { font-size: 2.441em !important; font-weight: 800 !important; }
@@ -58,16 +59,23 @@ each(range(100, 900, 100), .(@weight){
     }
 })
 
+each(range(1, 20, 1), .(@size){
+    .font-size-@{size} {
+        font-size: @size * 1em;
+    }
+})
+
+.info {
+    border: none;
+    border-radius: .33em;
+    padding: 1em;
+    font-size: .9em;
+}
+
 each(@colors, {
 
-    .info {
-        border: none;
-        border-radius: .33em;
-        padding: 1em;
-        font-size: .9em;
-    }
-
     .info.@{key} {
+        --highlight: rgba(@value, .22);
         background-color: rgba(@value, .22);
         color: var(--fg);
 
@@ -85,6 +93,7 @@ each(@colors, {
     .background-@{key}, .bg-@{key} {
         background-color: @value !important;
         border-color: @value !important;
+        --bg: @value !important;
     }
 })
 

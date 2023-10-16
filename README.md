@@ -10,7 +10,7 @@ git clone https://github.com/yonis-savary/sharp-extensions.git Sharp/Extensions
 # submodule
 git submodule add https://github.com/yonis-savary/sharp-extensions.git Sharp/Extensions
 
-# After adding Sharp/Extensions/AssetsKit and/or Sharp/Extensions/LazySearch into sharp.json
+php do enable-application Sharp/Extensions/*
 php do build
 php do test
 ```
