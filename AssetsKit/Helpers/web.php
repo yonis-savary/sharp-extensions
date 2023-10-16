@@ -1,7 +1,7 @@
 <?php
 
 use Sharp\Classes\Extras\AssetServer;
-use Sharp\Extensions\AssetsKit\Components\Svg;
+use SharpExtensions\AssetsKit\Components\Svg;
 
 const ASSETS_KIT_BUNDLE_SCRIPTS = [
 

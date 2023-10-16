@@ -2,7 +2,7 @@
 
     use Sharp\Classes\Extras\AssetServer;
     use Sharp\Classes\Web\Renderer;
-    use Sharp\Extensions\LazySearch\Classes\LazySearch;
+    use SharpExtensions\LazySearch\Classes\LazySearch;
 
     $asset = fn(string $target) => AssetServer::getInstance()->getURL($target);
     $settings = (array) LazySearch::getInstance()->getBackendOptions();

@@ -1,5 +1,5 @@
 <?php
 
-use Sharp\Extensions\AssetsKit\Components\Svg;
+use SharpExtensions\AssetsKit\Components\Svg;
 
 Svg::initialize();

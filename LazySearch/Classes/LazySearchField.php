@@ -1,6 +1,6 @@
 <?php
 
-namespace Sharp\Extensions\LazySearch\Classes;
+namespace SharpExtensions\LazySearch\Classes;
 
 class LazySearchField
 {

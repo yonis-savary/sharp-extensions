@@ -1,11 +1,11 @@
 <?php
 
-namespace Sharp\Extensions\AssetsKit\Tests;
+namespace SharpExtensions\AssetsKit\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Sharp\Classes\Http\Request;
 use Sharp\Classes\Http\Response;
-use Sharp\Extensions\AssetsKit\Components\Svg;
+use SharpExtensions\AssetsKit\Components\Svg;
 
 class SvgTest extends TestCase
 {

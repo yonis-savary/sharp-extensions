@@ -1,6 +1,6 @@
 <?php
 
-namespace Sharp\Extensions\AssetsKit\Components;
+namespace SharpExtensions\AssetsKit\Components;
 
 use Exception;
 use Sharp\Classes\Core\Component;
@@ -32,7 +32,7 @@ class Svg
         return [
             'enabled' => true,
             "url" => "/assets/svg",
-            'path' => 'Sharp/Extensions/AssetsKit/vendor/twbs/bootstrap-icons/icons',
+            'path' => 'SharpExtensions/AssetsKit/vendor/twbs/bootstrap-icons/icons',
             'cached' => true,
             'default-size' => 24,
             'max-age' => 3600*24*7, // 1 Weeks

@@ -1,6 +1,6 @@
 <?php
 
-namespace Sharp\Extensions\AssetsKit\Classes;
+namespace SharpExtensions\AssetsKit\Classes;
 
 use Sharp\Classes\CLI\AbstractBuildTask;
 use Sharp\Core\Utils;

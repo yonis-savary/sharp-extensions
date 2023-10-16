@@ -2,9 +2,9 @@
 
 use Sharp\Classes\Web\Renderer;
 use Sharp\Core\Utils;
-use Sharp\Extensions\LazySearch\Classes\LazySearchLink;
-use Sharp\Extensions\LazySearch\Classes\LazySearchOptions;
-use Sharp\Extensions\LazySearch\Classes\LazySearch;
+use SharpExtensions\LazySearch\Classes\LazySearchLink;
+use SharpExtensions\LazySearch\Classes\LazySearchOptions;
+use SharpExtensions\LazySearch\Classes\LazySearch;
 
 function lazySearch(string $url)
 {
