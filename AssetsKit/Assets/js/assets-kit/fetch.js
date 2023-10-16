@@ -120,7 +120,7 @@ declareNewBridge("API", {
     },
 
     createMultiple: async function (model, data) {
-        return await this.fetchJSON(this.url(model, "/multiple"), data, this.CREATE_METHOD);
+        return await this.fetchJSON(this.url(model, "/create-multiples"), data, this.CREATE_METHOD);
     }
 }, api => {return {
     apiLastResponse: _ => api.lastResponse,
