@@ -330,8 +330,6 @@ class LazySearch
 
         $resultCount = $db->query("SELECT COUNT(*) C $querySampler")[0]["C"];
 
-        debug("SELECT COUNT(*) C $querySampler");
-
         $wrappedQuery = $this->completeQueryWithFields($queryInfos, $querySampler) . $this->getPageExpression();
 
         $response = [
