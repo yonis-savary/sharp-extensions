@@ -156,7 +156,7 @@ class LazySearch
     protected function getPageExpression(): string
     {
         $size = intval($this->queryParams['size'] ?? 50);
-        $size = min($this->configuration['size_limit'], $size);
+        $size = min(200, $size);
 
         $page = intval($this->queryParams['page'] ?? 1);
         $offset = $size * $page;
@@ -326,7 +326,11 @@ class LazySearch
     public function getDataResponse(string $querySampler, array $queryInfos, LazySearchOptions $backendOptions)
     {
         $db = Database::getInstance();
+
+
         $resultCount = $db->query("SELECT COUNT(*) C $querySampler")[0]["C"];
+
+        debug("SELECT COUNT(*) C $querySampler");
 
         $wrappedQuery = $this->completeQueryWithFields($queryInfos, $querySampler) . $this->getPageExpression();
 

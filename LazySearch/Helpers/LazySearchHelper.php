@@ -8,7 +8,7 @@ use Sharp\Extensions\LazySearch\Classes\LazySearch;
 
 function lazySearch(string $url)
 {
-    return Renderer::getInstance()->render("LazySearch", ["url"=>$url])->getContent();
+    return Renderer::getInstance()->render("LazySearch", ["url"=>$url]);
 }
 
 
