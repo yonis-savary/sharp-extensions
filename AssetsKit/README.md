@@ -25,7 +25,7 @@ svg("person-fill", 64);
 {
     "enabled" : true,
     "url": "/assets/svg",
-    "path" : "Sharp/Extensions/AssetsKit/vendor/twbs/bootstrap-icons/icons",
+    "path" : "SharpExtensions/AssetsKit/vendor/twbs/bootstrap-icons/icons",
     "cached" : true,
     "default-size" : 24,
     "max-age" : 604800,
@@ -46,7 +46,7 @@ A `svg` function is available in AssetsKit scripts, see [the documentation](./Do
 ## Stylesheet
 
 To build the stylesheet, [`lessc`](https://lesscss.org/) is needed,
-after adding `Sharp/Extensions/AssetsKit`, execute
+after adding `SharpExtensions/AssetsKit`, execute
 
 ```bash
 php do build

@@ -9,7 +9,7 @@ class Build extends AbstractBuildTask
 {
     public function execute()
     {
-        $assetsKitDir = Utils::relativePath('Sharp/Extensions/AssetsKit');
+        $assetsKitDir = Utils::relativePath('SharpExtensions/AssetsKit');
 
         $this->log("Building stylesheet...\n");
         $styleDir = Utils::joinPath($assetsKitDir, '/Assets/less');

@@ -1,4 +1,4 @@
-<phpunit bootstrap="../../bootstrap.php">
+<phpunit bootstrap="../../Sharp/bootstrap.php">
   <testsuite name="AssetsKit Unit test">
     <directory>Tests</directory>
   </testsuite>
