@@ -57,19 +57,21 @@ class LazySearch
     dom = {};
 
     meta = null;
+    resultsCount = null;
     data = null;
 
     renderCallbacks = [];
 
     response = null;
-    params = {
+
+    flags = {
+        builtBody: false
+    };
+
+    parameters = {
         flags: {
-            initialized: false,
-            extractInfos: true,
-            builtBody: false,
-            builtBodyEventDispatched: false,
-            firstBuild: true,
-            allowFilters: true
+            fetchQueryResultsCount: true,
+            fetchQueryPossibilities: true
         },
         mode: "data",
         page: 0,
@@ -79,19 +81,15 @@ class LazySearch
         sorts: [],
         extras: {}
     }
-    flags = this.params.flags;
 
     renderFunctions = []
 
 
     constructor(root)
     {
-        this.id = root.id || `lst_${((new Date).getTime()).toString(16)}`;
+        this.id = root.id || `lazySearch_${((new Date).getTime()).toString(16)}`;
         this.root = root;
         this.url = root.getAttribute("url")
-
-        this.flags.allowFilters = !this.root.hasAttribute("no-filters");
-        this.flags.allowTranslate = !this.root.hasAttribute("no-translate");
 
         this.root.innerHTML = `
         <section class="lazySearchGrid" style="display: grid; gap: .5em; grid-template-area:
@@ -102,7 +100,6 @@ class LazySearch
             <section style="grid-area: 1/1/2/2" class="flex-column align-center justify-center">
                 <h1 class="h4 tableTitle"></h1>
             </section>
-            ${(!this.flags.allowFilters) ? "": `
             <section style="grid-area: 2/1/3/2" class="flex-column aside-menu">
                 <section class="card">
                     <section class="flex-column">
@@ -116,7 +113,6 @@ class LazySearch
                     <section class="hide-empty extraAside"></section>
                 </section>
             </section>
-            `}
             <section
                 style="grid-area: 1/2/2/3; width: 100%"
                 class="flex-column align-end gap-1"
@@ -131,27 +127,31 @@ class LazySearch
                 <table class="content table"></table>
             </section>
         </section>
-        `
+        `;
 
-        const putDOM = classname => this.dom[classname] = this.root.querySelector(`.${classname}`);
-        ["filters", "pagination", "search", "content", "resetButton", "exportButton", "extraAside"].forEach(putDOM);
+        [
+            "filters",
+            "pagination",
+            "search",
+            "content",
+            "resetButton",
+            "exportButton",
+            "extraAside",
+            "tableTitle"
+        ].forEach(
+            classname => this.dom[classname] = this.root.querySelector("."+classname)
+        );
 
-        if (this.dom.search)
-            this.dom.search.addEventListener("change", ()=>{
-                this.params.search = this.dom.search.value || null;
-                this.params.page = 0;
-                this.refresh()
-            })
+        this.dom.search.addEventListener("change", ()=>{
+            this.parameters.search = this.dom.search.value || null;
+            this.parameters.page = 0;
+            this.refresh()
+        })
 
-        this.dom.resetButton?.addEventListener("click", ()=>this.reset())
-        this.dom.exportButton?.addEventListener("click", ()=>this.export())
+        this.dom.resetButton?.addEventListener("click", ()=>this.reset());
+        this.dom.exportButton?.addEventListener("click", ()=>this.export());
 
-        ;(async _ => {
-            if (this.url)
-                await this.refresh()
-
-            this.dispatchEvent("LazySearchInitialized");
-        })();
+        this.dispatchEvent("LazySearchInitialized");
     }
 
     addRenderFunction(...callbacks)
@@ -162,20 +162,21 @@ class LazySearch
 
     async export()
     {
-        let paramsMock = Object.assign({}, this.params);
-        paramsMock.mode = "file";
+        let parametersMock = Object.assign({}, this.parameters);
+        parametersMock.mode = "file";
 
         // TODO : Find a way to download with a POST query
-        window.open(`${this.url}?params=${JSON.stringify(paramsMock)}`)
+        window.open(`${this.url}?parameters=${JSON.stringify(parametersMock)}`)
     }
 
     async reset()
     {
-        this.params.page = 0;
-        this.params.search = "";
-        this.params.filters =  {};
-        this.params.sorts =  [];
-        this.flags.extractInfos = true;
+        this.parameters.page = 0;
+        this.parameters.search = "";
+        this.parameters.filters =  {};
+        this.parameters.sorts =  [];
+        this.parameters.flags.fetchQueryPossibilities = true;
+        this.parameters.flags.fetchQueryResultsCount = true;
         this.refresh();
     }
 
@@ -189,49 +190,48 @@ class LazySearch
     async refresh(forceReload=false)
     {
         if (forceReload)
-            this.flags.extractInfos = true;
+        {
+            this.parameters.flags.fetchQueryPossibilities = true;
+            this.parameters.flags.fetchQueryResultsCount = true;
+        }
 
-        await this.dom.content.animateAsync([
-            {opacity: 1},
-            {opacity: .5},
-        ], {duration: 50});
+        this.dom.content.animateAsync([{opacity: 1},{opacity: .5}], {duration: 100});
         this.dom.content.style.opacity = .5;
 
         let body = await fetch(this.url , {
-            body: JSON.stringify(this.params),
+            body: JSON.stringify(this.parameters),
             method: "POST",
             headers: {'Content-Type': 'application/json'}
         });
         body = this.response = await body.json();
 
-        await this.dom.content.animateAsync([
-            {opacity: .5},
-            {opacity: 1},
-        ], {duration: 50});
+        this.dom.content.animateAsync([{opacity: .5}, {opacity: 1}], {duration: 100});
         this.dom.content.style.opacity = 1;
 
-        let {meta, data, options, resultsCount} = body;
+        let {meta, data, options, queryParameters, resultsCount} = body;
 
-        let gotDefault = this.flags.initialized ? null: this.applyDefaults(options);
+        this.parameters = queryParameters;
 
-        if (this.flags.extractInfos)
-        {
-            this.flags.extractInfos = false;
-            this.buildFilters(meta, options);
-            this.root.querySelector(".tableTitle").innerText = options.title
-        }
+        this.dom.tableTitle.innerText = options.title
+
+        if (this.parameters.flags.fetchQueryPossibilities)
+            this.meta = meta;
+        else
+            meta = this.meta
+
+        if (this.parameters.flags.fetchQueryResultsCount)
+            this.resultsCount = resultsCount
+        else
+            resultsCount = this.resultsCount;
+
+        this.parameters.flags.fetchQueryPossibilities = false;
+        this.parameters.flags.fetchQueryResultsCount = false;
 
         this.buildPagination(resultsCount)
         this.buildTable(data, meta, options);
+        this.buildFilters(meta, options);
 
-
-        if (this.flags.initialized)
-            return this.dispatchEvent("LazySearchRefreshed");
-
-
-        this.flags.initialized = true;
-        if (gotDefault)
-            this.refresh();
+        this.dispatchEvent("LazySearchRefreshed");
     }
 
 
@@ -243,13 +243,13 @@ class LazySearch
             return false;
 
         if (typeof defaultSorts === "object" && Object.keys(defaultSorts).length)
-            this.params.sorts = defaultSorts;
+            this.parameters.sorts = defaultSorts;
 
         if (typeof defaultFilters === "object" && Object.keys(defaultFilters).length)
-            this.params.filters = defaultFilters;
+            this.parameters.filters = defaultFilters;
 
-        let filters = this.params.filters;
-        Object.keys(this.params.filters).forEach(field => {
+        let filters = this.parameters.filters;
+        Object.keys(this.parameters.filters).forEach(field => {
             if (!Array.isArray(filters[field]))
                 filters[field] = [filters[field]];
         });
@@ -273,11 +273,11 @@ class LazySearch
             ${displayable.map(field => `
             <th>
                 <section
-                    class="flex-row gap-2 sort-button align-center ${this.params.sorts[0] == field ? "fg-blue": ""}"
+                    class="flex-row gap-2 sort-button align-center ${this.parameters.sorts[0] == field ? "fg-blue": ""}"
                 >
-                    ${this.params.sorts[0] !== field ?
+                    ${this.parameters.sorts[0] !== field ?
                         `<span class="svg-text sort-asc" field="${field}">${svg('filter', 18)}</span>`:
-                        this.params.sorts[1] === "ASC" ?
+                        this.parameters.sorts[1] === "ASC" ?
                             `<span class="svg-text sort-desc" field="${field}">${svg('sort-alpha-down', 18)}</span>`:
                             `<span class="svg-text sort-none" field="${field}">${svg('sort-alpha-down-alt', 18)}</span>`
 
@@ -307,11 +307,11 @@ class LazySearch
         const getSortCallback = (input, mode) => {
             return event => {
                 if (!mode)
-                    this.params.sorts = [];
+                    this.parameters.sorts = [];
                 else
-                    this.params.sorts = [input.getAttribute("field"), mode];
+                    this.parameters.sorts = [input.getAttribute("field"), mode];
 
-                this.params.page = 0;
+                this.parameters.page = 0;
                 this.refresh();
             }
         }
@@ -330,8 +330,8 @@ class LazySearch
 
     async buildPagination(resultsCount)
     {
-        let maxPage = Math.ceil(resultsCount / this.params.size);
-        let range = Array(5).fill(0).map((_,i) => this.params.page + i - 1 ).filter(x => 0 < x && x <= maxPage);
+        let maxPage = Math.ceil(resultsCount / this.parameters.size);
+        let range = Array(5).fill(0).map((_,i) => this.parameters.page + i - 1 ).filter(x => 0 < x && x <= maxPage);
         let minRange = Math.min(...range);
         let maxRange = Math.max(...range);
 
@@ -340,7 +340,7 @@ class LazySearch
         if (maxPage == 0)
             return this.dom.pagination.innerHTML = "";
 
-        const pageButton = page => `<button page="${page}" class="button icon ${page === this.params.page+1 ? "active" :''} ">${page}</button>`
+        const pageButton = page => `<button page="${page}" class="button icon ${page === this.parameters.page+1 ? "active" :''} ">${page}</button>`
 
         this.dom.pagination.innerHTML = `
             ${minRange <= 1 ? "":`${pageButton(1)}...`}
@@ -350,7 +350,7 @@ class LazySearch
 
         this.dom.pagination.querySelectorAll("button[page]").forEach(button => {
             button.addEventListener("click", _ =>{
-                this.params.page = parseInt(button.getAttribute("page"))-1;
+                this.parameters.page = parseInt(button.getAttribute("page"))-1;
                 this.refresh();
             })
         })
@@ -358,14 +358,11 @@ class LazySearch
 
     async buildFilters(meta, options)
     {
-        if (!this.flags.allowFilters)
-            return;
-
         let fieldIsNotIgnored = f => (!(options.fieldsToIgnore.includes(f)));
 
-        this.dom.filters.innerHTML = `
-            ${meta.fields.filter(f => fieldIsNotIgnored(f.alias)).filter(x => (x.possibilities ?? []).length).map(field => `
-                <details class="flex-column gap-0" ${(this.params.filters[field.alias] ?? []).length ? "open": ""}>
+        this.dom.filters.innerHTML =
+            meta.fields.filter(f => fieldIsNotIgnored(f.alias)).filter(x => (x.possibilities ?? []).length).map(field => `
+                <details class="flex-column gap-0" ${(this.parameters.filters[field.alias] ?? []).length ? "open": ""}>
                     <summary>
                         <b>${field.alias}</b>
                     </summary>
@@ -381,7 +378,7 @@ class LazySearch
                                 field="${field.alias}"
                                 index="${i}"
                                 class="filter-checkbox"
-                                ${(this.params.filters[field.alias]??[]).includes(x) ? '': 'checked'}
+                                ${(this.parameters.filters[field.alias]??[]).includes(x) ? '': 'checked'}
                                 value="${x}"
                             >
                             ${this.formatData(x)}
@@ -389,8 +386,8 @@ class LazySearch
                         `).join("")}
                     </section>
                 </details>
-            `).join("")}
-        `
+            `).join("")
+
         this.dom.filters.querySelectorAll(".filter-checkbox").forEach(checkbox => {
             let field = checkbox.getAttribute("field");
             let index = parseInt(checkbox.getAttribute("index"));
@@ -408,9 +405,10 @@ class LazySearch
                 });
 
                 if (checkbox.checked)
-                    this.params.filters[field] = [];
+                    this.parameters.filters[field] = [];
                 else
-                    this.params.filters[field] = meta.fields.find(x => x.alias == field).possibilities;
+                    this.parameters.filters[field] = meta.fields.find(x => x.alias == field).possibilities;
+
                 this.refresh()
             });
         })
@@ -420,13 +418,15 @@ class LazySearch
     {
         let field = event.target.getAttribute("field");
 
-        this.params.filters[field] ??= [];
+        this.parameters.filters[field] ??= [];
         if (event.target.checked)
-            this.params.filters[field] = this.params.filters[field].filter(x => x != value);
+            this.parameters.filters[field] = this.parameters.filters[field].filter(x => x != value);
         else
-            this.params.filters[field].push(value);
+            this.parameters.filters[field].push(value);
 
-        this.params.page = 0;
+
+        this.parameters.flags.fetchQueryResultsCount = true;
+        this.parameters.page = 0;
         this.refresh();
     }
 
@@ -445,8 +445,8 @@ class LazySearch
     }
 
 
-    setExtra(extras) { this.params.extras = extras ; this.refresh(); }
-    getExtra() { return this.params.extras }
+    setExtra(extras) { this.parameters.extras = extras ; this.refresh(); }
+    getExtra() { return this.parameters.extras }
     editExtra(callback) { this.setExtra(callback(this.getExtra())); }
 }
 
@@ -455,7 +455,9 @@ window.lazySearchInstances = {}
 async function refreshLazySearch()
 {
     let promises = []
-    document.querySelectorAll(".lazySearch").forEach(table => {
+
+    let lazySearchTables = document.querySelectorAll(".lazySearch");
+    lazySearchTables.forEach(table => {
         promises.push( new Promise(res => table.addEventListener("LazySearchInitialized", res) ) );
         let instance = new LazySearch(table);
         window.lazySearchInstances[instance.id] = instance;
@@ -463,6 +465,10 @@ async function refreshLazySearch()
 
     await Promise.allSettled(promises)
     document.dispatchEvent(new Event("LazySearchLoaded"));
+
+    Object.values(lazySearchInstances).forEach(element => {
+        element.refresh(true);
+    });
 }
 
 document.addEventListener("DOMContentLoaded", refreshLazySearch);

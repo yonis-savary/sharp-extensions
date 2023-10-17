@@ -30,7 +30,8 @@ class LazySearch
 
     const DEFAULT_PARAMS = [
         'flags' => [
-            'extractInfos' => true,
+            "fetchQueryResultsCount" => true,
+            "fetchQueryPossibilities" => true
         ],
         'mode' => 'form',
         'size' => 50,
@@ -79,7 +80,7 @@ class LazySearch
         $this->loadConfiguration();
 
         $body = $request->body() ?? [];
-        if ($fileModeParams = $request->params("params"))
+        if ($fileModeParams = $request->params("parameters"))
             $body = json_decode($fileModeParams, true, flags: JSON_THROW_ON_ERROR);
 
         $this->queryParams = array_merge(self::DEFAULT_PARAMS, $body);
@@ -207,11 +208,11 @@ class LazySearch
         $db = Database::getInstance();
 
         $toIgnores = $backendOptions->fieldsToIgnore;
-        $displayables = ObjectArray::fromArray($queryInfos["fields"]);
-        $displayables = $displayables->filter(fn(LazySearchField $f) => !in_array($f->alias, $toIgnores));
-        $displayables = $displayables->map(fn(LazySearchField $f) => $db->build("IFNULL(`{}`, '')", [$f->alias]));
+        $displayedFields = ObjectArray::fromArray($queryInfos["fields"]);
+        $displayedFields = $displayedFields->filter(fn(LazySearchField $f) => !in_array($f->alias, $toIgnores));
+        $displayedFields = $displayedFields->map(fn(LazySearchField $f) => $db->build("IFNULL(`{}`, '')", [$f->alias]));
 
-        $concatExpression = "CONCAT(". $displayables->join(",") . ")";
+        $concatExpression = "CONCAT(". $displayedFields->join(",") . ")";
 
         $search = ObjectArray::fromExplode(" ", $search);
         $search = $search->map(fn($word) => $db->build("($concatExpression LIKE '%{}%')", [$word]));
@@ -299,19 +300,28 @@ class LazySearch
             );
         }
 
+        $queryParams = &$this->queryParams;
+        if (!count($queryParams['sorts']))
+            $queryParams['sorts'] = $backendOptions->defaultSorts;
+
+        if (!count($queryParams['filters']))
+            $queryParams['filters'] = $backendOptions->defaultFilters;
+
         $queryInfos = $this->parseQueryFields($sqlQuery, $backendOptions);
         $querySampler = $this->getQuerySampler($sqlQuery, $backendOptions, $queryInfos);
-        $this->countQueryFields($sqlQuery, $queryInfos);
+
+        if ($this->queryParams["flags"]["fetchQueryPossibilities"])
+            $this->countQueryFields($sqlQuery, $queryInfos);
 
         switch ($this->mode)
         {
             case self::MODE_DATA: return $this->getDataResponse($querySampler, $queryInfos, $backendOptions);
             case self::MODE_FILE: return $this->getFileResponse($querySampler, $queryInfos, $backendOptions);
-            case self::MODE_FORM: return $this->getViewResponse($querySampler, $queryInfos, $backendOptions);
+            case self::MODE_FORM: return $this->getViewResponse($backendOptions);
         }
     }
 
-    public function getViewResponse(string $querySampler, array $queryInfos, LazySearchOptions $backendOptions)
+    public function getViewResponse(LazySearchOptions $backendOptions)
     {
         $renderer = Renderer::getInstance();
 
@@ -327,16 +337,18 @@ class LazySearch
     {
         $db = Database::getInstance();
 
-
-        $resultCount = $db->query("SELECT COUNT(*) C $querySampler")[0]["C"];
+        $resultCount = null;
+        if ($this->queryParams["flags"]["fetchQueryResultsCount"])
+            $resultCount = $db->query("SELECT COUNT(*) C $querySampler")[0]["C"];
 
         $wrappedQuery = $this->completeQueryWithFields($queryInfos, $querySampler) . $this->getPageExpression();
 
         $response = [
-            'options'      => (array) $backendOptions,
-            'meta'         => $queryInfos,
-            'resultsCount' => $resultCount,
-            'data'         => $db->query($wrappedQuery)
+            'options'          => (array) $backendOptions,
+            'queryParameters'  => $this->queryParams,
+            'meta'             => $queryInfos,
+            'resultsCount'     => $resultCount,
+            'data'             => $db->query($wrappedQuery)
         ];
 
         return Response::json($response);
