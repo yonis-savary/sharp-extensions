@@ -189,6 +189,13 @@ class LazySearch
 
     async refresh(forceReload=false)
     {
+        if (!this.url)
+        {
+            let newURL;
+            if ((newURL = this.root.getAttribute("url")))
+                return;
+        }
+
         if (forceReload)
         {
             this.parameters.flags.fetchQueryPossibilities = true;
