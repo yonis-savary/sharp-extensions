@@ -310,7 +310,7 @@ class LazySearch
         $queryInfos = $this->parseQueryFields($sqlQuery, $backendOptions);
         $querySampler = $this->getQuerySampler($sqlQuery, $backendOptions, $queryInfos);
 
-        if ($this->queryParams["flags"]["fetchQueryPossibilities"])
+        if ($this->queryParams["flags"]["fetchQueryPossibilities"] ?? true )
             $this->countQueryFields($sqlQuery, $queryInfos);
 
         switch ($this->mode)
