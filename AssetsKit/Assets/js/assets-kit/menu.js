@@ -409,7 +409,7 @@ document.addEventListener("DOMContentLoaded", ()=> {
     document.body.appendChild(mb);
 
     AssetsKitMenu.menuBackgroundForMobile = mb;
-    mb.addEventListener("click", SharpAssetsKit.menu.close);
+    mb.addEventListener("click", _ => SharpAssetsKit.menu.close());
 })
 
 
