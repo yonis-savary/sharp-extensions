@@ -87,7 +87,7 @@ class LazySearch
 
     constructor(root)
     {
-        this.id = root.id || `lazySearch_${((new Date).getTime()).toString(16)}`;
+        this.id = root.id || `lazySearch_${((new Date).getTime()).toString(16)}_${ Math.floor((Math.random()*100000)).toString().padStart(5, "0") }`;
         this.root = root;
         this.url = root.getAttribute("url")
 
@@ -219,6 +219,9 @@ class LazySearch
 
         this.parameters = queryParameters;
 
+        if (Array.isArray(this.parameters.extras))
+            this.parameters.extras = {};
+
         this.dom.tableTitle.innerText = options.title
 
         if (this.parameters.flags.fetchQueryPossibilities)
@@ -234,11 +237,13 @@ class LazySearch
         this.parameters.flags.fetchQueryPossibilities = false;
         this.parameters.flags.fetchQueryResultsCount = false;
 
+
         this.buildPagination(resultsCount)
         this.buildTable(data, meta, options);
         this.buildFilters(meta, options);
 
         this.dispatchEvent("LazySearchRefreshed");
+
     }
 
 
@@ -442,7 +447,7 @@ class LazySearch
         if (data === null || typeof data == "undefined")
             return "";
 
-        if (data.toString().match(/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/))
+        if (data.toString().match(/^\d{4}-\d{2}-\d{2}$/))
             return LOC.functions.dateTransform(data.toString());
 
         if (data.toString().match(/^(http|www)/))
