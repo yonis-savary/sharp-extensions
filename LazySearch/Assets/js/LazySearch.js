@@ -238,6 +238,10 @@ class LazySearch
         this.parameters.flags.fetchQueryResultsCount = false;
 
 
+        // PHP Converts {} to [], we fix this effect with this line
+        if (Array.isArray(this.parameters.filters))
+            this.parameters.filters = {};
+
         this.buildPagination(resultsCount)
         this.buildTable(data, meta, options);
         this.buildFilters(meta, options);
@@ -389,7 +393,11 @@ class LazySearch
                         <b>${field.alias}</b>
                     </summary>
                     <label class="flex-row align-center gap-1">
-                        <input type="checkbox" checked field="${field.alias}" class="filter-all-checkbox">
+                        <input
+                            type="checkbox"
+                            ${field.possibilities.length === (this.parameters.filters[field.alias] ?? []).length ? "": "checked"}
+                            field="${field.alias}" class="filter-all-checkbox"
+                        >
                         ${LOC.dict.selectAllLabel}
                     </label>
                     <section class="padding-left-2 flex-column gap-0 scrollable max-vh-20">
@@ -445,7 +453,6 @@ class LazySearch
             this.parameters.filters[field] = this.parameters.filters[field].filter(x => x != value);
         else
             this.parameters.filters[field].push(value);
-
 
         this.parameters.flags.fetchQueryResultsCount = true;
         this.parameters.page = 0;
