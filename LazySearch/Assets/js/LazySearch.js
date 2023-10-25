@@ -372,6 +372,16 @@ class LazySearch
     {
         let fieldIsNotIgnored = f => (!(options.fieldsToIgnore.includes(f)));
 
+        for (let [key, value] of Object.entries(this.parameters.filters))
+        {
+            if (value instanceof Object && (!Array.isArray(value)))
+                value = [];
+            else if (!Array.isArray(value))
+                value = [value]
+
+            this.parameters.filters[key] = value ;
+        }
+
         this.dom.filters.innerHTML =
             meta.fields.filter(f => fieldIsNotIgnored(f.alias)).filter(x => (x.possibilities ?? []).length).map(field => `
                 <details class="flex-column gap-0" ${(this.parameters.filters[field.alias] ?? []).length ? "open": ""}>

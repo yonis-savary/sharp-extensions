@@ -5,6 +5,7 @@ namespace SharpExtensions\LazySearch\Classes;
 use Exception;
 use Sharp\Classes\Core\Component;
 use Sharp\Classes\Core\Configurable;
+use Sharp\Classes\Core\Logger;
 use Sharp\Classes\Data\Database;
 use Sharp\Classes\Data\ObjectArray;
 use Sharp\Classes\Env\Cache;
@@ -173,14 +174,14 @@ class LazySearch
         $conditions = [];
         $db = Database::getInstance();
 
-        foreach ($filters as $field => $forbiddenValues)
+        foreach ($filters as $field => &$filterValues)
         {
-            $forbiddenValues = Utils::toArray($forbiddenValues);
+            $filterValues = Utils::toArray($filterValues);
 
-            if (!count($forbiddenValues))
+            if (!count($filterValues))
                 continue;
 
-            $forbiddenValues = new ObjectArray($forbiddenValues);
+            $forbiddenValues = new ObjectArray($filterValues);
 
             if ($forbiddenValues->any(is_null(...)))
                 $conditions[] = $db->build("(`{}` IS NOT NULL)", [$field]);
@@ -188,6 +189,7 @@ class LazySearch
             $conditions[] = $db->build("(`{}` NOT IN {})", [$field, $forbiddenValues->collect()]);
         }
 
+        $this->queryParams['filters'] = $filters;
         return $conditions;
     }
 
