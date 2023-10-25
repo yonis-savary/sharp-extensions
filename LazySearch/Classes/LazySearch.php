@@ -186,7 +186,7 @@ class LazySearch
             if ($forbiddenValues->any(is_null(...)))
                 $conditions[] = $db->build("(`{}` IS NOT NULL)", [$field]);
 
-            $conditions[] = $db->build("(`{}` NOT IN {})", [$field, $forbiddenValues->collect()]);
+            $conditions[] = $db->build("(`{}` NOT IN {})", [$field, $forbiddenValues->filter()->collect()]);
         }
 
         $this->queryParams['filters'] = $filters;
