@@ -97,7 +97,7 @@ class LazySearch
             'filters', 'content';
             grid-template-columns: minmax(auto, 0px) auto;
         ">
-            <section style="grid-area: 1/1/2/2" class="flex-column align-center justify-center">
+            <section style="grid-area: 1/1/2/2" class="flex-column align-center justify-center title-section">
                 <h1 class="h4 tableTitle"></h1>
             </section>
             <section style="grid-area: 2/1/3/2" class="flex-column aside-menu">
@@ -105,8 +105,8 @@ class LazySearch
                     <section class="flex-column">
                         <section class="flex-row align-center gap-1">
                             <b class="svg-text">${svg("funnel")}${LOC.dict.filtersTitle}</b>
-                            <button class="button blue icon resetButton fill-left">${svg("arrow-repeat")}</button>
-                            <button class="button violet icon exportButton">${svg("file-earmark-arrow-down")}</button>
+                            <button class="button blue icon secondary resetButton fill-left">${svg("arrow-repeat")}</button>
+                            <button class="button violet icon secondary exportButton">${svg("file-earmark-arrow-down")}</button>
                         </section>
                         <section class="flex-column hide-empty gap-2 filters"></section>
                     </section>
@@ -115,7 +115,7 @@ class LazySearch
             </section>
             <section
                 style="grid-area: 1/2/2/3; width: 100%"
-                class="flex-column align-end gap-1"
+                class="flex-column align-end gap-1 pagination-section"
             >
                 <section class="flex-row width-100 align-center">
                     <input type="search" placeholder="${LOC.dict.searchPlaceholder}" name="${this.url}" class="search">
@@ -145,6 +145,7 @@ class LazySearch
         this.dom.search.addEventListener("change", ()=>{
             this.parameters.search = this.dom.search.value || null;
             this.parameters.page = 0;
+            this.parameters.flags.fetchQueryResultsCount = true;
             this.refresh()
         })
 
@@ -356,7 +357,7 @@ class LazySearch
         if (maxPage == 0)
             return this.dom.pagination.innerHTML = "";
 
-        const pageButton = page => `<button page="${page}" class="button icon ${page === this.parameters.page+1 ? "active" :''} ">${page}</button>`
+        const pageButton = page => `<button page="${page}" class="button icon secondary ${page === this.parameters.page+1 ? "active" :''} ">${page}</button>`
 
         this.dom.pagination.innerHTML = `
             ${minRange <= 1 ? "":`${pageButton(1)}...`}
