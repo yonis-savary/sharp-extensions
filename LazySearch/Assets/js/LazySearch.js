@@ -440,7 +440,9 @@ class LazySearch
                 if (checkbox.checked)
                     this.parameters.filters[field] = [];
                 else
-                    this.parameters.filters[field] = meta.fields.find(x => x.alias == field).possibilities;
+                    this.parameters.filters[field] = meta.fields
+                        .find(x => x.alias == field).possibilities
+                        .concat(this.parameters.filters[field] ?? []);
 
                 this.parameters.flags.fetchQueryResultsCount = true;
 

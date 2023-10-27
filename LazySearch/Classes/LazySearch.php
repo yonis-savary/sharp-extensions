@@ -54,7 +54,7 @@ class LazySearch
             'locale' => 'en',
             'ignore_links' => true,
             'template' => null,
-            'size_limit' => 20,
+            'size_limit' => 30,
             'export_middlewares' => [],
             'export_chunk_size' => 20_000,
             'cached' => false
