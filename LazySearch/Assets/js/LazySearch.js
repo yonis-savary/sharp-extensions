@@ -388,7 +388,10 @@ class LazySearch
         }
 
         this.dom.filters.innerHTML =
-            meta.fields.filter(f => fieldIsNotIgnored(f.alias)).filter(x => (x.possibilities ?? []).length).map(field => `
+            meta.fields
+                .filter(f => fieldIsNotIgnored(f.alias))
+                .filter(x => (x.possibilities ?? []).concat(this.parameters.filters[x.alias] ?? []).length)
+                .map(field => `
                 <details class="flex-column gap-0" ${(this.parameters.filters[field.alias] ?? []).length ? "open": ""}>
                     <summary>
                         <b>${field.alias}</b>
@@ -402,12 +405,15 @@ class LazySearch
                         ${LOC.dict.selectAllLabel}
                     </label>
                     <section class="padding-left-2 flex-column gap-0 scrollable max-vh-20">
-                        ${field.possibilities.sort().map((x,i) => `
+                        ${field.possibilities
+                            .concat(this.parameters.filters[field.alias] ?? [])
+                            .uniques()
+                            .sort()
+                            .map((x,i) => `
                         <label class="flex-row gap-1 filter-label">
                             <input
                                 type="checkbox"
                                 field="${field.alias}"
-                                index="${i}"
                                 class="filter-checkbox"
                                 ${(this.parameters.filters[field.alias]??[]).includes(x) ? '': 'checked'}
                                 value="${x}"
@@ -420,11 +426,7 @@ class LazySearch
             `).join("")
 
         this.dom.filters.querySelectorAll(".filter-checkbox").forEach(checkbox => {
-            let field = checkbox.getAttribute("field");
-            let index = parseInt(checkbox.getAttribute("index"));
-
-            let value = meta.fields.find(x => x.alias == field).possibilities[index];
-
+            let value = checkbox.getAttribute("value");
             checkbox.addEventListener("change", event => this.updateFilter(event, value));
         });
 
@@ -439,6 +441,8 @@ class LazySearch
                     this.parameters.filters[field] = [];
                 else
                     this.parameters.filters[field] = meta.fields.find(x => x.alias == field).possibilities;
+
+                this.parameters.flags.fetchQueryResultsCount = true;
 
                 this.refresh()
             });
@@ -455,6 +459,7 @@ class LazySearch
         else
             this.parameters.filters[field].push(value);
 
+        this.parameters.flags.fetchQueryPossibilities = true;
         this.parameters.flags.fetchQueryResultsCount = true;
         this.parameters.page = 0;
         this.refresh();

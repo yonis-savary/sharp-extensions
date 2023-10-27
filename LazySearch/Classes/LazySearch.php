@@ -245,9 +245,11 @@ class LazySearch
         return "FROM ($query) __ $conditions $sort";
     }
 
-    protected function countQueryFields(string $sqlQuery, array &$queryInfos)
+    protected function countQueryFields(string $querySampler, array &$queryInfos)
     {
-        $cacheKey = $this->possibilitiesCacheKey($sqlQuery);
+        $wrappedQuery = $this->completeQueryWithFields($queryInfos, $querySampler);
+
+        $cacheKey = $this->possibilitiesCacheKey($wrappedQuery);
 
         if ($this->isCached())
         {
@@ -268,7 +270,7 @@ class LazySearch
             ->join(",\n");
 
 
-        $counterQuery = "SELECT $fields FROM ($sqlQuery) as _";
+        $counterQuery = "SELECT $fields FROM ($wrappedQuery) as _";
         $counterResults = $db->query($counterQuery)[0];
 
         /** @var LazySearchField $field */
@@ -281,7 +283,7 @@ class LazySearch
                 continue;
 
             $field->possibilities =
-                ObjectArray::fromArray($db->query("SELECT DISTINCT `{}` FROM ($sqlQuery) as _", [$alias]))
+                ObjectArray::fromArray($db->query("SELECT DISTINCT `{}` FROM ($wrappedQuery) as _", [$alias]))
                 ->map(fn($arr) => $arr[$alias])
                 ->collect();
         }
@@ -313,7 +315,7 @@ class LazySearch
         $querySampler = $this->getQuerySampler($sqlQuery, $backendOptions, $queryInfos);
 
         if ($this->queryParams["flags"]["fetchQueryPossibilities"] ?? true )
-            $this->countQueryFields($sqlQuery, $queryInfos);
+            $this->countQueryFields($querySampler, $queryInfos);
 
         switch ($this->mode)
         {
