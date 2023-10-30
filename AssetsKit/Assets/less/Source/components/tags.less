@@ -2,14 +2,16 @@
 each(@colors, .(@color, @name){
     .tag.@{name}
     {
-        color: @color;
-        background-color: fade(@color, 15);
-        border: solid .1em @color;
+        --tag-foreground: @color;
+        --tag-background: fade(@color, 15);
     }
 })
 
 .tag
 {
+    --tag-foreground: #777;
+    --tag-background: #EEE;
+
     border-radius: .25em;
     padding: .25em .5em;
     font-size: .8em;
@@ -23,6 +25,10 @@ each(@colors, .(@color, @name){
     text-decoration: none;
 
     filter: brightness(100%);
+
+    color: var(--tag-foreground);
+    background-color: var(--tag-background);
+    border: solid .1em var(--tag-foreground);
 }
 
 .tag.clickable

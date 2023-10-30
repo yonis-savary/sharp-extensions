@@ -40,14 +40,14 @@
 
 .switch input:checked ~ .slider
 {
-    background-color: var(--primary, #6a56ff);
+    background-color: var(--primary, @blue);
 }
 
 
 .switch input ~ .slider::after
 {
     content: '';
-    background-color: @bg;
+    background-color: var(--accent, var(--bg));
     display: block;
     width: 1em;
     height: 1em;
@@ -84,3 +84,9 @@
 {
     animation: slider-scale-out 200ms ease-in-out;
 }
+
+each(@colors, .(@color, @name) {
+    .switch.@{name} {
+        --accent: @color;
+    }
+})

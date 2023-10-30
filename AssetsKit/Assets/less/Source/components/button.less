@@ -1,25 +1,67 @@
 .button {
+    --button-foreground: #EEEEEE;
+    --button-background: #6e6e6e;
+    --button-background-faded: #b8b8b8;
+    --button-border: #6e6e6e;
+    --button-shadow: #f8f8f8;
+
+    color: var(--button-foreground);
+    background-color: var(--button-background);
+    border: solid 2px var(--button-background);
+
     border-radius: @default-container-border-radius * .5;
     padding: .4em .8em;
-    border: none;
-    transition: all 100ms ease;
     text-decoration: none;
     font-size: .9em;
     font-weight: 600;
     font-family: @font-family;
-    text-align: center;
+
+    .svg-text;
+    justify-content: center;
+
+    box-shadow: 0px 0px 0px transparent;
+    transition: all 250ms ease;
+}
+
+.button:hover:not(:disabled)
+{
+    box-shadow: 0px 0px 12px var(--button-background-faded);
+}
+
+.button:not(:disabled):active {
+    box-shadow: 0 0 30px transparent !important;
 }
 
 .button svg {
-    scale: .8
+    scale: .8;
+}
+
+.button svg {
+    scale: .9;
+}
+
+
+.button.secondary {
+    background-color: var(--button-background-faded);
+    border: solid 2px transparent;
+    color: var(--button-background);
+}
+
+
+.button.tertiary {
+    color: var(--button-background);
+    border-color: var(--button-background);
+    background-color: transparent;
+}
+
+.button.tertiary:hover {
+    color: var(--button-foreground);
+    background-color: var(--button-background);
+    border-color: var(--button-background);
 }
 
 .button:focus {
     outline: 3px solid lighten(@focus-outline-color, 5)
-}
-
-.button {
-    box-shadow: 0 0 0 rgba(black, 0);
 }
 
 .button.icon {
@@ -34,62 +76,20 @@
     justify-content: center;
 }
 
-.button svg {
-    scale: .9;
+.button.icon:hover {
+    box-shadow: 0px 0px 6px var(--button-background-faded);
 }
 
-.button {
-    box-shadow: 0px 0px 0px transparent;
-    transition: all 100ms ease;
-}
 
 each(@colors, .(@color, @name) {
-
     .button.@{name} {
-        background-color: @color;
-        color: contrast(@color, black, white);
-        border: solid 2px @color;
-    }
-
-    .button.@{name}.icon {
-        color: contrast(fade(@color, 30), @color, lighten(@color, 5));
-        background-color: fade(@color, 30);
-    }
-
-    .button.@{name}:not(:disabled):hover {
-        box-shadow: 0px 0px 16px fade(@color, 20);
-    }
-
-    .button.secondary.@{name} {
-        background-color: fade(@color, 35);
-        border: solid 2px fade(@color, 0);
-        color: darken(@color, 0);
-    }
-
-    .button.tertiary {
-        background-color: transparent;
-    }
-
-    .button.tertiary.@{name} {
-        color: @color;
-        border-color: @color;
-    }
-
-    .button.tertiary.@{name}:hover {
-        color: contrast(@color, black, white);
-        background-color: @color;
-        border-color: @color;
+        --button-background-faded: fade(@color, 30);
+        --button-foreground: contrast(@color, black, white);
+        --button-background: @color;
     }
 })
 
-.button:not(:disabled):hover {
-    //filter: brightness(115%);
-    box-shadow: @light-shadow;
-}
 
-.button:not(:disabled):active {
-    box-shadow: 0 0 30px transparent !important;
-}
 
 .button:disabled {
     border-color: #d0d0d0 !important;

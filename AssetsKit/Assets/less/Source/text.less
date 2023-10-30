@@ -66,31 +66,42 @@ each(range(1, 20, 1), .(@size){
 })
 
 .info {
+    --info-background: #EEEA;
+    --info-foreground: #777A;
+
     border: none;
     border-radius: .33em;
     padding: 1em;
     font-size: .9em;
+
+    background: var(--info-background);
+    --highlight : var(--info-background);
+    color: var(--info-foreground);
+
+    span, b {
+        color: var(--info-contrast);
+    }
 }
 
 each(@colors, {
 
     .info.@{key} {
-        --highlight: rgba(@value, .22);
-        background-color: rgba(@value, .22);
-        color: var(--fg);
-
-        span, b {
-            color: darken(@value, 5);
-        }
+        --info-background: rgba(@value, .22);
+        --info-foreground: var(--fg);
+        --info-contrast: darken(@value, 5);
     }
 
-
-    .foreground-@{key}, .text-@{key}, .fg-@{key} {
+    .foreground-@{key},
+    .text-@{key},
+    .fg-@{key}
+    {
         color: @value !important;
         --fg: @value !important;
     }
 
-    .background-@{key}, .bg-@{key} {
+    .background-@{key},
+    .bg-@{key}
+    {
         background-color: @value !important;
         border-color: @value !important;
         --bg: @value !important;
@@ -103,7 +114,7 @@ each(@colors, {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: @standart-spacing * .5;
+    gap: @standard-spacing * .5;
 }
 
 
@@ -129,7 +140,7 @@ ul, ol
 
 .svg-link:hover
 {
-        color: var(--primary) !important;
+    color: var(--primary, @blue) !important;
 }
 
 

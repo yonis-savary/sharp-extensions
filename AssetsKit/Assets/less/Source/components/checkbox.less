@@ -1,4 +1,12 @@
 input[type='checkbox']
 {
-    accent-color: var(--primary, #6a56ff);
+    --accent: var(--primary, @blue);
+    accent-color: var(--accent);
 }
+
+
+each(@colors, .(@color, @name) {
+    input[type='checkbox'].@{name} {
+        --accent: @color;
+    }
+})

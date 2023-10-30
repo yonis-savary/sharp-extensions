@@ -1,12 +1,17 @@
 details
 {
+    --details-background: var(--bg);
+    --details-foreground: var(--fg);
+    --details-border: var(--stealth);
+
     position: relative;
     padding: .5em .75em;
     width: 100%;
-    background: var(--bg);
-    border: solid 1px var(--stealth);
-    border-radius: 0;
-    border-radius: .5em;
+    border: solid 1px var(--details-border);
+    border-radius: 4px;
+    border-left: .33em var(--details-border) solid;
+
+    background-color: var(--details-background);
 }
 
 details summary
@@ -20,6 +25,7 @@ details summary
     align-items: center;
     gap: @default-container-padding;
     padding-right: 2em;
+    color: var(--details-foreground);
 }
 
 details summary img
@@ -27,9 +33,16 @@ details summary img
     width: 1.5em;
 }
 
+details summary + *
+{
+    margin-top: 1em;
+}
 
 // Still needed for some browser
-details > summary::-webkit-details-marker {display: none;}
+details > summary::-webkit-details-marker
+{
+    display: none;
+}
 
 details > summary::after
 {
@@ -41,6 +54,7 @@ details > summary::after
     transition: all 200ms ease;
     transform-origin: 50% 50%;
     cursor: pointer;
+    color: var(--details-foreground);
 }
 
 details[open] > summary::after
@@ -51,18 +65,8 @@ details[open] > summary::after
 
 each(@colors, .(@color, @name){
     details.@{name} {
-        background-color: rgba(@color, .3);
-        border-left: .33em @color solid;
-    }
-    details.@{name} > summary,
-    details.@{name} > summary::after
-    {
-        color: darken(@color, 10);
+        --details-background: rgba(@color, .3);
+        --details-foreground: @color;
+        --details-border: fade(@color, 60);
     }
 })
-
-
-summary + *
-{
-    margin-top: 1em;
-}

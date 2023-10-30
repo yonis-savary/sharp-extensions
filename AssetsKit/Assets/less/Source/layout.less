@@ -6,6 +6,12 @@
     gap: @default-flex-gap;
 }
 
+.flex-row-reverse
+{
+    .flex-row;
+    flex-direction: row-reverse;
+}
+
 .flex-column
 {
     display: flex;
@@ -13,9 +19,20 @@
     gap: @default-flex-gap;
 }
 
+.flex-column-reverse
+{
+    .flex-column;
+    flex-direction: column-reverse;
+}
+
 .flex-wrap
 {
     flex-wrap: wrap;
+}
+
+.flex-wrap-reverse
+{
+    flex-wrap: wrap-reverse;
 }
 
 .flex-no-wrap
@@ -26,6 +43,7 @@
 @alignments : {
     justify: justify-content;
     align: align-items;
+    align-content: align-content;
 };
 
 @modes : {
@@ -47,7 +65,7 @@ each(@alignments, .(@alignProps, @alignName){
 })
 
 
-@spacing :  @standart-spacing * .33;
+@spacing :  @standard-spacing * .33;
 
 each(range(0,10), .(@size){
 
@@ -80,9 +98,23 @@ each(range(0,10), .(@size){
 })
 
 each(range(0,100, 10), .(@size){
+    .vh-@{size} {
+        min-height: (@size*1vh) !important ;
+        max-height: (@size*1vh) !important ;
+        height: (@size*1vh) !important ;
+    }
+    .vw-@{size} {
+        min-width: (@size*1vw) !important ;
+        max-width: (@size*1vw) !important ;
+        width: (@size*1vw) !important ;
+    }
+
     .max-vh-@{size} { max-height: (@size*1vh) !important ; }
-    .max-vw-@{size} { max-height: (@size*1vh) !important ; }
+    .max-vw-@{size} { max-width: (@size*1vw) !important ; }
+    .min-vh-@{size} { max-height: (@size*1vh) !important ; }
+    .min-vw-@{size} { max-width: (@size*1vw) !important ; }
     .width-@{size}  { width: @size*1%; }
+    .height-@{size}  { height: @size*1%; }
 })
 
 .centered
@@ -154,8 +186,6 @@ each(@colors, {
 {
     overflow-y: auto;
     padding: .25em;
-
-    .scroll-shadow;
 }
 
 .scrollable.horizontal
@@ -216,8 +246,6 @@ each(range(0,10), {
 
 @media screen and (max-width: @mobile-screen-width)
 {
-    // .flex-row { flex-wrap: wrap; }
-
     .centered
     {
         min-width: 0 !important;

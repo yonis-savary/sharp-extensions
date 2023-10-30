@@ -6,6 +6,6 @@ use Sharp\Core\Utils;
 if (!Utils::isProduction())
 {
     addRoutes(
-        Route::view("/assets-kit-demo", "assetskit/demo")
+        Route::view("/assets-kit-demo", "assets-kit-demos-home")
     );
 }

@@ -3,6 +3,9 @@
 
 .chip
 {
+    --chip-background: #EEE;
+    --chip-foreground: #7f7f7f;
+
     border-radius: 100%;
     border: none;
     display: flex;
@@ -11,11 +14,14 @@
     width: fit-content;
     height: fit-content;
     padding: .3em;
+
+    background-color: var(--chip-background);
+    color: var(--chip-foreground);
 }
 
 each(@colors, .(@color, @name){
     .chip.@{name} {
-        background-color: rgba(@color, .4);
-        color: lighten(@color, 0);
+        --chip-background: rgba(@color, .4);
+        --chip-foreground: lighten(@color, 0);
     }
 })
