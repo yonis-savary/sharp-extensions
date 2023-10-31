@@ -57,7 +57,8 @@ class LazySearch
             'size_limit' => 30,
             'export_middlewares' => [],
             'export_chunk_size' => 20_000,
-            'cached' => false
+            'cached' => false,
+            'cache_time_to_live' => 3600
         ];
     }
 
@@ -150,7 +151,7 @@ class LazySearch
         $infos["fields"] = $fields;
 
         if ($this->configuration['cached'])
-            $this->getCache()->set($this->queryCacheKey($query), $infos);
+            $this->getCache()->set($this->queryCacheKey($query), $infos, $this->configuration["cache_time_to_live"]);
 
         return $infos;
     }
