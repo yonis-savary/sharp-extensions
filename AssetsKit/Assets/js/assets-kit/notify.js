@@ -2,7 +2,7 @@
 declareNewBridge("notify", {
 
     // Used to calculate a display time value based on word quantity
-    NOTIFY_AGV_WORD_PER_SECOND: 10,
+    NOTIFY_AGV_WORD_PER_SECOND: 7,
 
 
     NOTIFIER_ANIMATION: [
@@ -57,13 +57,13 @@ declareNewBridge("notify", {
         element.innerHTML = `<section class="chip ${current.tone}">${svg(current.icon)}</section>` + `
         <section class="flex-column gap-1">
             <b>${current.title}</b>
-            <p>${current.description}</p>
+            <p>${current.description.replaceAll("\n", "<br>")}</p>
         </section>
         `
         document.body.appendChild(element);
         animateAsync(element, this.NOTIFIER_ANIMATION, this.NOTIFIER_ANIMATION_OPTION);
 
-        this.timeout = setTimeout(this.hideNotifyObject.bind(this), 3000 + current.extraTime);
+        this.timeout = setTimeout(this.hideNotifyObject.bind(this), 4000 + current.extraTime);
     },
 
 
