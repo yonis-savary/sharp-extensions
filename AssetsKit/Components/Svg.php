@@ -8,9 +8,8 @@ use Sharp\Classes\Core\Configurable;
 use Sharp\Classes\Http\Request;
 use Sharp\Classes\Http\Response;
 use Sharp\Classes\Web\Route;
-use Sharp\Classes\Core\Logger;
 use Sharp\Classes\Env\Cache;
-use Sharp\Core\Autoloader;
+use Sharp\Classes\Web\Router;
 use Sharp\Core\Utils;
 
 /**
@@ -75,7 +74,9 @@ class Svg
         $url = $this->configuration["url"];
         $route = Route::get($url, [$this, "serve"], $this->configuration["middlewares"]);
 
-        if (!$route->match($req))
+        $router = new Router();
+
+        if (!$router->match($route, $req))
             return;
 
         $response = $route($req);
