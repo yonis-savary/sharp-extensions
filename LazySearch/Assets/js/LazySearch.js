@@ -95,7 +95,6 @@ class LazySearch
         <section class="lazySearchGrid" style="display: grid; gap: .5em; grid-template-area:
             'none', 'pagination'
             'filters', 'content';
-            grid-template-columns: minmax(auto, 0px) auto;
         ">
             <section style="grid-area: 1/1/2/2" class="flex-column align-center justify-center title-section">
                 <h1 class="h4 tableTitle"></h1>
