@@ -47,16 +47,15 @@
     background: var(--highlight);
     font-weight: 500;
     font-size: 1em;
-    border: solid 1px var(--discreet) !important;
     color: var(--fg);
 }
 
 .lazySearch .pagination button.active
 {
     border-width: 3px !important;
-    border-color: var(--fg) !important;
+    border-color: var(--primary) !important;
     color: var(--bg);
-    background: var(--fg);
+    background: var(--primary);
 }
 
 .lazySearch thead
