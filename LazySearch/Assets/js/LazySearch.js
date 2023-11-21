@@ -123,7 +123,7 @@ class LazySearch
                 </section>
             </section>
             <section style="grid-area: 2/2/3/3" class="content-wrapper">
-                <table class="content table"></table>
+                <table class="content table striped width-100"></table>
             </section>
         </section>
         `;

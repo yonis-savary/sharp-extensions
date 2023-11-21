@@ -15,7 +15,7 @@ input, textarea, select
     padding: .4em .5em;
     background-color: var(--input-background);
     color: var(--fg);
-    border: solid var(--stealth) 1px;
+    border: solid var(--highlight) 1px;
     transition: all 50ms ease;
     border-radius: .4em;
 }
@@ -30,6 +30,11 @@ input:focus, textarea:focus, select:focus
     outline: 3px solid lighten(@focus-outline-color, 5)
 }
 
+
+input::placeholder
+{
+    opacity: .6;
+}
 
 
 textarea
