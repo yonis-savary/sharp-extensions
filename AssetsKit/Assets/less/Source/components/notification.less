@@ -26,11 +26,14 @@ each(@colors, .(@color, @name) {
     }
 })
 
-.notification .number
+.notification[count]::after
 {
+    content: attr(count);
+
     position: absolute;
-    right: -1.25em;
-    top: -.75em;
+    right: 0em;
+    top: 0em;
+    transform: translate(50%, -25%);
     font-size: .8em;
     font-weight: bold;
 
@@ -45,17 +48,4 @@ each(@colors, .(@color, @name) {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-@keyframes notification-shake {
-    0%     { transform: rotate(00deg); }
-    5%     { transform: rotate(20deg); }
-    10%    { transform: rotate(-20deg); }
-    15%    { transform: rotate(00deg); }
-    100%   { transform: rotate(00deg); }
-}
-
-.notification .number
-{
-    animation: notification-shake 5s infinite 1s;
 }
