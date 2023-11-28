@@ -25,6 +25,8 @@ const ASSETS_KIT_BUNDLE_SCRIPTS = [
     "notify.js",
     "autocomplete.js",
 
+    "summary.js",
+
     "nav.js"
 ];
 
