@@ -72,7 +72,7 @@ declareNewBridge("summary", {
             let index = link.getAttribute("index");
             let title = this.index[index].element;
 
-            title.scrollIntoView({ behavior: "smooth", block: "center", inline: "center" })
+            title.scrollIntoView({ behavior: "smooth", block: "start", inline: "start" })
             this.refreshSummaryPosition();
         }
 
