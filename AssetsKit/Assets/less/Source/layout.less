@@ -119,9 +119,7 @@ each(range(0,100, 10), .(@size){
 
 .centered
 {
-    min-width: 0px;
-    width: fit-content;
-    max-width: 1000px;
+    width: 1000px;
     margin: 0 auto;
 }
 
@@ -243,10 +241,17 @@ each(range(0,10), {
 
 
 
-
+@media screen and (max-width: 1200px)
+{
+    .centered
+    {
+        width: 100%;
+    }
+}
 
 @media screen and (max-width: @mobile-screen-width)
 {
+
     body > *
     {
         max-width: 100%;
