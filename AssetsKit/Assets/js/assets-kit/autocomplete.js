@@ -12,6 +12,8 @@ declareNewBridge("autocomplete", {
 
     addAutocompleteListener: function(target, provider, onselect=null)
     {
+        target.setAttribute("autocomplete", "off");
+
         if (!this.autocompleteBox)
         {
             this.autocompleteBox = document.createElement("section");
