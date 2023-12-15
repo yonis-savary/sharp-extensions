@@ -477,7 +477,7 @@ class LazySearch
         if (data.toString().match(/^(http|www)/))
             return html`<a href="${data}">${data}</a>`
 
-        return html`${data}`;
+        return (html`${data.toString()}`).replaceAll("\n", "<br>");
     }
 
 
