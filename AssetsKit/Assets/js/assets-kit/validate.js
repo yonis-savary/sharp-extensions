@@ -133,8 +133,16 @@ declareNewBridge("validate", {
                 return this;
             },
 
-            match : function(regex){
-                return this.respect(x => (x + "").match(regex)?.length ?? false)
+            match : function(regex, errorMessage){
+
+                let originalValid= this.valid;
+
+                this.valid &= ((this.value + "").match(regex)?.length ?? 0) > 0;
+
+                if (this.valid != originalValid)
+                    this.errorLabel = errorMessage ?? this.errorLabel;
+
+                return this;
             },
 
             respect : async function(callback, errorMessage=null){
@@ -181,6 +189,8 @@ declareNewBridge("validate", {
         {
             let input = inputs[key] = await inputs[key];
             valid &= input.valid;
+
+            input.removeError();
 
             if (input.valid == false)
                 causes.push(input);
