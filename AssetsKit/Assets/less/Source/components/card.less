@@ -14,11 +14,24 @@
     gap: 0;
 }
 
+.card.horizontal
+{
+    flex-direction: row;
+}
+
 .card > *
 {
     padding: @default-container-padding;
-    border-top: 1px solid var(--stealth);
     border-radius: 0;
+}
+
+.card:not(.horizontal) > *
+{
+    border-top: 1px solid var(--stealth);
+}
+.card.horizontal > *
+{
+    border-left: 1px solid var(--stealth);
 }
 
 .card > img
@@ -29,8 +42,12 @@
 }
 
 
-.card > *:first-of-type
+.card:not(.horizontal) > *:first-of-type
 {
     border-top-width: 0px;
 }
 
+.card.horizontal > *:first-of-type
+{
+    border-left-width: 0px;
+}
