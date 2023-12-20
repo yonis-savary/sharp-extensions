@@ -175,7 +175,7 @@ declareNewBridge("validate", {
 
     validate: async function(inputs, onSuccess, onError=null){
 
-        onError ??= function(inputs, message){
+        onError ??= function(_, message){
             console.error(message);
             if (this.VALIDATE_DISPLAY_ERROR)
                 alert(message);
@@ -211,5 +211,10 @@ declareNewBridge("validate", {
     }
 }, form => {return {
     read: form.read,
-    validate: form.validate
+    validate: form.validate,
+    validateAsync: function(inputs) {
+        return new Promise((resolve, reject) => {
+            form.validate(inputs, resolve, reject)
+        })
+    }
 }});

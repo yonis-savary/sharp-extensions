@@ -332,7 +332,24 @@ AssetsKitHighstate.highlightAll("#myExampleTable td[status]", "PaymentStatus")
 ## validate.js
 
 ```js
-if (validate({
+async function myCreationFunction()
+{
+    let form = await validateAsync({
+        full_name: read(myTextInput).error("This input is needed").notNull(),
+        some_flag: read(myCheckbox),
+        age: read(myNumberInput).error("This input is needed").notNull().error("Must be between 0 and 150").between(0, 150),
+        username: read(myUserName).notNull().match(/^[a-z0-9\-]{5,}$/).respect(usernameDontExists)
+    })
+
+    let {
+        full_name,
+        some_flag,
+        age,
+        username
+    } = form;
+}
+
+validate({
     full_name: read(myTextInput).error("This input is needed").notNull(),
     some_flag: read(myCheckbox),
     age: read(myNumberInput).error("This input is needed").notNull().error("Must be between 0 and 150").between(0, 150),
@@ -347,7 +364,7 @@ if (validate({
         username
     } = form;
 
-});
+};
 ```
 
 ## notify.js
