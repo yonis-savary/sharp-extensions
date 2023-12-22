@@ -13,6 +13,9 @@ class Build extends AbstractBuildTask
 
         $this->log("Building stylesheet...\n");
         $styleDir = Utils::joinPath($assetsKitDir, '/Assets/less');
-        $this->shellInDirectory('lessc main.less ../css/assets-kit/style.css --verbose', $styleDir, true);
+
+        $command = str_starts_with(PHP_OS, "WIN") ? "lessc.cmd" : "lessc";
+
+        $this->shellInDirectory("$command main.less ../css/assets-kit/style.css --verbose", $styleDir, true);
     }
 }
