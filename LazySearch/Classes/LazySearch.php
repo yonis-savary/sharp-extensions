@@ -306,11 +306,15 @@ class LazySearch
         }
 
         $queryParams = &$this->queryParams;
-        if (!count($queryParams['sorts']))
-            $queryParams['sorts'] = $backendOptions->defaultSorts;
 
-        if (!count($queryParams['filters']))
-            $queryParams['filters'] = $backendOptions->defaultFilters;
+        if ($this->queryParams["flags"]["canUseDefaults"] ?? true)
+        {
+            if (!count($queryParams['sorts']))
+                $queryParams['sorts'] = $backendOptions->defaultSorts;
+
+            if (!count($queryParams['filters']))
+                $queryParams['filters'] = $backendOptions->defaultFilters;
+        }
 
         $queryInfos = $this->parseQueryFields($sqlQuery, $backendOptions);
         $querySampler = $this->getQuerySampler($sqlQuery, $backendOptions, $queryInfos);
@@ -333,7 +337,7 @@ class LazySearch
         $lazySearch = $renderer->render('LazySearch', ['url' => $this->request->getPath()]);
 
         if ($template = $this->configuration['template'] ?? false)
-            return Response::render($template, ['lazySearch' => $lazySearch, 'lazySearchOptions' => (array)$backendOptions]);
+            return Response::view($template, ['lazySearch' => $lazySearch, 'lazySearchOptions' => (array)$backendOptions]);
 
         return Response::html($lazySearch);
     }
