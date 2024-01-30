@@ -139,6 +139,7 @@ class LazySearch
             this.parameters.search = this.dom.search.value || null;
             this.parameters.page = 0;
             this.parameters.flags.fetchQueryResultsCount = true;
+            this.parameters.flags.fetchQueryPossibilities = true;
             this.refresh()
         })
 
