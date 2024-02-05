@@ -271,7 +271,7 @@ class LazySearch
             ->join(",\n");
 
 
-        $counterQuery = "SELECT $fields FROM ($wrappedQuery) as _";
+        $counterQuery = "SELECT $fields FROM ($wrappedQuery) as _lazySearchSubQuery";
         $counterResults = $db->query($counterQuery)[0];
 
         /** @var LazySearchField $field */
