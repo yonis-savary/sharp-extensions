@@ -77,6 +77,13 @@
     white-space: nowrap;
     max-width: 35ch;
     text-overflow: ellipsis;
+    padding: 0.5em;
+}
+
+.lazySearch th
+{
+    padding-top: 1em;
+    padding-bottom: 1em;
 }
 
 .lazySearchGrid > *

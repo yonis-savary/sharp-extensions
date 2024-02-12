@@ -267,16 +267,16 @@ class LazySearch
             ${displayable.map(field => `
             <th>
                 <section
-                    class="flex-row gap-2 sort-button align-center ${this.parameters.sorts[0] == field ? "fg-blue": ""}"
+                    class="svg-text gap-2 sort-button ${this.parameters.sorts[0] == field ? "fg-blue": ""}"
                 >
+                    <b>${field}</b>
                     ${this.parameters.sorts[0] !== field ?
-                        `<span class="svg-text sort-asc" field="${field}">${svg('filter', 18)}</span>`:
+                        `<span class="svg-text sort-asc" field="${field}">${svg('filter', 16)}</span>`:
                         this.parameters.sorts[1] === "ASC" ?
-                            `<span class="svg-text sort-desc" field="${field}">${svg('sort-alpha-down', 18)}</span>`:
-                            `<span class="svg-text sort-none" field="${field}">${svg('sort-alpha-down-alt', 18)}</span>`
+                            `<span class="svg-text sort-desc" field="${field}">${svg('caret-down-fill', 16)}</span>`:
+                            `<span class="svg-text sort-none" field="${field}">${svg('caret-up-fill', 16)}</span>`
 
                     }
-                    <b>${field}<b>
                 </section>
             </th>
             `).join("")}
