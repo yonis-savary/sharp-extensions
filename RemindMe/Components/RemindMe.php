@@ -2,7 +2,6 @@
 
 namespace SharpExtensions\RemindMe\Components;
 
-use RuntimeException;
 use Sharp\Classes\Core\Component;
 use Sharp\Classes\Core\Configurable;
 use Sharp\Classes\Env\Cache;
@@ -32,10 +31,6 @@ class RemindMe
         $configuration ??= Configuration::getInstance();
 
         $this->loadConfiguration($configuration);
-
-        $authConfig = $configuration->get("authentication");
-        if (!$authConfig["enabled"])
-            throw new RuntimeException("Cannot use RemindMe as Authentication is not configured !");
     }
 
     public function remindLoggedUser(): bool
