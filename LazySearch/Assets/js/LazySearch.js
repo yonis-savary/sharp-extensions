@@ -71,7 +71,8 @@ class LazySearch
     parameters = {
         flags: {
             fetchQueryResultsCount: true,
-            fetchQueryPossibilities: true
+            fetchQueryPossibilities: true,
+            canUseDefaults: true
         },
         mode: "data",
         page: 0,
@@ -92,38 +93,30 @@ class LazySearch
         this.url = root.getAttribute("url")
 
         this.root.innerHTML = `
-        <section class="lazySearchGrid" style="display: grid; gap: .5em; grid-template-area:
-            'none', 'pagination'
-            'filters', 'content';
-        ">
-            <section style="grid-area: 1/1/2/2" class="flex-column align-center justify-center title-section">
-                <h1 class="h4 tableTitle"></h1>
-            </section>
-            <section style="grid-area: 2/1/3/2" class="flex-column aside-menu">
-                <section class="card">
-                    <section class="flex-column">
-                        <section class="flex-row align-center gap-1">
-                            <b class="svg-text">${svg("funnel")}${LOC.dict.filtersTitle}</b>
-                            <button class="button blue icon secondary resetButton fill-left">${svg("arrow-repeat")}</button>
-                            <button class="button violet icon secondary exportButton">${svg("file-earmark-arrow-down")}</button>
-                        </section>
-                        <section class="flex-column hide-empty gap-2 filters"></section>
-                    </section>
-                    <section class="hide-empty extraAside"></section>
-                </section>
-            </section>
-            <section
-                style="grid-area: 1/2/2/3; width: 100%"
-                class="flex-column align-end gap-1 pagination-section"
-            >
+        <h1 class="h4 tableTitle"></h1>
+        <section class="lazySearchGrid flex-column">
+            <section class="flex-column align-end gap-1 pagination-section">
                 <section class="flex-row width-100 align-center">
                     <input type="search" placeholder="${LOC.dict.searchPlaceholder}" name="${this.url}" class="search">
-                    <small class="resultCount"></small>
+                    <section class="flex-row align-center gap-1">
+                        <button class="button blue icon secondary" bottom menu="${this.id}-filterMenu" title="${LOC.dict.filtersTitle}">${svg("funnel")}</button>
+                        <button class="button blue icon secondary resetButton fill-left">${svg("arrow-repeat")}</button>
+                        <button class="button violet icon secondary exportButton">${svg("file-earmark-arrow-down")}</button>
+                    </section>
                     <section class="fill-left flex-row gap-1 align-end pagination"></section>
                 </section>
             </section>
             <section style="grid-area: 2/2/3/3" class="content-wrapper">
                 <table class="content table striped width-100"></table>
+            </section>
+        </section>
+        <section class="menu filterMenu" id="${this.id}-filterMenu" >
+            <section class="flex-column">
+                <b>${LOC.dict.filtersTitle} (<span class="filtersNumber"></span>)</b>
+                <hr>
+                <section class="flex-row scrollable horizontal filters"></section>
+                <hr>
+                <section class="hide-empty extraAside"></section>
             </section>
         </section>
         `;
@@ -136,7 +129,8 @@ class LazySearch
             "resetButton",
             "exportButton",
             "extraAside",
-            "tableTitle"
+            "tableTitle",
+            "filtersNumber"
         ].forEach(
             classname => this.dom[classname] = this.root.querySelector("."+classname)
         );
@@ -145,6 +139,7 @@ class LazySearch
             this.parameters.search = this.dom.search.value || null;
             this.parameters.page = 0;
             this.parameters.flags.fetchQueryResultsCount = true;
+            this.parameters.flags.fetchQueryPossibilities = true;
             this.refresh()
         })
 
@@ -177,6 +172,7 @@ class LazySearch
         this.parameters.sorts =  [];
         this.parameters.flags.fetchQueryPossibilities = true;
         this.parameters.flags.fetchQueryResultsCount = true;
+        this.parameters.flags.canUseDefaults = true;
         this.refresh();
     }
 
@@ -222,8 +218,6 @@ class LazySearch
         if (Array.isArray(this.parameters.extras))
             this.parameters.extras = {};
 
-        this.dom.tableTitle.innerText = options.title
-
         if (this.parameters.flags.fetchQueryPossibilities)
             this.meta = meta;
         else
@@ -234,9 +228,11 @@ class LazySearch
         else
             resultsCount = this.resultsCount;
 
+        this.dom.tableTitle.innerText = options.title + ` (${this.resultsCount})`
+
         this.parameters.flags.fetchQueryPossibilities = false;
         this.parameters.flags.fetchQueryResultsCount = false;
-
+        this.parameters.flags.canUseDefaults = false;
 
         // PHP Converts {} to [], we fix this effect with this line
         if (Array.isArray(this.parameters.filters))
@@ -248,27 +244,9 @@ class LazySearch
 
         this.dispatchEvent("LazySearchRefreshed");
 
-    }
-
-
-    async applyDefaults(options)
-    {
-        let {defaultSorts, defaultFilters} = options;
-
-        if ((!defaultSorts) && (!defaultFilters))
-            return false;
-
-        if (typeof defaultSorts === "object" && Object.keys(defaultSorts).length)
-            this.parameters.sorts = defaultSorts;
-
-        if (typeof defaultFilters === "object" && Object.keys(defaultFilters).length)
-            this.parameters.filters = defaultFilters;
-
-        let filters = this.parameters.filters;
-        Object.keys(this.parameters.filters).forEach(field => {
-            if (!Array.isArray(filters[field]))
-                filters[field] = [filters[field]];
-        });
+        this.dom.filtersNumber.innerText =
+            Object.keys(this.parameters.filters).length +
+            this.parameters.sorts.length;
     }
 
     async buildTable(data, meta, options)
@@ -282,23 +260,23 @@ class LazySearch
         });
         let isLink = field => Object.keys(links).includes(field);
 
-        const safeAttrVal = value => (value ?? "").toString().replaceAll("\"", "\\\"").replaceAll(">", "&gt;").replaceAll("<", "&lt;");
+        const safeAttrVal = value => (value ?? "").toString().replaceAll("\"", "&quot;").replaceAll(">", "&gt;").replaceAll("<", "&lt;");
 
         this.dom.content.innerHTML = `
         <thead>
             ${displayable.map(field => `
             <th>
                 <section
-                    class="flex-row gap-2 sort-button align-center ${this.parameters.sorts[0] == field ? "fg-blue": ""}"
+                    class="svg-text gap-2 sort-button ${this.parameters.sorts[0] == field ? "fg-blue": ""}"
                 >
+                    <b>${field}</b>
                     ${this.parameters.sorts[0] !== field ?
-                        `<span class="svg-text sort-asc" field="${field}">${svg('filter', 18)}</span>`:
+                        `<span class="svg-text sort-asc" field="${field}">${svg('filter', 16)}</span>`:
                         this.parameters.sorts[1] === "ASC" ?
-                            `<span class="svg-text sort-desc" field="${field}">${svg('sort-alpha-down', 18)}</span>`:
-                            `<span class="svg-text sort-none" field="${field}">${svg('sort-alpha-down-alt', 18)}</span>`
+                            `<span class="svg-text sort-desc" field="${field}">${svg('caret-down-fill', 16)}</span>`:
+                            `<span class="svg-text sort-none" field="${field}">${svg('caret-up-fill', 16)}</span>`
 
                     }
-                    <b>${field}<b>
                 </section>
             </th>
             `).join("")}
@@ -351,8 +329,6 @@ class LazySearch
         let minRange = Math.min(...range);
         let maxRange = Math.max(...range);
 
-        this.root.querySelector(".resultCount").innerText =`${resultsCount} ${LOC.dict.resultsName}`
-
         if (maxPage == 0)
             return this.dom.pagination.innerHTML = "";
 
@@ -391,38 +367,62 @@ class LazySearch
                 .filter(f => fieldIsNotIgnored(f.alias))
                 .filter(x => (x.possibilities ?? []).concat(this.parameters.filters[x.alias] ?? []).length)
                 .map(field => `
-                <details class="flex-column gap-0" ${(this.parameters.filters[field.alias] ?? []).length ? "open": ""}>
-                    <summary>
+                <section class="flex-column gap-2" ${(this.parameters.filters[field.alias] ?? []).length ? "open": ""}>
+                    <section class="flex-column gap-1">
                         <b>${field.alias}</b>
-                    </summary>
-                    <label class="flex-row align-center gap-1">
-                        <input
-                            type="checkbox"
-                            ${field.possibilities.length === (this.parameters.filters[field.alias] ?? []).length ? "": "checked"}
-                            field="${field.alias}" class="filter-all-checkbox"
-                        >
-                        ${LOC.dict.selectAllLabel}
-                    </label>
-                    <section class="padding-left-2 flex-column gap-0 scrollable max-vh-20">
-                        ${field.possibilities
-                            .concat(this.parameters.filters[field.alias] ?? [])
-                            .uniques()
-                            .sort()
-                            .map((x,i) => `
-                        <label class="flex-row gap-1 filter-label">
+                        <hr>
+                    </section>
+                    <section class="flex-column gap-0 filter-section">
+                        <label class="flex-row align-center gap-1">
                             <input
                                 type="checkbox"
-                                field="${field.alias}"
-                                class="filter-checkbox"
-                                ${(this.parameters.filters[field.alias]??[]).includes(x) ? '': 'checked'}
-                                value="${x}"
+                                field="${field.alias}" class="filter-all-checkbox"
                             >
-                            ${this.formatData(x)}
+                            ${LOC.dict.selectAllLabel}
                         </label>
-                        `).join("")}
+                        <section class="padding-left-2 flex-column gap-0 scrollable max-vh-40">
+                            <section>
+                                ${field.possibilities
+                                    .concat(this.parameters.filters[field.alias] ?? [])
+                                    .uniques()
+                                    .sort()
+                                    .map((x,i) => `
+                                <label class="flex-row gap-1 filter-label">
+                                    <input
+                                        type="checkbox"
+                                        field="${field.alias}"
+                                        class="filter-checkbox"
+                                        ${(this.parameters.filters[field.alias]??[]).includes(x) ? '': 'checked'}
+                                        value="${x}"
+                                    >
+                                    <span class="one-liner" style="max-width: 30ch">
+                                        ${this.formatData(x, false)}
+                                    </span>
+                                </label>
+                                `).join("")}
+                            </section>
+                        </section>
                     </section>
-                </details>
+                </section>
             `).join("")
+
+        this.dom.filters.querySelectorAll(".filter-section").forEach(section => {
+            let allCheckboxAreChecked = true;
+
+            let checkboxes = section.querySelectorAll(".filter-checkbox");
+
+            for (let checkbox of checkboxes)
+            {
+                if (checkbox.checked)
+                    continue;
+
+                allCheckboxAreChecked = false;
+                break;
+            }
+
+            section.querySelector(".filter-all-checkbox").checked = allCheckboxAreChecked
+
+        })
 
         this.dom.filters.querySelectorAll(".filter-checkbox").forEach(checkbox => {
             let value = checkbox.getAttribute("value");
@@ -444,6 +444,7 @@ class LazySearch
                         .concat(this.parameters.filters[field] ?? []);
 
                 this.parameters.flags.fetchQueryResultsCount = true;
+                this.parameters.flags.fetchQueryPossibilities = true;
 
                 this.refresh()
             });
@@ -466,7 +467,7 @@ class LazySearch
         this.refresh();
     }
 
-    formatData(data)
+    formatData(data, supportNewLines=true)
     {
         if (data === null || typeof data == "undefined")
             return "";
@@ -477,7 +478,10 @@ class LazySearch
         if (data.toString().match(/^(http|www)/))
             return html`<a href="${data}">${data}</a>`
 
-        return (html`${data.toString()}`).replaceAll("\n", "<br>");
+
+        let toReturn = html`${data.toString()}`;
+
+        return supportNewLines ? toReturn.replaceAll("\n", "<br>") : toReturn;
     }
 
 
@@ -505,6 +509,8 @@ async function refreshLazySearch()
     Object.values(lazySearchInstances).forEach(element => {
         element.refresh(true);
     });
+
+    addMenuListeners()
 }
 
 document.addEventListener("DOMContentLoaded", refreshLazySearch);

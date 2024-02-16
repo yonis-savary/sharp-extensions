@@ -125,7 +125,8 @@ declareNewBridge("overlay", {
             el.addEventListener("click", ()=>this.open(el.getAttribute("overlay")));
         });
         document.querySelectorAll(".overlay").forEach( el => {
-            el.style.display = "none";
+            if (!this.stack.includes(el))
+                el.style.display = "none";
         })
         document.querySelectorAll(".overlay:not([locked])").forEach( el => {
             el.addEventListener("click", (event)=>{
