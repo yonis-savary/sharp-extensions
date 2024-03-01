@@ -33,6 +33,12 @@ class RemindMe
         $this->loadConfiguration($configuration);
     }
 
+    public function getClientIP(): string
+    {
+        $ip = $_SERVER["REMOTE_ADDR"];
+        return preg_replace("/[^0-9]/", "_", $ip);
+    }
+
     public function remindLoggedUser(): bool
     {
         $authentication = Authentication::getInstance();
@@ -45,7 +51,7 @@ class RemindMe
 
         $userId = $authentication->getUser()["data"][$primaryKey];
 
-        $ip = $_SERVER["REMOTE_ADDR"];
+        $ip = $this->getClientIP();
         $token = bin2hex(random_bytes(64));
 
         $cache = $this->getCache();
@@ -63,7 +69,7 @@ class RemindMe
 
     public function forgetLoggedUser(): void
     {
-        $ip = $_SERVER["REMOTE_ADDR"];
+        $ip = $this->getClientIP();
 
         $cache = $this->getCache();
         $cache->delete($ip);
@@ -72,7 +78,7 @@ class RemindMe
     public function tryToRemember(): bool
     {
         $userSideToken = $_COOKIE[$this->configuration["cookie-name"]] ?? false;
-        $userIP = $_SERVER["REMOTE_ADDR"];
+        $userIP = $this->getClientIP();
 
         $cache = $this->getCache();
 
