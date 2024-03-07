@@ -108,6 +108,14 @@ let scaledValue = Math.map(50, 0, 100, 0, 180)
 let scaledValue = Math.map(50, 0, 100, -180, 0)
 ```
 
+### Mobile - Screen Events
+
+Properties :
+- Always on mobile, and on desktop when `window.innerWith < 1000px`, `document.body` got the `is-mobile` class
+- On desktop, when adding/removing the `is-mobile` class, a `mobileModeSwitched` event is triggered on `window` (the event detail got the boolean `mobile` key)
+- On mobile, `document.body` has the `landscape-mode` or `portrait-mode` class depending on the screen rotation (this class is dynamic and can change when the phone is rotated)
+- When rotating your phone, `switchedToLandscapeMode` and `switchedToPortraitMode` events are automatically triggered on the `window` object
+
 ## date.js
 
 ```js

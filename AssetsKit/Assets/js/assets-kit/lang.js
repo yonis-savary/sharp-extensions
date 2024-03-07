@@ -408,3 +408,73 @@ declareNewBridge("lang", {
         return (deltaTo * xScale) + c;
     };
 });
+
+
+document.addEventListener("DOMContentLoaded", _ => {
+    if (SharpAssetsKit.lang.isMobile())
+    {
+        document.body.classList.add("is-mobile");
+    }
+});
+
+
+;(_ => {
+    if (!SharpAssetsKit.lang.isMobile())
+        return;
+
+    const getOrientation = _ => window.innerWidth > window.innerHeight ? "horizontal": "vertical";
+    let lastOrientation = null;
+
+    document.body.classList.add( getOrientation() == "horizontal" ? "landscape-mode": "portrait-mode");
+
+    window.addEventListener("resize", _ => {
+        let currentOrientation = getOrientation();
+
+        if (currentOrientation === lastOrientation)
+            return;
+
+        switch (currentOrientation)
+        {
+            case "horizontal":
+                document.body.classList.replace("protrait-mode", "landscape-mode");
+                window.dispatchEvent(new Event("switchedToLandscapeMode"));
+                break;
+
+            case "vertical":
+                document.body.classList.replace("landscape-mode", "protrait-mode");
+                window.dispatchEvent(new Event("switchedToPortraitMode"));
+                break;
+        }
+
+        lastOrientation = currentOrientation;
+    });
+})();
+
+
+;(_ => {
+    if (SharpAssetsKit.lang.isMobile())
+        return;
+
+    const MOBILE_WIDTH_LIMIT = 1000;
+    let lastMobileModeOn = null;
+
+    window.addEventListener("resize", _ => {
+        let currentMobileMode = window.innerWidth < MOBILE_WIDTH_LIMIT;
+
+        if (lastMobileModeOn === currentMobileMode)
+            return;
+
+        if (currentMobileMode)
+            document.body.classList.add("is-mobile");
+        else
+            document.body.classList.remove("is-mobile");
+
+        window.dispatchEvent(new CustomEvent("mobileModeSwitched", {
+            detail: {mobile: currentMobileMode}
+        }))
+
+        lastMobileModeOn = currentMobileMode
+    });
+})();
+
+window.dispatchEvent(new Event("resize"));

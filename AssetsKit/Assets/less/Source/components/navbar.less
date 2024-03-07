@@ -21,6 +21,7 @@ Navbar usage
 
     position: sticky;
     display: flex;
+    flex-wrap: wrap;
     gap: var(--spacing);
     top: 0;
     padding: var(--spacing);
@@ -189,9 +190,10 @@ each(range(0,11), .(@value){
 }
 
 
-@media screen and (max-width: @mobile-screen-width)
+body.is-mobile
 {
     @nav-mobile-icon-size: 3em;
+    padding-top: @nav-mobile-icon-size;
 
     .navbar
     {
@@ -206,6 +208,7 @@ each(range(0,11), .(@value){
         max-height: 100vh !important;
         margin: 0 !important;
         transition: all 200ms ease;
+        flex-wrap: wrap;
         z-index: 100;
     }
 
@@ -242,8 +245,4 @@ each(range(0,11), .(@value){
         border-radius: 0 1em 1em 0;
     }
 
-    body
-    {
-        padding-top: @nav-mobile-icon-size;
-    }
 }
