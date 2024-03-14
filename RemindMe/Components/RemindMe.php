@@ -17,7 +17,8 @@ class RemindMe
     {
         return [
             "cookie-name" => "sharp_extensions_remind_me",
-            "cookie-duration" => Cache::DAY * 14
+            "cookie-duration" => Cache::DAY * 14,
+            "same-ip-required" => false
         ];
     }
 
@@ -39,7 +40,7 @@ class RemindMe
         return preg_replace("/[^0-9]/", "_", $ip);
     }
 
-    public function remindLoggedUser(): bool
+    public function rememberLoggedUser(): bool
     {
         $authentication = Authentication::getInstance();
 
@@ -55,7 +56,7 @@ class RemindMe
         $token = bin2hex(random_bytes(64));
 
         $cache = $this->getCache();
-        $cache->set($ip, ["token" => $token, "user-id" => $userId]);
+        $cache->set($token, ["token" => $token, "ip" => $ip, "user-id" => $userId]);
 
         setcookie(
             $this->configuration["cookie-name"],
@@ -70,9 +71,17 @@ class RemindMe
     public function forgetLoggedUser(): void
     {
         $ip = $this->getClientIP();
-
         $cache = $this->getCache();
-        $cache->delete($ip);
+        $keys = $cache->getKeys();
+
+        foreach ($keys as $key)
+        {
+            if (!$data = $cache->try($key))
+                continue;
+
+            if ($data["ip"] === $ip)
+                $cache->delete($key);
+        }
     }
 
     public function tryToRemember(): bool
@@ -82,10 +91,10 @@ class RemindMe
 
         $cache = $this->getCache();
 
-        if (!$data = $cache->try($userIP))
+        if (!$data = $cache->try($userSideToken))
             return false;
 
-        if ($data["token"] !== $userSideToken)
+        if ($this->configuration["same-ip-required"] && ($data["ip"] != $userIP))
             return false;
 
         $authentication = Authentication::getInstance();

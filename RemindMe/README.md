@@ -17,7 +17,7 @@ Then when the user is logged, you can use the `RemindMe` class to remember its i
 
 ```php
 if ($request->params("remember-me") === "on")
-    RemindMe::getInstance()->remindLoggedUser();
+    RemindMe::getInstance()->rememberLoggedUser();
 ```
 
 **Note: the cookie is set to match an IP, you cannot use the cookie to connect from another IP**
@@ -38,6 +38,9 @@ You can edit the cookie name and its duration (in seconds)
 ```json
 {
     "cookie-name" => "sharp_extensions_remind_me",
-    "cookie-duration" => 3600*31
+    "cookie-duration" => 3600*31,
+    "same-ip-required" => false
 }
 ```
+
+The `same-ip-required` key means that for the cookie to be valid it must be used with the same IP used for registration
