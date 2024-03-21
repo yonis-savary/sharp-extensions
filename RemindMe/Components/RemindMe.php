@@ -56,7 +56,11 @@ class RemindMe
         $token = bin2hex(random_bytes(64));
 
         $cache = $this->getCache();
-        $cache->set($token, ["token" => $token, "ip" => $ip, "user-id" => $userId]);
+        $cache->set(
+            $token,
+            ["token" => $token, "ip" => $ip, "user-id" => $userId],
+            $this->configuration["cookie-duration"]
+        );
 
         setcookie(
             $this->configuration["cookie-name"],
