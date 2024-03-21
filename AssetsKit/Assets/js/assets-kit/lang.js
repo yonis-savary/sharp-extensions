@@ -469,9 +469,9 @@ document.addEventListener("DOMContentLoaded", _ => {
         else
             document.body.classList.remove("is-mobile");
 
-        window.dispatchEvent(new CustomEvent("mobileModeSwitched", {
-            detail: {mobile: currentMobileMode}
-        }))
+        const event = new CustomEvent("mobileModeSwitched", {detail: {mobile: currentMobileMode}});
+        window.dispatchEvent(event);
+        document.dispatchEvent(event);
 
         lastMobileModeOn = currentMobileMode
     });

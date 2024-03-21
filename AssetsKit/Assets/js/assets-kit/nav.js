@@ -29,6 +29,7 @@ const refreshMobileAccessibilityMode = async ()=>{
         return;
     }
 
+    console.log("Create button");
     let lastButtonBottom = 0;
     document.querySelectorAll(".navbar").forEach(nav => {
 
