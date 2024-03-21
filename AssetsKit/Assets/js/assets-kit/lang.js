@@ -455,7 +455,7 @@ document.addEventListener("DOMContentLoaded", _ => {
     if (SharpAssetsKit.lang.isMobile())
         return;
 
-    const MOBILE_WIDTH_LIMIT = 1000;
+    const MOBILE_WIDTH_LIMIT = parseFloat(document.body.style.getPropertyValue("--mobile-width-threshold") || "1000");
     let lastMobileModeOn = null;
 
     window.addEventListener("resize", _ => {

@@ -123,10 +123,11 @@ each(@colors, .(@color, @name) {
 }
 
 
-@media screen and (max-width: @mobile-screen-width)
+body.is-mobile
 {
     // This block's purpose is to have a better touch-surface for mobile users
     .button {
-        min-height: 3rem;
+        min-height: 2rem !important;
+        min-width: 2rem !important;
     }
 }

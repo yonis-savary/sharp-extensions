@@ -57,19 +57,15 @@ main
     flex-direction: column;
 }
 
-@media screen and (max-width: @mobile-screen-width)
+body.is-mobile
 {
-    :root
-    {
-        font-size: @font-size-rem-mobile;
-    }
+    font-size: @font-size-rem-mobile;
+    max-width: 100dvw;
+    overflow: auto;
+}
 
-    html, body
-    {
-        max-width: 100dvw;
-        overflow: auto;
-    }
-
+body.is-mobile
+{
     main
     {
         padding: (@standard-spacing/2);

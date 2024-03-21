@@ -96,11 +96,11 @@ class LazySearch
         <h1 class="h4 tableTitle"></h1>
         <section class="lazySearchGrid flex-column">
             <section class="flex-column align-end gap-1 pagination-section">
-                <section class="flex-row width-100 align-center">
+                <section class="flex-row flex-wrap width-100 align-center">
                     <input type="search" placeholder="${LOC.dict.searchPlaceholder}" name="${this.url}" class="search">
-                    <section class="flex-row align-center gap-1">
+                    <section class="flex-row align-center gap-1 flex-grow-0">
                         <button class="button blue icon secondary" bottom menu="${this.id}-filterMenu" title="${LOC.dict.filtersTitle}">${svg("funnel")}</button>
-                        <button class="button blue icon secondary resetButton fill-left">${svg("arrow-repeat")}</button>
+                        <button class="button blue icon secondary resetButton">${svg("arrow-repeat")}</button>
                         <button class="button violet icon secondary exportButton">${svg("file-earmark-arrow-down")}</button>
                     </section>
                     <section class="fill-left flex-row gap-1 align-end pagination"></section>

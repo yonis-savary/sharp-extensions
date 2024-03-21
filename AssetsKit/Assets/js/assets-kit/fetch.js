@@ -104,7 +104,15 @@ declareNewBridge("API", {
     },
 
     create: async function (model, data){
-        return (await this.fetch(model, data, this.CREATE_METHOD)).insertedId;
+        let insertedId = Array.isArray(data) ?
+            (await this.fetch(model, data, this.CREATE_METHOD)).insertedId :
+            (await this.fetchJSON(model, data, this.CREATE_METHOD)).insertedId
+        ;
+
+        if (insertedId.length == 1)
+            return insertedId[0];
+
+        return insertedId;
     },
 
     read: function (model, data){

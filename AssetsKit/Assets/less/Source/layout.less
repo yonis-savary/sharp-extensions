@@ -241,7 +241,7 @@ each(range(0,10), {
 
 
 
-@media screen and (max-width: 800px)
+body.is-mobile
 {
     .centered
     {
@@ -254,13 +254,9 @@ each(range(0,10), {
     }
 }
 
-@media screen and (max-width: @mobile-screen-width)
+body.is-mobile > *
 {
-
-    body > *
-    {
-        max-width: 100%;
-    }
+    max-width: 100%;
 }
 
 
