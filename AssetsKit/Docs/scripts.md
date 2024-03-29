@@ -411,4 +411,34 @@ myInput.addAutocompleteListener(searchObject =>{
 })
 ```
 
+## entity.js
+
+This script can be used to have interactive read/write data page, it was made to work
+with `apiUpdate` method (Autobahn utils)
+
+```html
+<section entity="client" entity-id="3">
+    <input type="email" client="email">
+</section>
+```
+
+Everything INSIDE the section will be bound to the `client` table (id: 3),
+when the input value changes, `apiUpdate` shall be called to update the row
+
+Supported input types:
+- Text + email + tel
+- Date + time
+- checkbox + radio
+
+When a row is update, two events are triggered on `document`
+- `successful-entity-update` when `apiUpdate` is successful
+- `failed-entity-update` when `apiUpdate` failed
+
+Both of these event got the `detail` key as :
+- `entity`: name of the updated table
+- `field`: name of the updated field
+- `value`: new value for the field
+- `entityId`: updated row id
+- `error` (only for failed event): thrown exception by `apiUpdate`
+
 [< Back to AssetsKit summary](../README.md)

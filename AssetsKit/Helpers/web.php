@@ -24,6 +24,7 @@ const ASSETS_KIT_BUNDLE_SCRIPTS = [
     "validate.js",
     "notify.js",
     "autocomplete.js",
+    "entity.js",
 
     "summary.js",
 
