@@ -4,7 +4,7 @@ This directory contains :
 
 | Script            | Purpose                       |
 |-------------------|-------------------------------|
-| `utils.js`        | Various language utilities    |
+| `lang.js`         | Various language utilities    |
 | `validation.js`   | Form Validation               |
 | `animation.js`    | Async animation, fade in/out  |
 | `date.js`         | Date utility                  |
@@ -25,15 +25,15 @@ The documentation is written inside every scripts,
 
 | Module            | Dependencies               |
 |-------------------|----------------------------|
-| `utils.js`        | ---                        |
+| `lang.js`         | ---                        |
 | `validation.js`   | ---                        |
 | `animation.js`    | ---                        |
 | `date.js`         | ---                        |
 | `svg.js`          | ---                        |
 | `workers.js`      | ---                        |
-| `fetch.js`        | `utils.js`                 |
-| `aside.js`        | `utils.js`, `animation.js` |
-| `modal.js`        | `utils.js`, `animation.js` |
-| `autocomplete.js` | `utils.js`, `modal.js`     |
+| `fetch.js`        | `lang.js`                 |
+| `aside.js`        | `lang.js`, `animation.js` |
+| `modal.js`        | `lang.js`, `animation.js` |
+| `autocomplete.js` | `lang.js`, `modal.js`     |
 | `highstate.js`    | `svg.js`                   |
 | `overlay.js`      | `animation.js`             |

@@ -60,7 +60,7 @@ declareNewBridge("svg", {
     },
 
 
-    svg: function (icon, size=24){
+    svg: function (icon, size=22){
         let content = localStorage.getItem(this.key(icon));
         let signature = typeof getPageSignature === "function" ? getPageSignature(): "dummysig";
 
