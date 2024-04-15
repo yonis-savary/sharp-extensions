@@ -1,8 +1,9 @@
 <?php
 
 use Sharp\Classes\Extras\AssetServer;
-use Sharp\Core\Utils;
 use SharpExtensions\AssetsKit\Components\Svg;
+
+const ASSETS_KIT_BUNDLE_FILE_NAME = "assets-kit-bundle.js";
 
 const ASSETS_KIT_BUNDLE_SCRIPTS = [
 
@@ -38,6 +39,15 @@ function svg(string $name, int $size=null)
 
 function assetsKitJSBundle(bool $inject=false)
 {
+    $assetsServer = AssetServer::getInstance();
+    if ($path = $assetsServer->findAsset(ASSETS_KIT_BUNDLE_FILE_NAME))
+    {
+        return $inject ?
+            "<script>".file_get_contents($path)."</script>":
+            "<script src='". AssetServer::getInstance()->getURL(ASSETS_KIT_BUNDLE_FILE_NAME) ."'></script>"
+        ;
+    }
+
     $str = "";
     foreach (ASSETS_KIT_BUNDLE_SCRIPTS as $s)
     {
