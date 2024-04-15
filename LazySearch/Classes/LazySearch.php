@@ -111,11 +111,6 @@ class LazySearch
         return $this->queryParams["extras"] ?? [];
     }
 
-    public function getBackendOptions()
-    {
-        return $this->backendOptions;
-    }
-
     public function parseQueryFields(string $query, LazySearchOptions $options): array
     {
         $infos = [];
@@ -296,7 +291,6 @@ class LazySearch
     public function makeList(string $sqlQuery, LazySearchOptions $backendOptions=null)
     {
         $backendOptions ??= new LazySearchOptions();
-        $this->backendOptions = $backendOptions;
 
         if ($this->configuration["ignore_links"])
         {
@@ -334,10 +328,18 @@ class LazySearch
     {
         $renderer = Renderer::getInstance();
 
-        $lazySearch = $renderer->render('LazySearch', ['url' => $this->request->getPath()]);
+        $lazySearch = $renderer->render('LazySearch', [
+            'backendOptions' => $backendOptions,
+            'views' => $backendOptions->viewsToRender ?? [],
+            'scripts' => $backendOptions->scriptToInject ?? [],
+            'url' => $this->request->getPath()
+        ]);
 
         if ($template = $this->configuration['template'] ?? false)
-            return Response::view($template, ['lazySearch' => $lazySearch, 'lazySearchOptions' => (array)$backendOptions]);
+            return Response::view($template, [
+                'lazySearch' => $lazySearch,
+                'lazySearchOptions' => (array)$backendOptions]
+            );
 
         return Response::html($lazySearch);
     }
