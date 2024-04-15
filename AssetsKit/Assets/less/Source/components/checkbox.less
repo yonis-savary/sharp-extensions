@@ -10,3 +10,45 @@ each(@colors, .(@color, @name) {
         --accent: @color;
     }
 })
+
+
+
+.subtle-checkbox
+{
+    display: none;
+}
+
+.subtle-checkbox + *
+{
+    position: relative;
+    transition: all 200ms ease;
+    padding: .5em;
+    cursor: pointer;
+    border-radius: .5em;
+    font-weight: 600;
+    border: solid 1px var(--stealth)
+}
+
+.subtle-checkbox + *::after
+{
+    content: '✓';
+    position: absolute;
+    right: 1em;
+    top: 50%;
+    opacity: 0;
+    transform: rotate(180deg) translateY(-50%);
+    transition: all 200ms ease;
+}
+
+.subtle-checkbox:checked + *
+{
+    background-color: var(--blue);
+    color: white;
+}
+
+.subtle-checkbox:checked + *::after
+{
+    opacity: 1;
+    transform: rotate(0deg) translateY(-50%);
+}
+
