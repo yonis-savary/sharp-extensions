@@ -98,7 +98,18 @@ class RequestWatch
         $this->rowId = $db->lastInsertId();
 
         if ($lastRowId = $this->lastRowId)
-            $db->query("UPDATE user_request SET previous = {} WHERE id = {}", [$lastRowId, $this->rowId]);
+        {
+            try
+            {
+                $db->query("UPDATE user_request SET previous = {} WHERE id = {}", [$lastRowId, $this->rowId]);
+            }
+            catch (Throwable $err)
+            {
+                self::$logger->error("Could not update last row [$lastRowId]", $err, "Skipping row");
+                Session::getInstance()->set(self::LAST_ROW_ID_KEY, null);
+                $this->lastRowId = null;
+            }
+        }
 
         $isAPI = str_contains($path, "/api") || ($method != "GET");
         $ignoreApi = $this->configuration["duration-ignore-api-requests"] ;
