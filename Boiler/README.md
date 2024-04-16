@@ -4,19 +4,13 @@ This extension includes boilerplates that can be installed inside of your applic
 
 Their files are copied and namespace changed so you can edit them
 
-## Availables Packages
+## Install a boilerplate package
 
-This list may not be exhaustive, please use this command to know which packages are availables
+First, you have to enable Boiler
 
 ```bash
-php do install-package
+php do enable-application SharpExtensions/Boiler
 ```
-
-- `Authentication`: authentication page with a login/logout controller + `IsLoggedMiddleware` that you can apply to your routes
-- `Showcase`: empty templates for your showcase site with a few routes for basic pages (homepage, about, contact...)
-
-
-## Install a boilerplate package
 
 The `ìnstall-package` can be used to install one or more package inside your application
 
@@ -36,3 +30,14 @@ If a package was already installed and you want to reinstall it, you can use the
 ```bash
 php do install-package Authentication --overwrite
 ```
+
+## Availables Packages
+
+This list may not be exhaustive, please use this command to know which packages are availables
+
+```bash
+php do install-package
+```
+
+- `Authentication`: authentication page with a login/logout controller + `IsLoggedMiddleware` that you can apply to your routes
+- `Showcase`: empty templates for your showcase site with a few routes for basic pages (homepage, about, contact...)
