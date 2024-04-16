@@ -21,3 +21,4 @@ php do test
 
 - [🎨 AssetsKit](./AssetsKit/README.md) : SVG Component, basic stylesheet/scripts for your applications !
 - [📖 LazySearch](./LazySearch/README.md) : Pagination in your Application !
+- [🚀 Boiler](./Boiler/README.md): Boilerplates ready to install
