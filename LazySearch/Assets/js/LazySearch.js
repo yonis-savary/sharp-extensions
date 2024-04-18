@@ -99,7 +99,9 @@ class LazySearch
                 <section class="flex-row flex-wrap width-100 align-center">
                     <input type="search" placeholder="${LOC.dict.searchPlaceholder}" name="${this.url}" class="search">
                     <section class="flex-row align-center gap-1 flex-grow-0">
-                        <button class="button blue icon secondary" bottom menu="${this.id}-filterMenu" title="${LOC.dict.filtersTitle}">${svg("funnel")}</button>
+                        <section class="notification violet filtersNumber">
+                            <button class="button blue icon secondary" bottom menu="${this.id}-filterMenu" title="${LOC.dict.filtersTitle}">${svg("funnel")}</button>
+                        </section>
                         <button class="button blue icon secondary resetButton">${svg("arrow-repeat")}</button>
                         <button class="button violet icon secondary exportButton">${svg("file-earmark-arrow-down")}</button>
                     </section>
@@ -112,7 +114,7 @@ class LazySearch
         </section>
         <section class="menu filterMenu" id="${this.id}-filterMenu" >
             <section class="flex-column">
-                <b>${LOC.dict.filtersTitle} (<span class="filtersNumber"></span>)</b>
+                <b>${LOC.dict.filtersTitle}</b>
                 <hr>
                 <section class="flex-row scrollable horizontal filters"></section>
                 <hr>
@@ -130,7 +132,8 @@ class LazySearch
             "exportButton",
             "extraAside",
             "tableTitle",
-            "filtersNumber"
+            "filtersNumber",
+            "filterButton"
         ].forEach(
             classname => this.dom[classname] = this.root.querySelector("."+classname)
         );
@@ -244,9 +247,12 @@ class LazySearch
 
         this.dispatchEvent("LazySearchRefreshed");
 
-        this.dom.filtersNumber.innerText =
-            Object.keys(this.parameters.filters).length +
-            this.parameters.sorts.length;
+        let filterCount = Object.keys(this.parameters.filters).length;
+        console.warn(this.parameters);
+        if (filterCount)
+            this.dom.filtersNumber.setAttribute("count", filterCount);
+        else
+            this.dom.filtersNumber.removeAttribute("count");
     }
 
     async buildTable(data, meta, options)
@@ -437,7 +443,7 @@ class LazySearch
                 });
 
                 if (checkbox.checked)
-                    this.parameters.filters[field] = [];
+                    delete this.parameters.filters[field];
                 else
                     this.parameters.filters[field] = meta.fields
                         .find(x => x.alias == field).possibilities
@@ -460,6 +466,9 @@ class LazySearch
             this.parameters.filters[field] = this.parameters.filters[field].filter(x => x != value);
         else
             this.parameters.filters[field].push(value);
+
+        if (!this.parameters.filters[field].length)
+            delete this.parameters.filters[field]
 
         this.parameters.flags.fetchQueryPossibilities = true;
         this.parameters.flags.fetchQueryResultsCount = true;

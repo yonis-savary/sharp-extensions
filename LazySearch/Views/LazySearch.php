@@ -5,22 +5,21 @@
     use SharpExtensions\LazySearch\Classes\LazySearch;
 
     $asset = fn(string $target) => AssetServer::getInstance()->getURL($target);
-    $settings = (array) LazySearch::getInstance()->getBackendOptions();
 
-    foreach (($settings["viewsToRender"] ?? []) as $v)
+    foreach (($views ?? []) as $v)
     {
         if (Renderer::getInstance()->templateExists($v))
-            echo Renderer::getInstance()->render($v);
+            echo (new Renderer())->render($v);
     }
 
-    foreach (($settings["scriptToInject"] ?? []) as $s)
+    foreach (($scripts ?? []) as $s)
         echo "<script src='".$asset($s)."'></script>"
 
 ?>
 
 <section
     class="lazySearch"
-    <?= isset($id) ? "id='$id'" : "" ?>
+    <?= (isset($id) && $id) ? "id='$id'" : "" ?>
     url="<?= $url ?? '' ?>"
     <?= $attr ?? $attributes ?? '' ?>
 ></section>
@@ -31,7 +30,7 @@
 ?>
     <script>
         const LAZYSEARCH_CONFIGURATION = <?= json_encode(LazySearch::getInstance()->getConfiguration()) ?>;
-        const LAZYSEARCH_SETTINGS = <?= json_encode($settings) ?>;
+        const LAZYSEARCH_SETTINGS = <?= json_encode($backendOptions ?? null) ?>;
     </script>
 
     <!-- LazySearch Core - only has to be imported once -->

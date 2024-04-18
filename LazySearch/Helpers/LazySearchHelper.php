@@ -6,9 +6,9 @@ use SharpExtensions\LazySearch\Classes\LazySearchLink;
 use SharpExtensions\LazySearch\Classes\LazySearchOptions;
 use SharpExtensions\LazySearch\Classes\LazySearch;
 
-function lazySearch(string $url)
+function lazySearch(string $url, string $id=null)
 {
-    return Renderer::getInstance()->render("LazySearch", ["url"=>$url]);
+    return (new Renderer())->render("LazySearch", ["url"=>$url, "id" => $id]);
 }
 
 

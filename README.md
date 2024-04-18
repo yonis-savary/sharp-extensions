@@ -11,13 +11,13 @@ git clone https://github.com/yonis-savary/sharp-extensions.git SharpExtensions
 git submodule add https://github.com/yonis-savary/sharp-extensions.git SharpExtensions
 
 php do enable-application SharpExtensions/*
-php do build
 php do test
 ```
 
 
 ## Extensions
 
-
 - [🎨 AssetsKit](./AssetsKit/README.md) : SVG Component, basic stylesheet/scripts for your applications !
 - [📖 LazySearch](./LazySearch/README.md) : Pagination in your Application !
+- [🚀 Boiler](./Boiler/README.md): Boilerplates ready to install
+- [✒️ RequestWatch](./RequestWatch/README.md): Log every users request
