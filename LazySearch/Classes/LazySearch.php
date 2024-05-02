@@ -13,6 +13,7 @@ use Sharp\Classes\Http\Request;
 use Sharp\Classes\Http\Response;
 use Sharp\Classes\Web\Renderer;
 use Sharp\Core\Utils;
+use Throwable;
 
 class LazySearch
 {
@@ -378,7 +379,16 @@ class LazySearch
 
         $userAgent = $this->request->getHeaders()["User-Agent"] ?? "Window";
         $utf8Of = str_contains($userAgent, "Window") ?
-            fn($data) => iconv( mb_detect_encoding( $data ), 'Windows-1252//TRANSLIT', $data ):
+            function($data) {
+                try
+                {
+                    return iconv( mb_detect_encoding( $data ), 'Windows-1252//TRANSLIT', $data );
+                }
+                catch (Throwable $e)
+                {
+                    return $data;
+                }
+            }:
             fn($data) => $data;
 
         $writeCSV = fn($data) => fputcsv($stream, $data, ";");
