@@ -3,6 +3,7 @@
 namespace SharpExtensions\LazySearch\Classes;
 
 use Exception;
+use InvalidArgumentException;
 use Sharp\Classes\Core\Component;
 use Sharp\Classes\Core\Configurable;
 use Sharp\Classes\Core\Logger;
@@ -289,7 +290,7 @@ class LazySearch
             $this->getCache()->set($cacheKey, $queryInfos);
     }
 
-    public function makeList(string $sqlQuery, LazySearchOptions $backendOptions=null)
+    public function makeList(string $sqlQuery, LazySearchOptions $backendOptions=null, string $forceMode=null)
     {
         $backendOptions ??= new LazySearchOptions();
 
@@ -317,11 +318,13 @@ class LazySearch
         if ($this->queryParams["flags"]["fetchQueryPossibilities"] ?? true )
             $this->countQueryFields($querySampler, $queryInfos);
 
-        switch ($this->mode)
+        $mode = $forceMode ?? $this->mode;
+        switch ($mode)
         {
             case self::MODE_DATA: return $this->getDataResponse($querySampler, $queryInfos, $backendOptions);
             case self::MODE_FILE: return $this->getFileResponse($querySampler, $queryInfos, $backendOptions);
             case self::MODE_FORM: return $this->getViewResponse($backendOptions);
+            default: throw new InvalidArgumentException("Unknown lazySearch mode [$mode]");
         }
     }
 

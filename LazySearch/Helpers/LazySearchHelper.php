@@ -12,9 +12,9 @@ function lazySearch(string $url, string $id=null)
 }
 
 
-function lazyList(string $query, LazySearchOptions $options=null)
+function lazyList(string $query, LazySearchOptions $options=null, string $forceMode=null)
 {
-    return LazySearch::getInstance()->makeList($query, $options);
+    return LazySearch::getInstance()->makeList($query, $options, $forceMode);
 }
 
 function lazyOptions(
