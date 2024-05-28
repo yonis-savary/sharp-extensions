@@ -39,9 +39,13 @@ Navbar usage
 
 .navbar:not(.vertical) .content
 {
-    width: clamp(0px, 1000px, 1000px);
     flex-direction: row;
     align-items: center;
+}
+
+.navbar:not(.vertical) .content:not(.wide)
+{
+    width: clamp(0px, 1000px, 1000px);
 }
 
 .navbar *
@@ -205,7 +209,7 @@ body.is-mobile
         max-height: 100vh !important;
         margin: 0 !important;
         transition: all 200ms ease;
-        flex-wrap: wrap;
+        flex-wrap: nowrap !important;
         z-index: 100;
     }
 
@@ -219,6 +223,7 @@ body.is-mobile
     {
         width: auto !important;
         flex-direction: column !important;
+        overflow: auto;
     }
 
     .navbar.active
