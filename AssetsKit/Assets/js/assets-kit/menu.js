@@ -72,7 +72,7 @@ class AssetsKitMenu
 
         let mBox = menu.getBoundingClientRect();
 
-        let buttonIsHTML = 'getBoundingClientRect' in button;
+        let buttonIsHTML = (typeof button !== "string") && ('getBoundingClientRect' in button);
 
         let bBox = buttonIsHTML ? button.getBoundingClientRect() : {
             left: button.x,
@@ -277,7 +277,7 @@ declareNewBridge("menu", {
     {
         if (selector)
         {
-            if ('innerHTML' in selector)
+            if ((typeof selector !== "string") && ('innerHTML' in selector))
                 return selector;
             let menu = document.querySelector(selector);
             if (menu)
