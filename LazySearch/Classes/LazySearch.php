@@ -60,7 +60,8 @@ class LazySearch
             'export_middlewares' => [],
             'export_chunk_size' => 20_000,
             'cached' => false,
-            'cache_time_to_live' => 3600
+            'cache_time_to_live' => 3600,
+            'convert-to-windows-encoding' => false
         ];
     }
 
@@ -389,6 +390,7 @@ class LazySearch
                 }
                 catch (Throwable $e)
                 {
+                    debug($e);
                     return $data;
                 }
             }:
@@ -408,8 +410,11 @@ class LazySearch
                 $chunk = $db->query($wrappedQuery . " LIMIT $pageSize OFFSET $offset");
                 foreach ($chunk as $row)
                 {
-                    foreach ($row as &$data)
-                        $data = $utf8Of($data ?? '');
+                    if ($this->getConfiguration()["convert-to-windows-encoding"])
+                    {
+                        foreach ($row as &$data)
+                            $data = $utf8Of($data ?? '');
+                    }
                     $writeCSV($row);
                 }
                 flush();
