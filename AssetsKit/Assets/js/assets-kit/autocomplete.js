@@ -17,7 +17,7 @@ declareNewBridge("autocomplete", {
         if (!this.autocompleteBox)
         {
             this.autocompleteBox = document.createElement("section");
-            this.autocompleteBox.classList = "menu menu-option";
+            this.autocompleteBox.classList = "menu menu-option no-tolerance";
             this.autocompleteBox.style.overflowY = "auto";
             this.autocompleteBox.id = `autocomplete-menu`;
             document.body.appendChild(this.autocompleteBox)

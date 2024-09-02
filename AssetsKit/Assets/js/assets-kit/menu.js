@@ -35,6 +35,7 @@ you can group them with a `name` attribute
 
 
 
+
 class AssetsKitMenu
 {
     static menuBackgroundForMobile = null;
@@ -65,6 +66,39 @@ class AssetsKitMenu
     direction = null;
     isMobile = false;
     opened = true;
+    toleranceSection = null;
+
+    createToleranceSection()
+    {
+        if (this.menu.classList.contains("no-tolerance"))
+            return;
+
+        let existingSection = this.menu.querySelector(".menu-tolerance-section");
+        if (existingSection) {
+            existingSection.remove();
+        }
+
+        let toleranceSection = document.createElement("section");
+        toleranceSection.classList = "menu-tolerance-section";
+
+        this.toleranceSection = toleranceSection;
+        this.toleranceSection.style.pointerEvents = "none"
+
+        this.menu.appendChild(toleranceSection);
+        this.updateToleranceSectionSize();
+    }
+
+    updateToleranceSectionSize()
+    {
+        if (!this.toleranceSection)
+            return;
+
+        let boundingBox = this.menu.getBoundingClientRect();
+
+        let toleranceSection = this.toleranceSection;
+        toleranceSection.style.width = (200 + (boundingBox.width * 1.1))  + "px";
+        toleranceSection.style.height = (200 + (boundingBox.height * 1.1))  + "px";
+    }
 
     resizeAndPosition()
     {
@@ -72,7 +106,7 @@ class AssetsKitMenu
 
         let mBox = menu.getBoundingClientRect();
 
-        let buttonIsHTML = 'getBoundingClientRect' in button;
+        let buttonIsHTML = (typeof button !== "string") && ('getBoundingClientRect' in button);
 
         let bBox = buttonIsHTML ? button.getBoundingClientRect() : {
             left: button.x,
@@ -158,6 +192,8 @@ class AssetsKitMenu
 
         menu.style.left = `${vector.x.toFixed(2)}px`;
         menu.style.top = `${vector.y.toFixed(2)}px`;
+        
+        this.updateToleranceSectionSize();
     }
 
 
@@ -173,6 +209,9 @@ class AssetsKitMenu
             if (event.target != event.currentTarget)
                 return;
             if (event.x < 0 || event.y < 0)
+                return;
+
+            if (this.toleranceSection && event.target == this.menu)
                 return;
 
             if (event.target.classList.contains("menu"))
@@ -216,6 +255,8 @@ class AssetsKitMenu
     {
         let {menu} = this;
         let {animateAsync} = SharpAssetsKit.animation;
+        
+        this.createToleranceSection()
 
         menu.style.visibility = "hidden";
         menu.style.display = "flex";
@@ -224,8 +265,38 @@ class AssetsKitMenu
         menu.style.visibility = "visible";
         await animateAsync(menu, AssetsKitMenu.MENU_SLIDE_IN);
 
+
         if (!menu.hasAttribute("locked"))
-            menu.onmouseleave = evt => this.close(evt);
+        {
+            if (this.toleranceSection)
+            {
+                menu.onmouseleave = evt => { 
+                    let boundingBox = this.menu.getBoundingClientRect();
+                    if (!(
+                        (boundingBox.left < evt.clientX && evt.clientX < boundingBox.left + boundingBox.width) &&
+                        (boundingBox.top  < evt.clientY && evt.clientY < boundingBox.top + boundingBox.height)
+                    ))
+                    {
+                        this.toleranceSection.style.pointerEvents = "auto";
+                    }
+                }
+                menu.onmouseenter = evt => { 
+                    let boundingBox = this.menu.getBoundingClientRect();
+                    if (
+                        (boundingBox.left < evt.clientX && evt.clientX < boundingBox.left + boundingBox.width) &&
+                        (boundingBox.top  < evt.clientY && evt.clientY < boundingBox.top + boundingBox.height)
+                    )
+                    {
+                        this.toleranceSection.style.pointerEvents = "none";
+                    }
+                }
+                this.toleranceSection.onmouseleave = evt => this.close(evt);
+            }
+            else 
+            {
+                menu.onmouseleave = evt => this.close(evt);
+            }
+        }
 
         this.observer = new ResizeObserver(this.resizeAndPosition.bind(this))
         this.observer.observe(menu);
@@ -277,7 +348,7 @@ declareNewBridge("menu", {
     {
         if (selector)
         {
-            if ('innerHTML' in selector)
+            if ((typeof selector !== "string") && ('innerHTML' in selector))
                 return selector;
             let menu = document.querySelector(selector);
             if (menu)
@@ -411,14 +482,4 @@ document.addEventListener("DOMContentLoaded", ()=> {
     AssetsKitMenu.menuBackgroundForMobile = mb;
     mb.addEventListener("click", _ => SharpAssetsKit.menu.close());
 })
-
-
-
-
-
-
-
-
-
-
 
