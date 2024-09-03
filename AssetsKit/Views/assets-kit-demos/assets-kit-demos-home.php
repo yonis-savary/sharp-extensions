@@ -181,9 +181,9 @@ $colors= [
 </head>
 
 <?= style("assets-kit/style.css", true) ?>
-<?= assetsKitJSBundle(true) ?>
 
 <body class="flex-column">
+    <?= assetsKitJSBundle(true) ?>
 
     <nav class="navbar bg-Crimson fg-White ">
         <h1>MyAPP</h1>

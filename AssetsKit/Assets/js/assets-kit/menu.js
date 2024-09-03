@@ -96,8 +96,8 @@ class AssetsKitMenu
         let boundingBox = this.menu.getBoundingClientRect();
 
         let toleranceSection = this.toleranceSection;
-        toleranceSection.style.width = (200 + (boundingBox.width * 1.1))  + "px";
-        toleranceSection.style.height = (200 + (boundingBox.height * 1.1))  + "px";
+        toleranceSection.style.width = (50 + (boundingBox.width * 1.1))  + "px";
+        toleranceSection.style.height = (50 + (boundingBox.height * 1.1))  + "px";
     }
 
     resizeAndPosition()

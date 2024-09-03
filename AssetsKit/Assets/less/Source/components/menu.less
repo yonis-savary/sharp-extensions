@@ -129,11 +129,16 @@ body.is-mobile
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: none;
+    
+    background: transparent;
 }
 
 
+.menu-bottom .menu-tolerance-section { top: -1em; transform: translate(-50%, 0%); }
+.menu-top .menu-tolerance-section { top: auto; bottom: -1em; transform: translate(-50%, 0%); }
 
+.menu-left .menu-tolerance-section { left: auto; right: -1em; transform: translate(0%, -50%); }
+.menu-right .menu-tolerance-section { left: -1em; transform: translate(0%, -50%); }
 
 
 
