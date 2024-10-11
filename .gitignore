@@ -1,0 +1,5 @@
+/vendor/
+/test-app/
+/.phpunit.result.cache
+/composer.lock
+/Storage

@@ -1,0 +1,30 @@
+{
+    "name": "yonis-savary/sharp-extensions",
+    "description": "Extensions set for yonis-savary/sharp",
+    "type": "library",
+    "homepage": "https://github.com/yonis-savary/sharp-extensions",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "YonisSavary\\Sharp\\Extensions\\": "src/",
+            "YonisSavary\\Sharp\\Extensions\\Tests\\": "tests/"
+        },
+        "files": [
+            "src/bootstrap.php"
+        ]
+    },
+    "authors": [
+        {
+            "name": "yonis-savary",
+            "email": "yonissavary@outlook.fr"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "yonis-savary/sharp": "dev-main",
+        "twbs/bootstrap-icons": "1.11.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^12.0@dev"
+    }
+}
