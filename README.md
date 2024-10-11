@@ -5,13 +5,8 @@ Extensions for [yonis-savary/sharp-php](https://github.com/yonis-savary/sharp-ph
 ## Installation
 
 ```bash
-# One-shot clone
-git clone https://github.com/yonis-savary/sharp-extensions.git SharpExtensions
-# submodule
-git submodule add https://github.com/yonis-savary/sharp-extensions.git SharpExtensions
-
-php do enable-application SharpExtensions/*
-php do test
+# Add extensions to your sharp project
+composer require yonis-savary/sharp-extensions
 ```
 
 
