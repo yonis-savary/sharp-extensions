@@ -34,7 +34,7 @@ class RequestWatch
     {
         $storage = Storage::getInstance();
 
-        self::$logger = new Logger("request-watch.csv", $storage->getSubStorage("Logs"));
+        self::$logger = new Logger("request-watch.csv");
 
         $exists = $storage->isFile(self::DB_NAME);
         self::$database = new Database("sqlite", self::DB_NAME);

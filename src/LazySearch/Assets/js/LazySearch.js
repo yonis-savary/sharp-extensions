@@ -248,7 +248,6 @@ class LazySearch
         this.dispatchEvent("LazySearchRefreshed");
 
         let filterCount = Object.keys(this.parameters.filters).length;
-        console.warn(this.parameters);
         if (filterCount)
             this.dom.filtersNumber.setAttribute("count", filterCount);
         else
