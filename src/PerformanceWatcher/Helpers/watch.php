@@ -1,9 +1,8 @@
 <?php
 
-use Sharp\Classes\Core\EventListener;
-use Sharp\Classes\Core\Logger;
-use Sharp\Classes\Events\DispatchedEvent;
-use Sharp\Classes\Http\Request;
+use YonisSavary\Sharp\Classes\Core\EventListener;
+use YonisSavary\Sharp\Classes\Core\Logger;
+use YonisSavary\Sharp\Classes\Events\DispatchedEvent;
 
 $lastTime = hrtime(true);
 $initialTime = $lastTime;
