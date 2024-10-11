@@ -16,7 +16,7 @@ Make sure your login form contains one checkbox that the user can check to enabl
 Then when the user is logged, you can use the `RemindMe` class to remember its informations
 
 ```php
-if ($request->params("remember-me") === "on")
+if ($request->params("remember-me"))
     RemindMe::getInstance()->rememberLoggedUser();
 ```
 
@@ -37,9 +37,9 @@ You can edit the cookie name and its duration (in seconds)
 
 ```json
 {
-    "cookie-name" => "sharp_extensions_remind_me",
-    "cookie-duration" => 3600*31,
-    "same-ip-required" => false
+    "cookie-name": "sharp_extensions_remind_me",
+    "cookie-duration": 3600*31,
+    "same-ip-required": false
 }
 ```
 
