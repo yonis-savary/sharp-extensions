@@ -1,6 +1,6 @@
 # sharp-extensions
 
-Extensions for [yonis-savary/sharp-php](https://github.com/yonis-savary/sharp-php) project
+Extensions for [yonis-savary/sharp](https://github.com/yonis-savary/sharp) project
 
 ## Installation
 
