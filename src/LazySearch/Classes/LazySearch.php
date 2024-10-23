@@ -181,7 +181,7 @@ class LazySearch
 
             $forbiddenValues = new ObjectArray($filterValues);
 
-            if ($forbiddenValues->any(is_null(...)))
+            if ($forbiddenValues->any(fn($x) => is_null($x)))
                 $conditions[] = $db->build("(`{}` IS NOT NULL)", [$field]);
 
             $conditions[] = $db->build("(`{}` NOT IN {})", [$field, $forbiddenValues->filter()->collect()]);
