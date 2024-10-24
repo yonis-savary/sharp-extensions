@@ -8,7 +8,7 @@ use YonisSavary\Sharp\Extensions\RequestWatch\Classes\RequestWatch;
 if ((config("request-watcher", ["enabled" => false])["enabled"] ?? false) === true )
 {
     $watch = RequestWatch::getInstance();
-    $watch->registerRequest(Request::buildFromGlobals());
+    $watch->registerRequest(Request::fromGlobals());
 
     EventListener::getInstance()->on(RoutedRequest::class, function(RoutedRequest $event) use (&$watch){
         $watch->registerRoute($event->route);

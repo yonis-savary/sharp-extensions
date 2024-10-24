@@ -7,13 +7,12 @@ use YonisSavary\Sharp\Classes\Core\Component;
 use YonisSavary\Sharp\Classes\Core\Configurable;
 use YonisSavary\Sharp\Classes\Core\Logger;
 use YonisSavary\Sharp\Classes\Data\Database;
-use YonisSavary\Sharp\Classes\Data\DatabaseQuery;
+use YonisSavary\Sharp\Classes\Data\ModelQuery;
 use YonisSavary\Sharp\Classes\Data\ObjectArray;
 use YonisSavary\Sharp\Classes\Env\Session;
 use YonisSavary\Sharp\Classes\Env\Storage;
 use YonisSavary\Sharp\Classes\Http\Request;
 use YonisSavary\Sharp\Classes\Web\Route;
-use YonisSavary\Sharp\Core\Utils;
 use Throwable;
 
 class RequestWatch
@@ -55,7 +54,8 @@ class RequestWatch
         catch(Throwable $err)
         {
             self::$database = null;
-            self::$logger->error("Got error, cannot create RequestWatch database", $err);
+            self::$logger->error("Got error, cannot create RequestWatch database");
+            self::$logger->error($err);
             $storage->unlink(self::DB_NAME);
             return;
         }
@@ -106,7 +106,9 @@ class RequestWatch
             }
             catch (Throwable $err)
             {
-                self::$logger->error("Could not update last row [$lastRowId]", $err, "Skipping row");
+                self::$logger->error("Could not update last row [$lastRowId]");
+                self::$logger->error($err);
+                self::$logger->error("Skipping row");
                 Session::getInstance()->set(self::LAST_ROW_ID_KEY, null);
                 $this->lastRowId = null;
             }
@@ -148,7 +150,7 @@ class RequestWatch
         if ((!preg_match($dateFormat, $from)) || (!preg_match($dateFormat, $to)))
             throw new InvalidArgumentException("Both [from] and [to] argument must be a date (yyyy-mm-dd)");
 
-        $request = new DatabaseQuery("user_table", DatabaseQuery::SELECT);
+        $request = new ModelQuery("user_table", ModelQuery::SELECT);
         $request->whereSQL("timestamp BETWEEN {} AND {}", [$from, $to]);
 
         if ($limit)

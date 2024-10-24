@@ -75,7 +75,7 @@ class LazySearch
 
     public static function getDefaultInstance()
     {
-        return new self(Request::buildFromGlobals());
+        return new self(Request::fromGlobals());
     }
 
     public function __construct(Request $request)

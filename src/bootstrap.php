@@ -10,6 +10,6 @@ EventListener::getInstance()->on(LoadingFramework::class, function(){
         if ($directory == "." || $directory == ".." || $directory == "bootstrap.php")
             continue;
 
-        Autoloader::loadApplication( __DIR__ . "/$directory");
+        Autoloader::loadApplication( __DIR__ . "/$directory", true);
     }
 });

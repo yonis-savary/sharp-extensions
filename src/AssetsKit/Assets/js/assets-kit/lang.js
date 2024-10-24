@@ -451,7 +451,7 @@ document.addEventListener("DOMContentLoaded", _ => {
 })();
 
 
-;(_ => {
+document.addEventListener("DOMContentLoaded", _ => {
     if (SharpAssetsKit.lang.isMobile())
         return;
 
@@ -475,6 +475,6 @@ document.addEventListener("DOMContentLoaded", _ => {
 
         lastMobileModeOn = currentMobileMode
     });
-})();
+})
 
 window.dispatchEvent(new Event("resize"));

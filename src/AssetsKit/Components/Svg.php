@@ -47,7 +47,7 @@ class Svg
     {
         $instance = self::getInstance();
         if ($instance->isEnabled())
-            $instance->handleRequest( Request::buildFromGlobals() );
+            $instance->handleRequest( Request::fromGlobals() );
     }
 
     public function __construct()

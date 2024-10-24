@@ -2,15 +2,15 @@
 
 namespace YonisSavary\Sharp\Extensions\Boiler\Commands;
 
+use YonisSavary\Sharp\Classes\CLI\AbstractCommand;
 use YonisSavary\Sharp\Classes\CLI\Args;
-use YonisSavary\Sharp\Classes\CLI\Command;
 use YonisSavary\Sharp\Classes\CLI\Terminal;
 use YonisSavary\Sharp\Classes\Data\ObjectArray;
 use YonisSavary\Sharp\Classes\Env\Storage;
 use YonisSavary\Sharp\Core\Utils;
 use YonisSavary\Sharp\Extensions\Boiler\Classes\InstallPackagePolicy;
 
-class InstallPackage extends Command
+class InstallPackage extends AbstractCommand
 {
     const REL_PATH = "vendor/yonis-savary/sharp-extensions/src/Boiler/Packages";
 
