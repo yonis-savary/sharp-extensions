@@ -1,6 +1,6 @@
 <?php
 
-namespace YonisSavary\Sharp\Extensions\Tests;
+namespace YonisSavary\Sharp\Extensions\Tests\Units;
 
 use PHPUnit\Framework\TestCase;
 use YonisSavary\Sharp\Classes\Http\Request;

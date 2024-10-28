@@ -11,7 +11,7 @@ class BundlingAssetsKitScripts extends AbstractBuildTask
 {
     public function execute(): bool
     {
-        $assetsKitDir = Utils::relativePath('vendor/yonis-savary/sharp-extensions/src/AssetsKit');
+        $assetsKitDir = realpath( __DIR__ . "/..");
 
         $this->log("Bundling scripts...\n");
         $scriptDir = new Storage(Utils::joinPath($assetsKitDir, "/Assets/js/assets-kit"));

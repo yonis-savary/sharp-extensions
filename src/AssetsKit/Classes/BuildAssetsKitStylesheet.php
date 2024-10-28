@@ -9,7 +9,7 @@ class BuildAssetsKitStylesheet extends AbstractBuildTask
 {
     public function execute(): bool
     {
-        $assetsKitDir = Utils::relativePath('vendor/yonis-savary/sharp-extensions/src/AssetsKit');
+        $assetsKitDir = realpath( __DIR__ . "/..");
 
         $this->log("Building stylesheet...\n");
         $styleDir = Utils::joinPath($assetsKitDir, '/Assets/less');

@@ -2,10 +2,15 @@
 
 use YonisSavary\Sharp\Classes\Core\EventListener;
 use YonisSavary\Sharp\Classes\Core\Logger;
+use YonisSavary\Sharp\Classes\Env\Configuration;
 use YonisSavary\Sharp\Classes\Events\DispatchedEvent;
+use YonisSavary\Sharp\Classes\Events\LoadedFramework;
 
-if ((config("performance-watcher", ["enabled" => false])["enabled"] ?? false) === true )
-{
+EventListener::getInstance()->on(LoadedFramework::class, function(){
+    $configuration = Configuration::getInstance();
+    if (($configuration->get("performance-watcher", ["enabled" => false])["enabled"] ?? false) === false )
+        return;
+
     $lastTime = hrtime(true);
     $initialTime = $lastTime;
     $logger = new Logger("performances.csv");
@@ -21,5 +26,5 @@ if ((config("performance-watcher", ["enabled" => false])["enabled"] ?? false) ==
         );
         $lastTime = $thisTime;
     });
-}
+});
 

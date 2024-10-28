@@ -57,7 +57,7 @@ class Svg
         $path = $this->configuration['path'];
 
         if (!$path)
-            $path = Utils::relativePath("/vendor/twbs/bootstrap-icons/icons");
+            $path = realpath(__DIR__ ."/../../../vendor/twbs/bootstrap-icons/icons");
         else
             $path = Utils::relativePath($path);
 
