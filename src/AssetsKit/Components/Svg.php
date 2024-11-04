@@ -30,7 +30,7 @@ class Svg
         return [
             'enabled' => true,
             "url" => "/assets/svg",
-            'path' => null,
+            'path' => "vendor/twbs/bootstrap-icons/icons",
             'cached' => true,
             'default-size' => 24,
             'max-age' => 3600*24*7, // 1 Weeks
@@ -54,13 +54,7 @@ class Svg
     {
         $this->loadConfiguration();
 
-        $path = $this->configuration['path'];
-
-        if (!$path)
-            $path = Utils::relativePath("vendor/twbs/bootstrap-icons/icons");
-        else
-            $path = Utils::relativePath($path);
-
+        $path = Utils::relativePath($this->configuration['path']);
         $this->configuration['path'] = $path;
 
         // Code here will be executed the first time SVG component will be called
@@ -104,7 +98,7 @@ class Svg
         $path = $this->getIconPath($name);
 
         if (!file_exists($path))
-            throw new Exception('File not found !');
+            throw new Exception("Svg $name not found ! (tried: $path)");
 
         $content = file_get_contents($path);
 

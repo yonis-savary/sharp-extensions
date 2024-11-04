@@ -5,13 +5,21 @@ namespace YonisSavary\Sharp\Extensions\Tests\Units;
 use PHPUnit\Framework\TestCase;
 use YonisSavary\Sharp\Classes\Http\Request;
 use YonisSavary\Sharp\Classes\Http\Response;
+use YonisSavary\Sharp\Core\Utils;
 use YonisSavary\Sharp\Extensions\AssetsKit\Components\Svg;
 
 class SvgTest extends TestCase
 {
-    public function test_handleRequest()
+    protected function createSvgProvider(): Svg
     {
         $svg = new Svg();
+        $svg->setConfiguration(["path" => realpath(Utils::relativePath("../../vendor/twbs/bootstrap-icons/icons"))]);
+        return $svg;
+    }
+
+    public function test_handleRequest()
+    {
+        $svg = $this->createSvgProvider();
         $req = new Request("GET", "/assets/svg", ["name" => "person"]);
 
         $this->assertInstanceOf(
@@ -23,7 +31,7 @@ class SvgTest extends TestCase
 
     public function test_serve()
     {
-        $svg = new Svg();
+        $svg = $this->createSvgProvider();
         $req = new Request("GET", "/assets/svg", ["name" => "person"]);
 
         $this->assertInstanceOf(
@@ -34,7 +42,7 @@ class SvgTest extends TestCase
 
     public function test_get()
     {
-        $svg = new Svg();
+        $svg = $this->createSvgProvider();
         $svgContent = $svg->get("person");
 
         $this->assertStringContainsString("<svg", $svgContent);
@@ -42,7 +50,7 @@ class SvgTest extends TestCase
 
     public function test_exists()
     {
-        $svg = new Svg();
+        $svg = $this->createSvgProvider();
 
         $this->assertTrue($svg->exists("person"));
         $this->assertTrue($svg->exists("file"));
