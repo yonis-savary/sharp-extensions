@@ -7,7 +7,7 @@ use YonisSavary\Sharp\Core\Utils;
 
 class BuildAssetsKitStylesheet extends AbstractBuildTask
 {
-    public function execute(): bool
+    public function execute(): int
     {
         $assetsKitDir = realpath( __DIR__ . "/..");
 
@@ -19,7 +19,14 @@ class BuildAssetsKitStylesheet extends AbstractBuildTask
         $this->shellInDirectory("$command main.less ../css/assets-kit/style.css --verbose", $styleDir, true);
         $this->shellInDirectory("$command essentials.less ../css/assets-kit/essentials.css --verbose", $styleDir, true);
 
+        return 0;
+    }
 
-        return true;
+    public function getWatchList(): array
+    {
+        $assetsKitDir = realpath( __DIR__ . "/..");
+        $styleDir = Utils::joinPath($assetsKitDir, '/Assets/less');
+
+        return [$styleDir];
     }
 }

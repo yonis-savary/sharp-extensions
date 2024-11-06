@@ -9,7 +9,7 @@ use YonisSavary\Sharp\Core\Utils;
 
 class BundlingAssetsKitScripts extends AbstractBuildTask
 {
-    public function execute(): bool
+    public function execute(): int
     {
         $assetsKitDir = realpath( __DIR__ . "/..");
 
@@ -23,6 +23,14 @@ class BundlingAssetsKitScripts extends AbstractBuildTask
         $cache = new Storage(Utils::joinPath($assetsKitDir, "Assets/Cache/js"));
         $cache->write(ASSETS_KIT_BUNDLE_FILE_NAME, $bundleContent);
 
-        return true;
+        return 0;
+    }
+
+    public function getWatchList(): array
+    {
+        $assetsKitDir = realpath( __DIR__ . "/..");
+        $scriptDir = Utils::joinPath($assetsKitDir, "/Assets/js/assets-kit");
+
+        return [$scriptDir];
     }
 }
