@@ -92,7 +92,7 @@ class InstallPackage extends AbstractCommand
         }
     }
 
-    public function __invoke(Args $args)
+    public function execute(Args $args): int
     {
         $toInstall = ObjectArray::fromArray($args->values())->filter()->collect();
 
@@ -107,5 +107,7 @@ class InstallPackage extends AbstractCommand
 
         foreach ($toInstall as $package)
             $this->installPackage($package, $application, $policy);
+
+        return 0;
     }
 }
