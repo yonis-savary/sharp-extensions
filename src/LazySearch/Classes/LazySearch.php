@@ -196,8 +196,21 @@ class LazySearch
         if (!($rawSorts = $this->queryParams['sorts'] ?? null))
             return "";
 
-        list($field, $mode) = $rawSorts;
-        return Database::getInstance()->build("ORDER BY `{}` $mode", [$field]);
+        if (is_string($rawSorts[0]))
+            $rawSorts = [$rawSorts];
+
+        $buildExpression = ObjectArray::fromArray($rawSorts)
+        ->map(function($sortElement){
+            list($field, $mode) = $sortElement;
+            $mode = strtolower($mode);
+            if (!in_array($mode, ["asc", "desc"]))
+                $mode = "asc";
+
+            return Database::getInstance()->build("`{}` $mode", [$field]);
+        })
+        ->join(",");
+
+        return Database::getInstance()->build("ORDER BY $buildExpression");
     }
 
     protected function getSearchCondition(LazySearchOptions $backendOptions, array $queryInfos): array
