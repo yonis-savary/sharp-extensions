@@ -436,12 +436,12 @@ document.addEventListener("DOMContentLoaded", _ => {
         switch (currentOrientation)
         {
             case "horizontal":
-                document.body.classList.replace("protrait-mode", "landscape-mode");
+                document.body.classList.replace("portrait-mode", "landscape-mode");
                 window.dispatchEvent(new Event("switchedToLandscapeMode"));
                 break;
 
             case "vertical":
-                document.body.classList.replace("landscape-mode", "protrait-mode");
+                document.body.classList.replace("landscape-mode", "portrait-mode");
                 window.dispatchEvent(new Event("switchedToPortraitMode"));
                 break;
         }
